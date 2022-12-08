@@ -82,8 +82,6 @@ jobs:
         cd openwrt
         chmod -R 755 files
         chmod 600 files/etc/config/ttyd
-        chmod 600 files/etc/firewall.user
-        chmod 644 files/lib/preinit/99_firewall_lxc_workaround
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
     - name: SSH connection to Actions
