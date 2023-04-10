@@ -1,12 +1,8 @@
-2022-1-12：添加5.15内核的编译，部分插件的兼容性不怎么友好！
+2023-4-10：
+forked from yaya131/X86_64-TEST
 
-新增天灵源码immortalwrt-5.4内核docker版本，不带docker是精简版，相比lean的源码更稳定，更丝滑！更急速！
+Lean x86
+immortalwrt-21.02
+Lienol-x86
 
-配置文件终于调整至我最满意的效果！好东西就要分享
-
-Official是基于openwrt官方配置文件编译，跟随openwrt官方主线更新
-
-
-所有分区是1024M。内核最新。
-
-插件参考我的配置文件
+编译rootfs版本用于PVE LXC OpenWRT
