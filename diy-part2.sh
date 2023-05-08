@@ -24,6 +24,8 @@ sed -i '/customized in this file/a net.bridge.bridge-nf-call-iptables=0' package
 sed -i '/customized in this file/a net.core.wmem_max=16777216' package/base-files/files/etc/sysctl.conf
 sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-files/files/etc/sysctl.conf
 
+#修复LXC OP监控页面活动连接数值
+sed -i 's/net.nf_conntrack_max/net.netfilter.nf_conntrack_max/g' /usr/lib/lua/luci/view/admin_status/index.htm
 
 # git clone https://github.com/kenzok8/openwrt-packages.git package/openwrt-packages
 # git clone https://github.com/kenzok8/small.git package/small-package
