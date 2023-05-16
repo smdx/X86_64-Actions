@@ -68,7 +68,7 @@ git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git pac
 # git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
 # git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
 
-# Smartdns
+# SmartDNS
 rm -rf package/luci-app-smartdns
 rm -rf package/lean/luci-app-smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
