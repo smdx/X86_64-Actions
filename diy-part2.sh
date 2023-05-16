@@ -59,7 +59,7 @@ git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git pac
 # git clone https://github.com/kiddin9/luci-app-dnsfilter.git package/luci-app-dnsfilter
 
 
-#添加额外非必须软件包
+# 添加额外非必须软件包
 # git clone https://github.com/rufengsuixing/luci-app-adguardhome.git package/luci-app-adguardhome
 # git clone https://github.com/vernesong/OpenClash.git package/OpenClash
 # git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
@@ -68,6 +68,13 @@ git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git pac
 # git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
 # git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
 
-#添加smartdns
-# git clone https://github.com/pymumu/openwrt-smartdns package/smartdns
-# git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
+# Smartdns
+rm -rf package/luci-app-smartdns
+rm -rf package/lean/luci-app-smartdns
+rm -rf feeds/luci/applications/luci-app-smartdns
+rm -rf package/smartdns
+rm -rf package/lean/smartdns
+rm -rf feeds/luci/applications/smartdns
+
+git clone https://github.com/pymumu/openwrt-smartdns.git package/smartdns
+git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
