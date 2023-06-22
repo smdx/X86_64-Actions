@@ -19,6 +19,10 @@ on:
         required: false
         default: 'false'
 
+# 每3天UTC时区转换11.25分执行
+  schedule:
+   - cron: 25 3 */3 * *
+
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
