@@ -19,7 +19,7 @@ on:
         required: false
         default: 'false'
 
-# 每周一UTC转换时间11点20执行
+# 每周一、五 11点20执行编译(UTC)
   schedule:
    - cron: 20 3 * * 1,5
 
