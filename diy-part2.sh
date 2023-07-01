@@ -69,12 +69,7 @@ git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git pac
 # git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
 
 # SmartDNS
-rm -rf package/luci-app-smartdns
-rm -rf package/lean/luci-app-smartdns
-rm -rf feeds/luci/applications/luci-app-smartdns
-rm -rf package/smartdns
-rm -rf package/lean/smartdns
-rm -rf feeds/luci/applications/smartdns
+rm -rf feeds/packages/net/smartdns
 
-git clone https://github.com/pymumu/openwrt-smartdns.git package/smartdns
-git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
+git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns package/luci-app-smartdns
+git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/smartdns
