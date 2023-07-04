@@ -32,7 +32,7 @@ sed -i 's/iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports
 sed -i 's/\[ -n "$(command -v ip6tables)" \] && ip6tables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53/#\[ -n "$(command -v ip6tables)" \] \&\& ip6tables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53/g' package/lean/default-settings/files/zzz-default-settings
 sed -i 's/\[ -n "$(command -v ip6tables)" \] && ip6tables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53/#\[ -n "$(command -v ip6tables)" \] \&\& ip6tables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53/g' package/lean/default-settings/files/zzz-default-settings
 
-#在防火墙自定义添加FTP规则
+#在防火墙自定义添加FTP规则 9099端口对应FTP转发端口
 sed -i '46a echo '\''iptables -t raw -A PREROUTING -p tcp --dport 9099 -j CT --helper ftp'\'' >> /etc/firewall.user\n' package/lean/default-settings/files/zzz-default-settings
 
 #nlbwmon 修复log警报
