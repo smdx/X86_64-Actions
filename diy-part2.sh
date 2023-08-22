@@ -39,13 +39,15 @@ sed -i '46a echo '\''iptables -t raw -A PREROUTING -p tcp --dport 9099 -j CT --h
 sed -i '/customized in this file/a net.core.wmem_max=16777216' package/base-files/files/etc/sysctl.conf
 sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-files/files/etc/sysctl.conf
 
+
+git clone https://github.com/kenzok8/small-package.git package/small-package
 # git clone https://github.com/kenzok8/openwrt-packages.git package/openwrt-packages
 # git clone https://github.com/kenzok8/small.git package/small-package
 
+# 添加额外非必须软件包
+#
 # git clone https://github.com/linkease/istore.git package/istore
 # sed -i 's/luci-lib-ipkg/luci-base/g' package/feeds/kenzok/luci-app-store/Makefile
-
-# git clone https://github.com/kiddin9/openwrt-bypass.git package/luci-app-bypass
 
 ###sirpdboy###
 # git clone https://github.com/sirpdboy/sirpdboy-package.git package/sirpdboy-package
@@ -56,15 +58,12 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 # git clone https://github.com/sirpdboy/luci-app-poweroffdevice.git package/luci-app-poweroffdevice
 # git clone https://github.com/sirpdboy/luci-app-autotimeset.git package/luci-app-autotimeset
 
-
 # themes添加（svn co 命令意思：指定版本如https://github）
 # git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git package/luci-theme-infinityfreedom
 # git clone https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
 # git clone https://github.com/openwrt-develop/luci-theme-atmaterial.git package/luci-theme-atmaterial
 # git clone https://github.com/kiddin9/luci-app-dnsfilter.git package/luci-app-dnsfilter
 
-
-# 添加额外非必须软件包
 # git clone https://github.com/rufengsuixing/luci-app-adguardhome.git package/luci-app-adguardhome
 # git clone https://github.com/vernesong/OpenClash.git package/OpenClash
 # git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
@@ -72,3 +71,7 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 # git clone https://github.com/riverscn/openwrt-iptvhelper.git package/openwrt-iptvhelper
 # git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
 # git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
+
+#添加smartdns
+git clone https://github.com/pymumu/openwrt-smartdns package/smartdns
+git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
