@@ -40,7 +40,7 @@ sed -i '/customized in this file/a net.core.wmem_max=16777216' package/base-file
 sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-files/files/etc/sysctl.conf
 
 
-git clone https://github.com/kenzok8/small-package.git package/small-package
+# git clone https://github.com/kenzok8/small-package.git package/small-package
 # git clone https://github.com/kenzok8/openwrt-packages.git package/openwrt-packages
 # git clone https://github.com/kenzok8/small.git package/small-package
 
@@ -73,5 +73,5 @@ git clone https://github.com/kenzok8/small-package.git package/small-package
 # git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
 
 #添加smartdns
-git clone https://github.com/pymumu/openwrt-smartdns package/smartdns
-git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
+# git clone https://github.com/pymumu/openwrt-smartdns package/smartdns
+# git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
