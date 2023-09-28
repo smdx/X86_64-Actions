@@ -46,7 +46,7 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 
 # 切换到指定的 OpenSSL 版本
 pushd package/libs/openssl
-git checkout d6697e2871e77238460402e9362d47d18382b15ef9f246aba6c7bd780d38a6b0
+git checkout 4fd8d7b
 popd
 
 # 添加额外非必须软件包
