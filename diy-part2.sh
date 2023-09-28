@@ -44,6 +44,11 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 # git clone https://github.com/kenzok8/openwrt-packages.git package/openwrt-packages
 # git clone https://github.com/kenzok8/small.git package/small-package
 
+# 切换到指定的 OpenSSL 版本
+pushd feeds/packages/libs/openssl
+git checkout d6697e2871e77238460402e9362d47d18382b15ef9f246aba6c7bd780d38a6b0
+popd
+
 # 添加额外非必须软件包
 #
 # git clone https://github.com/linkease/istore.git package/istore
