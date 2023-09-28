@@ -16,6 +16,5 @@
 
 # echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
 echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall;luci-smartdns-dev' >>feeds.conf.default
-echo 'src-git openssl https://github.com/coolsnowwolf/lede/tree/4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0/package/libs/openssl' >>feeds.conf.default
 sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
 sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
