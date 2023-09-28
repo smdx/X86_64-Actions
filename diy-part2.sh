@@ -44,6 +44,9 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 # git clone https://github.com/kenzok8/openwrt-packages.git package/openwrt-packages
 # git clone https://github.com/kenzok8/small.git package/small-package
 
+#切换openssl分支之前保存 zzz-default-settings 文件的修改
+git stash save "Temporary changes to zzz-default-settings"
+
 # 创建并切换到新分支 openssl-update
 git checkout -b openssl-update
 
@@ -51,6 +54,9 @@ git checkout -b openssl-update
 pushd package/libs/openssl
 git checkout 4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0
 popd
+
+#重新应用 zzz-default-settings 文件的修改
+git stash apply
 
 # 添加额外非必须软件包
 #
