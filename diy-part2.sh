@@ -9,6 +9,11 @@
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
+# 切换到指定的 OpenSSL 版本
+pushd package/libs/openssl
+git checkout 4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0
+popd
+
 # Modify default IP
 sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
 
@@ -39,24 +44,10 @@ sed -i '46a echo '\''iptables -t raw -A PREROUTING -p tcp --dport 9099 -j CT --h
 sed -i '/customized in this file/a net.core.wmem_max=16777216' package/base-files/files/etc/sysctl.conf
 sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-files/files/etc/sysctl.conf
 
-
 # git clone https://github.com/kenzok8/small-package.git package/small-package
 # git clone https://github.com/kenzok8/openwrt-packages.git package/openwrt-packages
 # git clone https://github.com/kenzok8/small.git package/small-package
 
-#切换openssl分支之前保存 zzz-default-settings 文件的修改
-git stash save "Temporary changes to zzz-default-settings"
-
-# 创建并切换到新分支 openssl-update
-git checkout -b openssl-update
-
-# 切换到指定的 OpenSSL 版本
-pushd package/libs/openssl
-git checkout 4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0
-popd
-
-#重新应用 zzz-default-settings 文件的修改
-git stash apply
 
 # 添加额外非必须软件包
 #
