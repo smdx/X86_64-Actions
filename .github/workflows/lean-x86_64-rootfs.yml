@@ -93,6 +93,7 @@ jobs:
         cd openwrt
         chmod -R 755 files
         chmod 600 files/etc/config/ttyd
+        chmod 600 files/etc/config/uhttpd
         chmod 644 files/lib/preinit/99_firewall_lxc_workaround
         chmod 644 files/usr/lib/lua/luci/view/wrtbwmon/wrtbwmon.htm
         chmod 644 files/www/luci-static/wrtbwmon/wrtbwmon.js
