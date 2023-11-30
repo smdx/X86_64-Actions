@@ -104,17 +104,16 @@ jobs:
         WORKINGDIR="openwrt/feeds/packages/net/smartdns"
         mkdir $WORKINGDIR -p
         rm $WORKINGDIR/* -fr
-        wget https://github.com/pymumu/openwrt-smartdns/archive/master.zip -O $WORKINGDIR/master.zip
+        curl -s -L --retry 6 https://github.com/pymumu/openwrt-smartdns/archive/master.zip -o $WORKINGDIR/master.zip
         unzip $WORKINGDIR/master.zip -d $WORKINGDIR
         mv $WORKINGDIR/openwrt-smartdns-master/* $WORKINGDIR/
         rmdir $WORKINGDIR/openwrt-smartdns-master
         rm $WORKINGDIR/master.zip
-        
-        LUCIBRANCH="lede" #更换此变量
+        LUCIBRANCH="master"
         WORKINGDIR="openwrt/feeds/luci/applications/luci-app-smartdns"
         mkdir $WORKINGDIR -p
         rm $WORKINGDIR/* -fr
-        wget https://github.com/pymumu/luci-app-smartdns/archive/${LUCIBRANCH}.zip -O $WORKINGDIR/${LUCIBRANCH}.zip
+        curl -s -L --retry 6 https://github.com/pymumu/luci-app-smartdns/archive/${LUCIBRANCH}.zip -o $WORKINGDIR/${LUCIBRANCH}.zip
         unzip $WORKINGDIR/${LUCIBRANCH}.zip -d $WORKINGDIR
         mv $WORKINGDIR/luci-app-smartdns-${LUCIBRANCH}/* $WORKINGDIR/
         rmdir $WORKINGDIR/luci-app-smartdns-${LUCIBRANCH}
