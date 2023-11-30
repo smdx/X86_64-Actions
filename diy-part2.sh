@@ -76,3 +76,13 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 # git clone https://github.com/riverscn/openwrt-iptvhelper.git package/openwrt-iptvhelper
 # git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
 # git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
+
+# Smartdns
+rm -rf package/luci-app-smartdns
+rm -rf package/lean/luci-app-smartdns
+rm -rf feeds/luci/applications/luci-app-smartdns
+rm -rf package/smartdns
+rm -rf package/lean/smartdns
+rm -rf feeds/luci/applications/smartdns
+git clone https://github.com/pymumu/openwrt-smartdns.git package/smartdns
+git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
