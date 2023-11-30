@@ -121,7 +121,6 @@ jobs:
         rm $WORKINGDIR/${LUCIBRANCH}.zip
         
         ./scripts/feeds install -a
-        make menuconfig
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
