@@ -48,6 +48,8 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 # git clone https://github.com/kenzok8/openwrt-packages.git package/openwrt-packages
 # git clone https://github.com/kenzok8/small.git package/small-package
 
+# 移除要替换的包
+rm -rf feeds/packages/net/adguardhome
 
 # 添加额外非必须软件包
 #
