@@ -17,15 +17,6 @@
 #git checkout 4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0
 #popd
 
-# AdGuardHome Beta - Fix build with go17.x
-pushd feeds/packages
-adguardhome_version=`curl -s "https://api.github.com/repos/AdguardTeam/AdGuardHome/releases" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g' | awk -F "v" '{print $2}'`
-sed -ri "s/(PKG_VERSION:=)[^\"]*/\1$adguardhome_version/" net/adguardhome/Makefile
-sed -i 's/release/beta/g' net/adguardhome/Makefile
-sed -i 's/.*PKG_MIRROR_HASH.*/#&/' net/adguardhome/Makefile
-sed -i '/init/d' net/adguardhome/Makefile
-popd
-
 # Modify default IP
 sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
 
