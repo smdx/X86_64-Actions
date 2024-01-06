@@ -10,7 +10,7 @@
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
 # 移除要替换的包
-#rm -rf feeds/packages/net/adguardhome
+rm -rf feeds/packages/net/adguardhome
 #
 # 切换到指定的 OpenSSL 版本
 #pushd package/libs/openssl
