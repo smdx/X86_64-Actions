@@ -9,10 +9,22 @@
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
+# 移除要替换的包
+#rm -rf feeds/packages/net/adguardhome
+#
 # 切换到指定的 OpenSSL 版本
 #pushd package/libs/openssl
 #git checkout 4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0
 #popd
+
+# AdGuardHome Beta - Fix build with go17.x
+pushd feeds/packages
+adguardhome_version=`curl -s "https://api.github.com/repos/AdguardTeam/AdGuardHome/releases" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g' | awk -F "v" '{print $2}'`
+sed -ri "s/(PKG_VERSION:=)[^\"]*/\1$adguardhome_version/" net/adguardhome/Makefile
+sed -i 's/release/beta/g' net/adguardhome/Makefile
+sed -i 's/.*PKG_MIRROR_HASH.*/#&/' net/adguardhome/Makefile
+sed -i '/init/d' net/adguardhome/Makefile
+popd
 
 # Modify default IP
 sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
@@ -47,9 +59,6 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 # git clone https://github.com/kenzok8/small-package.git package/small-package
 # git clone https://github.com/kenzok8/openwrt-packages.git package/openwrt-packages
 # git clone https://github.com/kenzok8/small.git package/small-package
-
-# 移除要替换的包
-rm -rf feeds/packages/net/adguardhome
 
 # 添加额外非必须软件包
 #
