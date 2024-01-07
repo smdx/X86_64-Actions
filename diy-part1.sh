@@ -21,3 +21,13 @@ sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
 #
 # 移除要替换的包
 rm -rf feeds/packages/net/adguardhome
+#
+# Smartdns
+rm -rf package/luci-app-smartdns
+rm -rf package/lean/luci-app-smartdns
+rm -rf feeds/luci/applications/luci-app-smartdns
+rm -rf package/smartdns
+rm -rf package/lean/smartdns
+rm -rf feeds/luci/applications/smartdns
+git clone https://github.com/pymumu/openwrt-smartdns.git package/smartdns
+git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
