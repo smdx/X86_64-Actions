@@ -6,3 +6,4 @@ Lienol-x86
 immortalwrt-21.02
 
 编译rootfs版本用于PVE LXC OpenWRT
+密码为空
