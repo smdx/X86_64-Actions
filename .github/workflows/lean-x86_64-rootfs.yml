@@ -103,6 +103,7 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        chmod +x $GITHUB_WORKSPACE/scripts/*.sh
         chmod +x $DIY_P2_SH
         cd openwrt
         chmod -R 755 files
@@ -111,6 +112,7 @@ jobs:
         chmod 644 files/lib/preinit/99_firewall_lxc_workaround
         chmod 644 files/usr/lib/lua/luci/view/wrtbwmon/wrtbwmon.htm
         chmod 644 files/www/luci-static/wrtbwmon/wrtbwmon.js
+        $GITHUB_WORKSPACE/scripts/conntrack.sh
         $GITHUB_WORKSPACE/$DIY_P2_SH
         
     - name: SSH connection to Actions
