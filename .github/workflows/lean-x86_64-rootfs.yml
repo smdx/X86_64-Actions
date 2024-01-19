@@ -30,6 +30,7 @@ env:
   CONFIG_FILE: lean-x86_64-rootfs.config
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
+  CLASH_KERNEL: amd64
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
@@ -113,6 +114,7 @@ jobs:
         chmod 644 files/usr/lib/lua/luci/view/wrtbwmon/wrtbwmon.htm
         chmod 644 files/www/luci-static/wrtbwmon/wrtbwmon.js
         $GITHUB_WORKSPACE/scripts/conntrack.sh
+        $GITHUB_WORKSPACE/scripts/preset-adguard-core.sh $CLASH_KERNEL
         $GITHUB_WORKSPACE/$DIY_P2_SH
         
     - name: SSH connection to Actions
