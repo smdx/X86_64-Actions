@@ -55,10 +55,7 @@ rm -rf feeds/smpackage/adguardhome
 rm -rf feeds/smpackage/luci-app-adguardhome
 rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
 #
-# git clone https://github.com/kenzok8/small-package.git package/small-package
-# git clone https://github.com/kenzok8/openwrt-packages.git package/openwrt-packages
-# git clone https://github.com/kenzok8/small.git package/small-package
-
+#
 # 添加额外非必须软件包
 #
 # git clone https://github.com/linkease/istore.git package/istore
@@ -93,6 +90,7 @@ git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/smartdns
 #
 # AdguardHome
 git clone --depth=1 https://github.com/kongfl888/luci-app-adguardhome package/luci-app-adguardhome
+#
 #
 echo 'refresh feeds'
 ./scripts/feeds update -a
