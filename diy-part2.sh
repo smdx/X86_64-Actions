@@ -90,6 +90,8 @@ rm -rf feeds/luci/applications/luci-app-smartdns
 rm -rf package/smartdns
 rm -rf package/lean/smartdns
 rm -rf feeds/luci/applications/smartdns
+rm -rf feeds/smpackage/smartdns
+rm -rf feeds/smpackage/luci-app-smartdns
 git clone https://github.com/pymumu/openwrt-smartdns.git package/smartdns
 git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 
