@@ -36,7 +36,7 @@ sed -i 's/\[ -n "$(command -v ip6tables)" \] && ip6tables -t nat -A PREROUTING -
 sed -i '46a echo '\''iptables -t raw -A PREROUTING -p tcp --dport 9099 -j CT --helper ftp'\'' >> /etc/firewall.user\n' package/lean/default-settings/files/zzz-default-settings
 
 #防止init.d目录下权限问题
-sed -i '60a\\nchmod 0755 /etc/init.d/*'  /root/zzz-default-settings.txt
+sed -i '60a\\nchmod 0755 /etc/init.d/*' package/lean/default-settings/files/zzz-default-settings
 
 #nlbwmon 修复log警报
 sed -i '/customized in this file/a net.core.wmem_max=16777216' package/base-files/files/etc/sysctl.conf
