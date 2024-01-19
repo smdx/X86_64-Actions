@@ -80,7 +80,6 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 #popd
 #
 # 移除要替换的包
-rm -rf feeds/packages/net/adguardhome
 rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
 #
 # Smartdns
@@ -94,6 +93,18 @@ rm -rf feeds/smpackage/smartdns
 rm -rf feeds/smpackage/luci-app-smartdns
 git clone https://github.com/pymumu/openwrt-smartdns.git package/smartdns
 git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
+#
+# AdguardHome
+rm -rf feeds/smpackage/adguardhome
+rm -rf feeds/smpackage/luci-app-adguardhome
+# AdGuardHome Beta - Fix build with go17.x
+pushd feeds/packages
+adguardhome_version=`curl -s "https://api.github.com/repos/AdguardTeam/AdGuardHome/releases" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g' | awk -F "v" '{print $2}'`
+sed -ri "s/(PKG_VERSION:=)[^\"]*/\1$adguardhome_version/" net/adguardhome/Makefile
+sed -i 's/release/beta/g' net/adguardhome/Makefile
+sed -i 's/.*PKG_MIRROR_HASH.*/#&/' net/adguardhome/Makefile
+sed -i '/init/d' net/adguardhome/Makefile
+popd
 
 echo 'refresh feeds'
 ./scripts/feeds update -a
