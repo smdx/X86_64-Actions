@@ -112,6 +112,7 @@ jobs:
         chmod 644 files/lib/preinit/99_firewall_lxc_workaround
         chmod 644 files/usr/lib/lua/luci/view/wrtbwmon/wrtbwmon.htm
         chmod 644 files/www/luci-static/wrtbwmon/wrtbwmon.js
+        patch -p1 < "${GITHUB_WORKSPACE}/patches/adguardhome.patch"
         $GITHUB_WORKSPACE/scripts/conntrack.sh
         $GITHUB_WORKSPACE/$DIY_P2_SH
         
