@@ -78,6 +78,7 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 #
 # 移除要替换的包
 rm -rf feeds/packages/net/adguardhome
+rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
 #
 # Smartdns
 rm -rf package/luci-app-smartdns
