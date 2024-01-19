@@ -8,7 +8,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
-#
+
 # Modify default IP
 sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
 
@@ -42,6 +42,19 @@ sed -i '60a\\nchmod 0755 /etc/init.d/*' package/lean/default-settings/files/zzz-
 sed -i '/customized in this file/a net.core.wmem_max=16777216' package/base-files/files/etc/sysctl.conf
 sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-files/files/etc/sysctl.conf
 
+# 切换到指定的 OpenSSL 版本
+#pushd package/libs/openssl
+#git checkout 4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0
+#popd
+#
+# 移除要替换的包
+rm -rf feeds/packages/net/smartdns
+rm -rf feeds/smpackage/smartdns
+rm -rf feeds/smpackage/luci-app-smartdns
+rm -rf feeds/smpackage/adguardhome
+rm -rf feeds/smpackage/luci-app-adguardhome
+rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+#
 # git clone https://github.com/kenzok8/small-package.git package/small-package
 # git clone https://github.com/kenzok8/openwrt-packages.git package/openwrt-packages
 # git clone https://github.com/kenzok8/small.git package/small-package
@@ -73,28 +86,14 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 # git clone https://github.com/riverscn/openwrt-iptvhelper.git package/openwrt-iptvhelper
 # git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
 # git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
-
-# 切换到指定的 OpenSSL 版本
-#pushd package/libs/openssl
-#git checkout 4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0
-#popd
-#
-# 移除要替换的包
-rm -rf feeds/packages/net/adguardhome
-rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
 #
 # Smartdns
-rm -rf package/luci-app-smartdns
-rm -rf package/lean/luci-app-smartdns
-rm -rf feeds/luci/applications/luci-app-smartdns
-rm -rf package/smartdns
-rm -rf package/lean/smartdns
-rm -rf feeds/luci/applications/smartdns
-rm -rf feeds/smpackage/smartdns
-rm -rf feeds/smpackage/luci-app-smartdns
-git clone https://github.com/pymumu/openwrt-smartdns.git package/smartdns
-git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
-
+git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns package/luci-app-smartdns
+git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/smartdns
+#
+# AdguardHome
+git clone --depth=1 https://github.com/kongfl888/luci-app-adguardhome package/luci-app-adguardhome
+#
 echo 'refresh feeds'
 ./scripts/feeds update -a
 ./scripts/feeds install -a
