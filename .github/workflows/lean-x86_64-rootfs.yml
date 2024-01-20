@@ -114,7 +114,7 @@ jobs:
         chmod 644 files/usr/lib/lua/luci/view/wrtbwmon/wrtbwmon.htm
         chmod 644 files/www/luci-static/wrtbwmon/wrtbwmon.js     
         $GITHUB_WORKSPACE/scripts/conntrack.sh
-        $GITHUB_WORKSPACE/scripts/preset-adguard-core.sh $CLASH_KERNEL
+        $GITHUB_WORKSPACE/scripts/adguard-core.sh $CLASH_KERNEL
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
     - name: Update SmartDNS
