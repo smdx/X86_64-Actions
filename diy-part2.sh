@@ -98,7 +98,7 @@ function git_sparse_clone() {
 #git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/smartdns
 #
 # AdguardHome
-git clone --depth=1 https://github.com/kongfl888/luci-app-adguardhome package/luci-app-adguardhome
+git clone --depth=1 https://github.com/chenmozhijin/luci-app-adguardhome package/luci-app-adguardhome
 #
 #
 echo 'refresh feeds'
