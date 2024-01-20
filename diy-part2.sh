@@ -102,4 +102,5 @@ git clone --depth=1 https://github.com/kongfl888/luci-app-adguardhome package/lu
 #
 #
 echo 'refresh feeds'
-./scripts/feeds install -a -f
+./scripts/feeds update -a
+./scripts/feeds install -a
