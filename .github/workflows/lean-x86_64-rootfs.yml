@@ -136,6 +136,119 @@ jobs:
         rmdir $WORKINGDIR/luci-app-smartdns-${LUCIBRANCH}
         rm $WORKINGDIR/${LUCIBRANCH}.zip
         cd openwrt && ./scripts/feeds install -a
+
+    - name: 下载AdGuardHome核心与DNS名单
+      working-directory: /workdir
+      run: |
+        if [ "$(grep -c "^CONFIG_PACKAGE_luci-app-adguardhome=y$" .config)" -ne '0' ];then
+              Archt="$(sed -n '/CONFIG_ARCH=/p' .config | sed -e 's/CONFIG_ARCH\=\"//' -e 's/\"//')"
+              case $Archt in
+              "i386")
+              Arch="386"
+              ;;
+              "i686")
+              Arch="386"
+              ;;
+              "x86_64")
+              Arch="amd64"
+              ;;
+              "mipsel")
+              Arch="mipsle"
+              ;;
+              "mips64el")
+              Arch="mips64le"
+              Arch="mipsle"
+              echo -e "mips64el use $Arch may have bug"
+              ;;
+              "mips")
+              Arch="mips"
+              ;;
+              "mips64")
+              Arch="mips64"
+              Arch="mips"
+              echo -e "mips64 use $Arch may have bug"
+              ;;
+              "arm")
+              if [ "$(grep -c "CONFIG_arm_" .config)" -ne '0' ];then
+                armv="$(sed -n '/CONFIG_arm_/p' .config | sed -e 's/CONFIG_arm_//' -e 's/=y//')"
+              else
+                armv=v5
+              fi
+              Arch="arm$armv"
+              ;;
+              "aarch64")
+              Arch="arm64"
+              ;;
+              "powerpc")
+              Arch="ppc"
+              Arch=1
+              echo -e "error not support $Archt"
+              ;;
+              "powerpc64")
+              Arch="ppc64"
+              Arch=1
+              echo -e "error not support $Archt"
+              ;;
+              *)
+              echo -e "error not support $Archt if you can use offical release please issue a bug"
+              Arch=1
+              ;;
+              esac
+              if [ "$Arch" != 1 ];then
+                echo "::notice ::检测到luci-app-adguardhome配置为编译进固件,下载DNS名单与架构为$Arch的AdGuardHome核心"
+                mkdir -p ./files/usr/bin/AdGuardHome/tmp
+                rm -rf ./files/usr/bin/AdGuardHome/tmp/*
+                latest_ver="$(curl -s https://api.github.com/repos/AdguardTeam/AdGuardHome/releases/latest 2>/dev/null|grep -E 'tag_name' |grep -E 'v[0-9.]+' -o 2>/dev/null)"
+                curl -s -L --retry 6 https://github.com/AdguardTeam/AdGuardHome/releases/download/${latest_ver}/AdGuardHome_linux_${Arch}.tar.gz -o ./files/usr/bin/AdGuardHome/tmp/AdGuardHome.tar.gz
+                tar -zxf "./files/usr/bin/AdGuardHome/tmp/AdGuardHome.tar.gz" -C "./files/usr/bin/AdGuardHome/tmp/"
+                mv -f ./files/usr/bin/AdGuardHome/tmp/AdGuardHome/AdGuardHome ./files/usr/bin/AdGuardHome
+                rm -rf ./files/usr/bin/AdGuardHome/tmp
+                chmod 755 $GITHUB_WORKSPACE/files/usr/bin/AdGuardHome/AdGuardHome
+                echo "下载AdGuardHome DNS黑白名单"
+                mkdir -p ./files/usr/bin/AdGuardHome/data/filters
+                cd $GITHUB_WORKSPACE/files/usr/bin/AdGuardHome/data/filters
+                curl -o 1628750870.txt https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt -s -L --retry 6
+                curl -o 1628750871.txt https://anti-ad.net/easylist.txt -s -L --retry 6
+                curl -o 1677875715.txt https://easylist-downloads.adblockplus.org/easylist.txt -s -L --retry 6
+                curl -o 1677875716.txt https://easylist-downloads.adblockplus.org/easylistchina.txt -s -L --retry 6
+                curl -o 1677875717.txt https://cdn.jsdelivr.net/gh/cjx82630/cjxlist@master/cjx-annoyance.txt -s -L --retry 6
+                curl -o 1677875718.txt https://cdn.jsdelivr.net/gh/zsakvo/AdGuard-Custom-Rule@master/rule/zhihu-strict.txt -s -L --retry 6
+                curl -o 1677875720.txt https://gist.githubusercontent.com/Ewpratten/a25ae63a7200c02c850fede2f32453cf/raw/b9318009399b99e822515d388b8458557d828c37/hosts-yt-ads -s -L --retry 6
+                curl -o 1677875721.txt https://raw.githubusercontent.com/adbyby/xwhyc-rules/master/lazy.txt -s -L --retry 6
+                curl -o 1677875722.txt https://raw.githubusercontent.com/adbyby/xwhyc-rules/master/v -s -L --retry 6
+                curl -o 1677875724.txt https://raw.githubusercontent.com/banbendalao/ADgk/master/ADgk.txt -s -L --retry 6
+                curl -o 1677875725.txt https://www.i-dont-care-about-cookies.eu/abp/ -s -L --retry 6
+                curl -o 1677875726.txt https://raw.githubusercontent.com/jdlingyu/ad-wars/master/hosts -s -L --retry 6
+                curl -o 1677875727.txt https://raw.githubusercontent.com/Goooler/1024_hosts/master/hosts -s -L --retry 6
+                curl -o 1677875728.txt https://winhelp2002.mvps.org/hosts.txt -s -L --retry 6
+                curl -o 1677875733.txt https://cdn.jsdelivr.net/gh/hl2gu -s -L --retry 6
+                curl -o 1677875734.txt https://cdn.jsdelivr.net/gh/hg1978/AdGuard-Home-Whitelist@master/whitelist.txt -s -L --retry 6
+                curl -o 1677875735.txt https://cdn.jsdelivr.net/gh/mmotti/adguard-home-filters@master/whitelist.txt -s -L --retry 6
+                curl -o 1677875737.txt https://cdn.jsdelivr.net/gh/liwenjie119/adg-rules@master/white.txt -s -L --retry 6
+                curl -o 1677875739.txt https://cdn.jsdelivr.net/gh/JamesDamp/AdGuard-Home---Personal-Whitelist@master/AdGuardHome-Whitelist.txt -s -L --retry 6
+                curl -o 1677875740.txt https://cdn.jsdelivr.net/gh/scarletbane/AdGuard-Home-Whitelist@main/whitelist.txt -s -L --retry 6
+                ls
+                echo "制作AdGuardHome上游 DNS 服务器规则"
+                cd  $GITHUB_WORKSPACE
+                mkdir -p tmp
+                cd $GITHUB_WORKSPACE/tmp
+                ls
+                rm -rf *
+                curl -s -L --retry 6 --connect-timeout 20 "https://raw.githubusercontent.com/chenmozhijin/AdGuardHome-Rules/main/AdGuardHome-dnslist(by%20cmzj).yaml" -o "AdGuardHomednslist" 
+                cat ./AdGuardHomednslist >> $GITHUB_WORKSPACE/files/etc/AdGuardHome-dnslist"(by cmzj)".yaml
+                echo "AdGuardHome-dnslist(by cmzj).yaml" >> $LOG_PATH/AdGuardHome.log
+                cat $GITHUB_WORKSPACE/files/etc/AdGuardHome-dnslist"(by cmzj)".yaml >> $LOG_PATH/AdGuardHome.log
+                rm -rf $GITHUB_WORKSPACE/tmp/*
+                echo "files"
+                ls -la $(find $GITHUB_WORKSPACE/files/ -type d)
+              else
+                echo "::warning ::AdGuardHome核心不支持此架构,退出执行下载AdGuardHome核心与DNS名单。"
+                rm -rf $GITHUB_WORKSPACE/files/etc/AdGuardHome-dnslist\(by\ cmzj\).yaml $GITHUB_WORKSPACE/files/etc/AdGuardHome.yaml $GITHUB_WORKSPACE/files/usr/bin/AdGuardHome
+              fi
+          else
+            echo "::notice ::未检测到luci-app-adguardhome配置为编译进固件,退出执行。"
+            rm -rf $GITHUB_WORKSPACE/files/etc/AdGuardHome-dnslist\(by\ cmzj\).yaml $GITHUB_WORKSPACE/files/etc/AdGuardHome.yaml $GITHUB_WORKSPACE/files/usr/bin/AdGuardHome
+          fi
         
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
