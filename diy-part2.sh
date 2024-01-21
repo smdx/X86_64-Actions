@@ -51,14 +51,14 @@ rm -rf feeds/smpackage/luci-app-adguardhome
 rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
 #
 # Git稀疏克隆，只克隆指定目录到本地
-function git_sparse_clone() {
-  branch="$1" repourl="$2" && shift 2
-  git clone --depth=1 -b $branch --single-branch --filter=blob:none --sparse $repourl
-  repodir=$(echo $repourl | awk -F '/' '{print $(NF)}')
-  cd $repodir && git sparse-checkout set $@
-  mv -f $@ ../package
-  cd .. && rm -rf $repodir
-}
+#function git_sparse_clone() {
+#  branch="$1" repourl="$2" && shift 2
+#  git clone --depth=1 -b $branch --single-branch --filter=blob:none --sparse $repourl
+#  repodir=$(echo $repourl | awk -F '/' '{print $(NF)}')
+#  cd $repodir && git sparse-checkout set $@
+#  mv -f $@ ../package
+#  cd .. && rm -rf $repodir
+#}
 
 # 切换到指定的 OpenSSL 版本
 #pushd package/libs/openssl
@@ -101,5 +101,5 @@ function git_sparse_clone() {
 #git clone --depth=1 https://github.com/chenmozhijin/luci-app-adguardhome package/luci-app-adguardhome
 #
 #
-echo 'refresh feeds'
+echo 'refresh feeds'  #install步骤在Yml下一个流程中执行
 ./scripts/feeds update -a
