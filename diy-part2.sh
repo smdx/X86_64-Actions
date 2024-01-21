@@ -103,4 +103,3 @@ function git_sparse_clone() {
 #
 echo 'refresh feeds'
 ./scripts/feeds update -a
-./scripts/feeds install -a
