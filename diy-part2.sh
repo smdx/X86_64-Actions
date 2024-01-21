@@ -42,14 +42,6 @@ sed -i '60a\\nchmod 0755 /etc/init.d/*' package/lean/default-settings/files/zzz-
 sed -i '/customized in this file/a net.core.wmem_max=16777216' package/base-files/files/etc/sysctl.conf
 sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-files/files/etc/sysctl.conf
 
-# 移除要替换的包
-#rm -rf feeds/packages/net/smartdns
-rm -rf feeds/smpackage/smartdns
-rm -rf feeds/smpackage/luci-app-smartdns
-rm -rf feeds/smpackage/adguardhome
-rm -rf feeds/smpackage/luci-app-adguardhome
-rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
-#
 # Git稀疏克隆，只克隆指定目录到本地
 #function git_sparse_clone() {
 #  branch="$1" repourl="$2" && shift 2
@@ -99,7 +91,3 @@ rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftabl
 #
 # AdguardHome
 #git clone --depth=1 https://github.com/chenmozhijin/luci-app-adguardhome package/luci-app-adguardhome
-#
-#
-echo 'refresh feeds'  #install步骤在Yml下一个流程中执行
-./scripts/feeds update -a
