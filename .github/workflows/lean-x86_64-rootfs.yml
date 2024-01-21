@@ -95,26 +95,16 @@ jobs:
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
     - name: Update feeds
-      run: cd openwrt && ./scripts/feeds update -a
-
-    - name: Install feeds
-      run: cd openwrt && ./scripts/feeds install -a
-
-    - name: Load custom configuration
       run: |
-        [ -e files ] && mv files openwrt/files
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        chmod +x $GITHUB_WORKSPACE/scripts/*.sh
-        chmod +x $DIY_P2_SH
         cd openwrt
-        chmod -R 755 files
-        chmod 600 files/etc/config/ttyd
-        chmod 600 files/etc/config/uhttpd
-        chmod 644 files/lib/preinit/99_firewall_lxc_workaround
-        chmod 644 files/usr/lib/lua/luci/view/wrtbwmon/wrtbwmon.htm
-        chmod 644 files/www/luci-static/wrtbwmon/wrtbwmon.js     
-        $GITHUB_WORKSPACE/scripts/conntrack.sh
-        $GITHUB_WORKSPACE/$DIY_P2_SH
+        ./scripts/feeds update -a
+        # 移除要替换的包
+        #rm -rf feeds/packages/net/smartdns
+        rm -rf feeds/smpackage/smartdns
+        rm -rf feeds/smpackage/luci-app-smartdns
+        rm -rf feeds/smpackage/adguardhome
+        rm -rf feeds/smpackage/luci-app-adguardhome
+        rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
 
     - name: Update SmartDNS
       run: |
@@ -135,8 +125,25 @@ jobs:
         mv $WORKINGDIR/luci-app-smartdns-${LUCIBRANCH}/* $WORKINGDIR/
         rmdir $WORKINGDIR/luci-app-smartdns-${LUCIBRANCH}
         rm $WORKINGDIR/${LUCIBRANCH}.zip
-        echo 'Install feeds'
-        cd openwrt && ./scripts/feeds install -a
+        
+    - name: Install feeds
+      run: cd openwrt && ./scripts/feeds install -a
+
+    - name: Load custom configuration
+      run: |
+        [ -e files ] && mv files openwrt/files
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        chmod +x $GITHUB_WORKSPACE/scripts/*.sh
+        chmod +x $DIY_P2_SH
+        cd openwrt
+        chmod -R 755 files
+        chmod 600 files/etc/config/ttyd
+        chmod 600 files/etc/config/uhttpd
+        chmod 644 files/lib/preinit/99_firewall_lxc_workaround
+        chmod 644 files/usr/lib/lua/luci/view/wrtbwmon/wrtbwmon.htm
+        chmod 644 files/www/luci-static/wrtbwmon/wrtbwmon.js     
+        $GITHUB_WORKSPACE/scripts/conntrack.sh
+        $GITHUB_WORKSPACE/$DIY_P2_SH
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
