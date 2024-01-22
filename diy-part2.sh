@@ -53,11 +53,11 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 #}
 
 # 移除要替换的包
-rm -rf feeds/packages/net/smartdns
-rm -rf feeds/smpackage/smartdns
-rm -rf feeds/smpackage/luci-app-smartdns
-rm -rf feeds/smpackage/adguardhome
-rm -rf feeds/smpackage/luci-app-adguardhome
+#rm -rf feeds/packages/net/smartdns
+#rm -rf feeds/smpackage/smartdns
+#rm -rf feeds/smpackage/luci-app-smartdns
+#rm -rf feeds/smpackage/adguardhome
+#rm -rf feeds/smpackage/luci-app-adguardhome
 
 # 切换到指定的 OpenSSL 版本
 #pushd package/libs/openssl
@@ -93,8 +93,8 @@ rm -rf feeds/smpackage/luci-app-adguardhome
 # git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
 #
 # Smartdns
-git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns package/luci-app-smartdns
-git clone --depth=1 https://github.com/pymumu/smartdns package/smartdns
+#git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns package/luci-app-smartdns
+#git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/smartdns
 #
 # AdguardHome
 #git clone --depth=1 https://github.com/chenmozhijin/luci-app-adguardhome package/luci-app-adguardhome
