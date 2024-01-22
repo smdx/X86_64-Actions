@@ -101,26 +101,6 @@ jobs:
         chmod +x $GITHUB_WORKSPACE/scripts/Del-Packages.sh
         $GITHUB_WORKSPACE/scripts/Del-Packages.sh
         
-    - name: Update SmartDNS
-      run: |
-        WORKINGDIR="$GITHUB_WORKSPACE/openwrt/feeds/packages/net/smartdns"
-        mkdir $WORKINGDIR -p
-        rm $WORKINGDIR/* -fr
-        curl -s -L --retry 6 https://github.com/pymumu/smartdns/archive/master.zip -o $WORKINGDIR/master.zip
-        unzip $WORKINGDIR/master.zip -d $WORKINGDIR
-        mv $WORKINGDIR/smartdns-master/* $WORKINGDIR/
-        rmdir $WORKINGDIR/smartdns-master
-        rm $WORKINGDIR/master.zip
-        LUCIBRANCH="lede"
-        WORKINGDIR="$GITHUB_WORKSPACE/openwrt/feeds/luci/applications/luci-app-smartdns"
-        mkdir $WORKINGDIR -p
-        rm $WORKINGDIR/* -fr
-        curl -s -L --retry 6 https://github.com/pymumu/luci-app-smartdns/archive/${LUCIBRANCH}.zip -o $WORKINGDIR/${LUCIBRANCH}.zip
-        unzip $WORKINGDIR/${LUCIBRANCH}.zip -d $WORKINGDIR
-        mv $WORKINGDIR/luci-app-smartdns-${LUCIBRANCH}/* $WORKINGDIR/
-        rmdir $WORKINGDIR/luci-app-smartdns-${LUCIBRANCH}
-        rm $WORKINGDIR/${LUCIBRANCH}.zip
-        
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
 
