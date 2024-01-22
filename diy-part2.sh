@@ -53,12 +53,14 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 #}
 
 # 移除要替换的包
-#rm -rf feeds/packages/net/smartdns
+rm -rf feeds/packages/net/smartdns
+rm -rf feeds/luci/applications/luci-app-smartdns
 #rm -rf feeds/smpackage/smartdns
 #rm -rf feeds/smpackage/luci-app-smartdns
 #rm -rf feeds/smpackage/adguardhome
 #rm -rf feeds/smpackage/luci-app-adguardhome
-
+rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+        
 # 切换到指定的 OpenSSL 版本
 #pushd package/libs/openssl
 #git checkout 4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0
@@ -98,3 +100,7 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 #
 # AdguardHome
 #git clone --depth=1 https://github.com/chenmozhijin/luci-app-adguardhome package/luci-app-adguardhome
+
+echo 'refresh feeds'
+./scripts/feeds update -a
+./scripts/feeds install -a
