@@ -106,7 +106,7 @@ jobs:
         WORKINGDIR="$GITHUB_WORKSPACE/openwrt/feeds/packages/net/smartdns"
         mkdir $WORKINGDIR -p
         rm $WORKINGDIR/* -fr
-        curl -s -L --retry 6 https://github.com/pymumu/openwrt-smartdns/archive/master.zip -o $WORKINGDIR/master.zip
+        curl -s -L --retry 6 https://github.com/pymumu/smartdns/archive/master.zip -o $WORKINGDIR/master.zip
         unzip $WORKINGDIR/master.zip -d $WORKINGDIR
         mv $WORKINGDIR/openwrt-smartdns-master/* $WORKINGDIR/
         rmdir $WORKINGDIR/openwrt-smartdns-master
