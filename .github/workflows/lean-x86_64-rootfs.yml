@@ -95,12 +95,8 @@ jobs:
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
     - name: Update feeds
-      run: |
-        cd openwrt
-        ./scripts/feeds update -a
-        rm -rf feeds/packages/net/smartdns
-        rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
-        
+      run: cd openwrt && ./scripts/feeds update -a
+      
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
 
