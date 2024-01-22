@@ -101,6 +101,6 @@ rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftabl
 # AdguardHome
 #git clone --depth=1 https://github.com/chenmozhijin/luci-app-adguardhome package/luci-app-adguardhome
 
-echo 'refresh feeds'
-./scripts/feeds update -a
-./scripts/feeds install -a
+#echo 'refresh feeds'
+#./scripts/feeds update -a
+#./scripts/feeds install -a
