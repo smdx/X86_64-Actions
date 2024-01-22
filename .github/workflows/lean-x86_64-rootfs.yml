@@ -108,8 +108,8 @@ jobs:
         rm $WORKINGDIR/* -fr
         curl -s -L --retry 6 https://github.com/pymumu/smartdns/archive/master.zip -o $WORKINGDIR/master.zip
         unzip $WORKINGDIR/master.zip -d $WORKINGDIR
-        mv $WORKINGDIR/openwrt-smartdns-master/* $WORKINGDIR/
-        rmdir $WORKINGDIR/openwrt-smartdns-master
+        mv $WORKINGDIR/smartdns-master/* $WORKINGDIR/
+        rmdir $WORKINGDIR/smartdns-master
         rm $WORKINGDIR/master.zip
         LUCIBRANCH="lede"
         WORKINGDIR="$GITHUB_WORKSPACE/openwrt/feeds/luci/applications/luci-app-smartdns"
