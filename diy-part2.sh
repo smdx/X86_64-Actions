@@ -53,10 +53,10 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 #}
 
 # 移除要替换的包
-rm -rf feeds/packages/net/smartdns
-rm -rf feeds/luci/applications/luci-app-smartdns
-rm -rf feeds/smpackage/smartdns
-rm -rf feeds/smpackage/luci-app-smartdns
+#rm -rf feeds/packages/net/smartdns
+#rm -rf feeds/luci/applications/luci-app-smartdns
+#rm -rf feeds/smpackage/smartdns
+#rm -rf feeds/smpackage/luci-app-smartdns
 #rm -rf feeds/smpackage/adguardhome
 #rm -rf feeds/smpackage/luci-app-adguardhome
 rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
@@ -95,8 +95,8 @@ rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftabl
 # git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
 #
 # Smartdns
-git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
-git clone https://github.com/pymumu/smartdns.git package/smartdns
+#git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
+#git clone https://github.com/pymumu/smartdns.git package/smartdns
 #
 # AdguardHome
 #git clone --depth=1 https://github.com/chenmozhijin/luci-app-adguardhome package/luci-app-adguardhome
