@@ -98,6 +98,7 @@ jobs:
       run: |
         cd openwrt
         ./scripts/feeds update -a
+        rm -rf feeds/packages/net/smartdns
         rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
         
     - name: Install feeds
