@@ -98,7 +98,9 @@ jobs:
       run: cd openwrt && ./scripts/feeds update -a
       
     - name: Install feeds
-      run: cd openwrt && ./scripts/feeds install -a
+      run: |
+        dos2unix $GITHUB_WORKSPACE/openwrt/feeds/small/sing-box/files/sing-box.init
+        cd openwrt && ./scripts/feeds install -a
 
     - name: Load custom configuration
       run: |
@@ -114,7 +116,6 @@ jobs:
         chmod 644 files/usr/lib/lua/luci/view/wrtbwmon/wrtbwmon.htm
         chmod 644 files/www/luci-static/wrtbwmon/wrtbwmon.js
         patch -p1 < "${GITHUB_WORKSPACE}/patches/sysctl.patch"
-        dos2unix $GITHUB_WORKSPACE/openwrt/feeds/small/sing-box/files/sing-box.init
         $GITHUB_WORKSPACE/scripts/conntrack.sh
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
