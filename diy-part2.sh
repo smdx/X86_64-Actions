@@ -60,11 +60,7 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 #rm -rf feeds/smpackage/adguardhome
 #rm -rf feeds/smpackage/luci-app-adguardhome
 rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
-        
-# 切换到指定的 OpenSSL 版本
-#pushd package/libs/openssl
-#git checkout 4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0
-#popd
+     
 #
 # 添加额外非必须软件包
 #
@@ -100,6 +96,17 @@ rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftabl
 #
 # AdguardHome
 #git clone --depth=1 https://github.com/chenmozhijin/luci-app-adguardhome package/luci-app-adguardhome
+
+# 个别插件切换到指定的版本
+# OpenSSL
+#pushd package/libs/openssl
+#git checkout 4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0
+#popd
+#
+# curl
+pushd package/net/curl
+git checkout 6501290c17fb2c65e0fb589da94d121ff89e7d5e
+popd
 
 #echo 'refresh feeds'
 #./scripts/feeds update -a
