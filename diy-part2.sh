@@ -61,11 +61,17 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 #rm -rf feeds/smpackage/luci-app-adguardhome
 rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
         
-# 切换到指定的 OpenSSL 版本
+# 插件切换到指定版本 
+# OpenSSL
 #pushd package/libs/openssl
 #git checkout 4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0
 #popd
 #
+# curl
+sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=8.5.0/g' feeds/packages/net/curl/Makefile
+sed -i 's/PKG_HASH:=.*/PKG_HASH:=ce4b6a6655431147624aaf582632a36fe1ade262d5fab385c60f78942dd8d87b/g' feeds/packages/net/curl/Makefile
+sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/net/curl/Makefile
+
 # 添加额外非必须软件包
 #
 # git clone https://github.com/linkease/istore.git package/istore
