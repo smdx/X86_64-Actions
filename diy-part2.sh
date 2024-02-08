@@ -104,7 +104,7 @@ rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftabl
 #popd
 #
 # curl
-pushd packages/tree/master/net/curl
+pushd packages/net/curl
 git checkout 986bdbcc1a0773434f04339d5ddee79da39fd948
 popd
 
