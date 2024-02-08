@@ -105,7 +105,7 @@ rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftabl
 #
 # curl
 pushd feeds/packages/net/curl
-git checkout 986bdbcc1a0773434f04339d5ddee79da39fd948
+git checkout ce4b6a6655431147624aaf582632a36fe1ade262d5fab385c60f78942dd8d87b
 popd
 
 #echo 'refresh feeds'
