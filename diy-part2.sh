@@ -105,6 +105,7 @@ rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftabl
 #
 # curl
 pushd package/net/curl
+git remote set-url origin https://github.com/openwrt/packages
 git checkout 6501290c17fb2c65e0fb589da94d121ff89e7d5e
 popd
 
