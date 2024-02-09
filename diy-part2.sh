@@ -59,7 +59,7 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 #rm -rf feeds/smpackage/luci-app-smartdns
 #rm -rf feeds/smpackage/adguardhome
 #rm -rf feeds/smpackage/luci-app-adguardhome
-rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+#rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
         
 # 插件切换到指定版本 
 # OpenSSL
