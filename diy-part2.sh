@@ -53,6 +53,7 @@ sed -i '/customized in this file/a net.core.rmem_max=16777216' package/base-file
 #}
 
 # 移除要替换的包
+rm -rf feeds/packages/net/adguardhome
 #rm -rf feeds/packages/net/smartdns
 #rm -rf feeds/luci/applications/luci-app-smartdns
 #rm -rf feeds/smpackage/smartdns
