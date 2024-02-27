@@ -16,6 +16,9 @@
 
 sed -i '1isrc-git passwall https://github.com/xiaorouji/openwrt-passwall;luci-smartdns-dev'  feeds.conf.default
 sed -i '2isrc-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
-sed -i '3isrc-git small https://github.com/kenzok8/small' feeds.conf.default
+sed -i '3isrc-git helloworld https://github.com/sbwml/openwrt_helloworld' feeds.conf.default
+rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
+
+#sed -i '3isrc-git small https://github.com/kenzok8/small' feeds.conf.default
 # echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
 #echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall;luci-smartdns-dev' >>feeds.conf.default
