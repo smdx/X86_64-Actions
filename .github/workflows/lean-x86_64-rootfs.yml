@@ -100,7 +100,6 @@ jobs:
       
     - name: Install feeds
       run: |
-        dos2unix $GITHUB_WORKSPACE/openwrt/feeds/small/sing-box/files/sing-box.init
         cd openwrt && ./scripts/feeds install -a
 
     - name: Load custom configuration
