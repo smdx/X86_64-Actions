@@ -55,7 +55,8 @@ sed -i '60a\\nchmod 0755 /etc/init.d/*' package/lean/default-settings/files/zzz-
 #}
 
 # 移除要替换的包
-rm -rf feeds/packages/net/adguardhome
+rm -rf feeds/packages/net/{v2ray-geodata,mosdns,smartdns,adguardhome}
+#rm -rf feeds/packages/net/adguardhome
 #rm -rf feeds/packages/net/smartdns
 #rm -rf feeds/luci/applications/luci-app-smartdns
 #rm -rf feeds/smpackage/smartdns
