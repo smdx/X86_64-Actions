@@ -182,6 +182,7 @@ jobs:
         find -name "*feeds.buildinfo*" | xargs -i mv -f {} packages
         find -name "*version.buildinfo*" | xargs -i mv -f {} packages
         find -name "*kernel.bin*" | xargs -i mv -f {} packages
+        find -name "*rootfs.img.gz*" | xargs -i mv -f {} packages
         find -name "*generic.manifest*" | xargs -i mv -f {} packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
