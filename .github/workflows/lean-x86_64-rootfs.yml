@@ -60,12 +60,7 @@ jobs:
         
     - name: Checkout
       uses: actions/checkout@main
-      
-    - name: Disk space
-      run: |
-           echo "Free space:"
-           df -h
-           
+       
     - name: Check server configuration
       run: |
         echo "警告⚠"
@@ -182,7 +177,12 @@ jobs:
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         cd openwrt/bin/targets/*/*
-        rm -rf packages
+        rm -rf packages && mkdir packages
+        find -name "*profiles.json*" | xargs -i mv -f {} packages
+        find -name "*feeds.buildinfo*" | xargs -i mv -f {} packages
+        find -name "*version.buildinfo*" | xargs -i mv -f {} packages
+        find -name "*kernel.bin*" | xargs -i mv -f {} packages
+        find -name "*generic.manifest*" | xargs -i mv -f {} packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
