@@ -180,6 +180,7 @@ jobs:
         rm -rf packages && mkdir packages
         find -name "*profiles.json*" | xargs -i mv -f {} packages
         find -name "*feeds.buildinfo*" | xargs -i mv -f {} packages
+        find -name "*config.buildinfo*" | xargs -i mv -f {} packages
         find -name "*version.buildinfo*" | xargs -i mv -f {} packages
         find -name "*kernel.bin*" | xargs -i mv -f {} packages
         find -name "*rootfs.img.gz*" | xargs -i mv -f {} packages
