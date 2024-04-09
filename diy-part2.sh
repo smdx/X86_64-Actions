@@ -38,6 +38,9 @@ sed -i '46a echo '\''iptables -t raw -A PREROUTING -p tcp --dport 9099 -j CT --h
 #防止init.d目录下权限问题
 sed -i '60a\\nchmod 0755 /etc/init.d/*' package/lean/default-settings/files/zzz-default-settings
 
+#PVE VirtIO半虚拟网卡状态页显示半双工修改
+sed -i '/exit 0/i ethtool -s eth0 speed 2500 duplex full\nethtool -s eth1 speed 2500 duplex full' package/base-files/files/etc/rc.local
+
 #nlbwmon 修复log警报
 #sed -i '/customized in this file/a net.core.rmem_default=16777216' package/base-files/files/etc/sysctl.conf
 #sed -i '/customized in this file/a net.core.wmem_default=16777216' package/base-files/files/etc/sysctl.conf
