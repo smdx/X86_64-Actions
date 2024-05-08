@@ -14,10 +14,9 @@
 
 # Add a feed source
 
-sed -i '1isrc-git passwall https://github.com/xiaorouji/openwrt-passwall;luci-smartdns-dev'  feeds.conf.default
-sed -i '2isrc-git mosdns https://github.com/sbwml/luci-app-mosdns'  feeds.conf.default
-sed -i '3isrc-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
-sed -i '4isrc-git helloworld https://github.com/sbwml/openwrt_helloworld' feeds.conf.default
+sed -i '1isrc-git mosdns https://github.com/sbwml/luci-app-mosdns'  feeds.conf.default
+sed -i '2isrc-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
+sed -i '3isrc-git helloworld https://github.com/sbwml/openwrt_helloworld' feeds.conf.default
 
 #sed -i '3isrc-git small https://github.com/kenzok8/small' feeds.conf.default
 # echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
