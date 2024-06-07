@@ -131,6 +131,7 @@ jobs:
         chmod 644 files/lib/preinit/99_firewall_lxc_workaround
         chmod 644 files/usr/lib/lua/luci/view/wrtbwmon/wrtbwmon.htm
         chmod 644 files/www/luci-static/wrtbwmon/wrtbwmon.js
+        dos2unix openwrt/feeds/small/sing-box/files/sing-box.init
         patch -p1 < "${GITHUB_WORKSPACE}/patches/sysctl.patch"
         $GITHUB_WORKSPACE/scripts/conntrack.sh
         $GITHUB_WORKSPACE/$DIY_P2_SH
