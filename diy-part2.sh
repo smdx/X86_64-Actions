@@ -58,22 +58,21 @@ sed -i '/exit 0/i ethtool -s eth0 speed 2500 duplex full\nethtool -s eth1 speed 
 #}
 
 # 移除要替换的包
-rm -rf feeds/packages/net/{v2ray-geodata,mosdns,smartdns,adguardhome}
-#rm -rf feeds/packages/net/adguardhome
-#rm -rf feeds/packages/net/smartdns
-#rm -rf feeds/luci/applications/luci-app-smartdns
-#rm -rf feeds/smpackage/smartdns
-#rm -rf feeds/smpackage/luci-app-smartdns
-#rm -rf feeds/smpackage/adguardhome
-#rm -rf feeds/smpackage/luci-app-adguardhome
-#rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
-        
+rm -rf feeds/luci/applications/luci-app-mosdns
+rm -rf feeds/packages/net/{alist,adguardhome,mosdns,xray*,v2ray*,v2ray*,sing*,smartdns}
+rm -rf feeds/packages/utils/v2dat
+rm -rf feeds/packages/lang/golang
+
+
 # 插件切换到指定版本 
+# Golang
+git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
+
 # OpenSSL
 #pushd package/libs/openssl
 #git checkout 4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0
 #popd
-#
+
 # curl
 #sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=8.5.0/g' feeds/packages/net/curl/Makefile
 #sed -i 's/PKG_HASH:=.*/PKG_HASH:=ce4b6a6655431147624aaf582632a36fe1ade262d5fab385c60f78942dd8d87b/g' feeds/packages/net/curl/Makefile
@@ -115,24 +114,6 @@ rm -rf feeds/packages/net/{v2ray-geodata,mosdns,smartdns,adguardhome}
 # Smartdns
 #git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 #git clone https://github.com/pymumu/smartdns.git package/smartdns
-#
-# AdguardHome
-#git clone --depth=1 https://github.com/chenmozhijin/luci-app-adguardhome package/luci-app-adguardhome
-#sed -i '/^\t\$(call Build\/Prepare\/Default)/a \\tif [ -d "$(BUILD_DIR)\/AdGuardHome-$(PKG_VERSION)" ]; then \\\n\t\tmv "$(BUILD_DIR)\/AdGuardHome-$(PKG_VERSION)\/"* "$(BUILD_DIR)\/adguardhome-$(PKG_VERSION)\/"; \\\n\tfi' package/feeds/kenzo/adguardhome/Makefile
-#sed -i '/gzip -dc $(DL_DIR)\/$(FRONTEND_FILE) | $(HOST_TAR) -C $(PKG_BUILD_DIR)\/ $(TAR_OPTIONS)/a \\t( cd "$(BUILD_DIR)\/adguardhome-$(PKG_VERSION)"; go mod tidy )' package/feeds/kenzo/adguardhome/Makefile
-
-# drop mosdns and v2ray-geodata packages that come with the source
-find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
-find ./ | grep Makefile | grep mosdns | xargs rm -f
-
-git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
-git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
-# 用openwrt_helloworld仓库的Makefile替换
-wget -O package/v2ray-geodata/Makefile https://raw.githubusercontent.com/sbwml/openwrt_helloworld/v5/v2ray-geodata/Makefile
-
-# Golang
-rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
 
 #echo 'refresh feeds'
 #./scripts/feeds update -a
