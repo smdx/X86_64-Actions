@@ -63,10 +63,15 @@ rm -rf feeds/packages/net/{alist,adguardhome,mosdns,xray*,v2ray*,v2ray*,sing*,sm
 rm -rf feeds/packages/utils/v2dat
 rm -rf feeds/packages/lang/golang
 
-
 # 插件切换到指定版本 
 # Golang
 git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
+
+#改用mosdns源码：
+rm -rf feeds/small/luci-app-mosdns
+rm -rf feeds/small/v2ray-geodata
+git clone https://github.com/sbwml/luci-app-mosdns -b v5-lua package/mosdns
+git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 
 # OpenSSL
 #pushd package/libs/openssl
