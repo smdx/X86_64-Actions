@@ -57,36 +57,52 @@ sed -i '/exit 0/i ethtool -s eth0 speed 2500 duplex full\nethtool -s eth1 speed 
 #  cd .. && rm -rf $repodir
 #}
 
+
 # 移除要替换的包
 rm -rf feeds/luci/applications/luci-app-mosdns
 rm -rf feeds/packages/net/{alist,adguardhome,mosdns,xray*,v2ray*,v2ray*,sing*,smartdns}
 rm -rf feeds/packages/utils/v2dat
 rm -rf feeds/packages/lang/golang
 
-# 插件切换到指定版本 
+# 插件切换到指定版本
+echo "开始执行切换插件到指定版本"
 # Golang
 git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
+echo "Golang 插件切换完成"
 
-#改用mosdns源码：
+# IPSet
+rm -rf package/network/utils/ipset
+wget -P package/network/utils/ipset/ https://raw.githubusercontent.com/openwrt/openwrt/47370eb9ba2cf7021ac2bb208136c52ee85b6ba1/package/network/utils/ipset/Makefile
+wget -P package/network/utils/ipset/patches/ https://raw.githubusercontent.com/openwrt/openwrt/47370eb9ba2cf7021ac2bb208136c52ee85b6ba1/package/network/utils/ipset/patches/0001-include-libgen.h-for-basename.patch
+echo "IPSet 插件切换完成"
+
+#改用MosDNS源码：
 rm -rf feeds/small/luci-app-mosdns
 rm -rf feeds/small/v2ray-geodata
 git clone https://github.com/sbwml/luci-app-mosdns -b v5-lua package/mosdns
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+echo "MosDNS 插件切换完成"
 
 # OpenSSL
 #pushd package/libs/openssl
 #git checkout 4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0
 #popd
+#echo "OpenSSL 插件切换完成"
 
-# curl
+# Curl
 #sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=8.5.0/g' feeds/packages/net/curl/Makefile
 #sed -i 's/PKG_HASH:=.*/PKG_HASH:=ce4b6a6655431147624aaf582632a36fe1ade262d5fab385c60f78942dd8d87b/g' feeds/packages/net/curl/Makefile
 #sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/net/curl/Makefile
+#echo "Curl 插件切换完成"
 
-# gn
+# GN
 #sed -i 's/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=2023-11-17/g' feeds/small/gn/Makefile
 #sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=7367b0df0a0aa25440303998d54045bda73935a5/g' feeds/small/gn/Makefile
 #sed -i 's/PKG_MIRROR_HASH:=.*/PKG_MIRROR_HASH:=c11eb62d257f9e41d29139d66e94d3798b013a650dd493ae8759c57e2e64cfd1/g' feeds/small/gn/Makefile
+#echo "GN 插件切换完成"
+
+echo "插件切换操作执行完毕"
+
 
 # 添加额外非必须软件包
 #
