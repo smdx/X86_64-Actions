@@ -20,8 +20,8 @@ on:
         default: 'false'
 
 # 每周三 执行编译
-  schedule:
-    - cron: '30 0 * * 3'
+#  schedule:
+#    - cron: '30 0 * * 3'
 
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
