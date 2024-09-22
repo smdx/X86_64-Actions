@@ -116,20 +116,6 @@ jobs:
         cd openwrt
         sed -i 's/ +libopenssl-legacy//g' feeds/small/shadowsocksr-libev/Makefile
         sed -i 's/ +kmod-nft-tproxy//g' feeds/small/v2raya/Makefile
-        rm -rf feeds/packages/net/miniupnpd
-        wget -P feeds/packages/net/miniupnpd/ https://raw.githubusercontent.com/coolsnowwolf/packages/master/net/miniupnpd/Makefile
-        wget -P feeds/packages/net/miniupnpd/patches/ https://raw.githubusercontent.com/coolsnowwolf/packages/master/net/miniupnpd/patches/100-no-daemon.patch
-        wget -P feeds/packages/net/miniupnpd/patches/ https://raw.githubusercontent.com/coolsnowwolf/packages/master/net/miniupnpd/patches/101-no-ssl-uuid.patch
-        wget -P feeds/packages/net/miniupnpd/patches/ https://raw.githubusercontent.com/coolsnowwolf/packages/master/net/miniupnpd/patches/102-ipv6-ext-port.patch
-        wget -P feeds/packages/net/miniupnpd/patches/ https://raw.githubusercontent.com/coolsnowwolf/packages/master/net/miniupnpd/patches/103-no-ipv6-autodetection.patch
-        wget -P feeds/packages/net/miniupnpd/patches/ https://raw.githubusercontent.com/coolsnowwolf/packages/master/net/miniupnpd/patches/104-always-libuuid.patch
-        wget -P feeds/packages/net/miniupnpd/patches/ https://raw.githubusercontent.com/coolsnowwolf/packages/master/net/miniupnpd/patches/105-build-with-kernel-5.4.patch
-        wget -P feeds/packages/net/miniupnpd/patches/ https://raw.githubusercontent.com/coolsnowwolf/packages/master/net/miniupnpd/patches/106-spam-syslog-ignoring.patch
-        wget -P feeds/packages/net/miniupnpd/files/ https://raw.githubusercontent.com/coolsnowwolf/packages/master/net/miniupnpd/files/firewall.include
-        wget -P feeds/packages/net/miniupnpd/files/ https://raw.githubusercontent.com/coolsnowwolf/packages/master/net/miniupnpd/files/miniupnpd.defaults
-        wget -P feeds/packages/net/miniupnpd/files/ https://raw.githubusercontent.com/coolsnowwolf/packages/master/net/miniupnpd/files/miniupnpd.hotplug
-        wget -P feeds/packages/net/miniupnpd/files/ https://raw.githubusercontent.com/coolsnowwolf/packages/master/net/miniupnpd/files/miniupnpd.init
-        wget -P feeds/packages/net/miniupnpd/files/ https://raw.githubusercontent.com/coolsnowwolf/packages/master/net/miniupnpd/files/upnpd.config
         chmod -R 755 files
         chmod 600 files/etc/config/ttyd
         chmod 600 files/etc/config/uhttpd
