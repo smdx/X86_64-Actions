@@ -64,7 +64,7 @@ cp -f ${GITHUB_WORKSPACE}/patchs/udpxy/Makefile feeds/packages/net/udpxy/
 
 # 移除要替换的包
 rm -rf feeds/luci/applications/luci-app-mosdns
-rm -rf feeds/packages/net/{alist,adguardhome,mosdns,xray*,v2ray*,v2ray*,sing*,smartdns}
+rm -rf feeds/packages/net/{alist,mosdns,xray*,v2ray*,v2ray*,sing*,smartdns}
 rm -rf feeds/packages/utils/v2dat
 rm -rf feeds/packages/lang/golang
 
@@ -109,6 +109,17 @@ echo "Miniupnpd 插件切换完成"
 #sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=7367b0df0a0aa25440303998d54045bda73935a5/g' feeds/small/gn/Makefile
 #sed -i 's/PKG_MIRROR_HASH:=.*/PKG_MIRROR_HASH:=c11eb62d257f9e41d29139d66e94d3798b013a650dd493ae8759c57e2e64cfd1/g' feeds/small/gn/Makefile
 #echo "GN 插件切换完成"
+
+# AdGuardHome Beta - Fix build with go17.x
+rm -rf feeds/kenzo/adguardhome
+rm -rf feeds/kenzo/luci-app-adguardhome
+pushd feeds/packages
+adguardhome_version=`curl -s "https://api.github.com/repos/AdguardTeam/AdGuardHome/releases" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g' | awk -F "v" '{print $2}'`
+sed -ri "s/(PKG_VERSION:=)[^\"]*/\1$adguardhome_version/" net/adguardhome/Makefile
+sed -i 's/release/beta/g' net/adguardhome/Makefile
+sed -i 's/.*PKG_MIRROR_HASH.*/#&/' net/adguardhome/Makefile
+sed -i '/init/d' net/adguardhome/Makefile
+popd
 
 echo "插件切换操作执行完毕"
 
