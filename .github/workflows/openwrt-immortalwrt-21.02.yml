@@ -26,10 +26,11 @@ on:
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: openwrt-21.02
-  FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: openwrt-immortalwrt-21.02.config
-  DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: diy-part2.sh
+  FILES: ImmortalWRT/files
+  FEEDS_CONF: ImmortalWRT/feeds.conf.default
+  CONFIG_FILE: ImmortalWRT/openwrt-immortalwrt-21.02.config
+  DIY_P1_SH: ImmortalWRT/diy-part1.sh
+  DIY_P2_SH: ImmortalWRT/diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
@@ -109,22 +110,15 @@ jobs:
 
     - name: Load custom configuration
       run: |
-        [ -e files ] && mv files openwrt/files
+        #[ -e files ] && mv files openwrt/files
+        [ -e $FILES ] && mv $FILES openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $GITHUB_WORKSPACE/scripts/*.sh
         chmod +x $DIY_P2_SH
-        source ${GITHUB_WORKSPACE}/scripts/function.sh
         cd openwrt
         sed -i 's/ +libopenssl-legacy//g' feeds/small/shadowsocksr-libev/Makefile
         sed -i 's/ +kmod-nft-tproxy//g' feeds/small/v2raya/Makefile
-        rm -rf feeds/packages/net/miniupnpd
-        merge_folder master https://github.com/coolsnowwolf/packages feeds/packages/net net/miniupnpd
-        chmod -R 755 files
-        chmod 600 files/etc/config/ttyd
-        chmod 600 files/etc/config/uhttpd
-        chmod 644 files/lib/preinit/99_firewall_lxc_workaround
-        chmod 644 files/usr/lib/lua/luci/view/wrtbwmon/wrtbwmon.htm
-        chmod 644 files/www/luci-static/wrtbwmon/wrtbwmon.js
+        chmod -R 755 ImmortalWRT/files
         patch -p1 < "${GITHUB_WORKSPACE}/patches/sysctl.patch"
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
