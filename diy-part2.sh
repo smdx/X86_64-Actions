@@ -98,9 +98,9 @@ git clone https://github.com/sbwml/luci-app-mosdns -b v5-lua package/mosdns
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 echo "MosDNS 插件切换完成"
 
-#替换miniupnpd
-rm -rf feeds/packages/net/miniupnpd
-merge_folder master https://github.com/coolsnowwolf/packages feeds/packages/net net/miniupnpd
+#替换miniupnpd(ImmortalWRT源码用)
+#rm -rf feeds/packages/net/miniupnpd
+#merge_folder master https://github.com/coolsnowwolf/packages feeds/packages/net net/miniupnpd
         
 # OpenSSL
 #pushd package/libs/openssl
