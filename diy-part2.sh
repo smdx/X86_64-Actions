@@ -8,6 +8,12 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
+#
+echo "开始 DIY2 配置……"
+echo "========================="
+
+chmod +x ${GITHUB_WORKSPACE}/scripts/function.sh
+source ${GITHUB_WORKSPACE}/scripts/function.sh
 
 # Modify default IP
 sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
@@ -57,6 +63,15 @@ sed -i '/exit 0/i ethtool -s eth0 speed 2500 duplex full\nethtool -s eth1 speed 
 #  cd .. && rm -rf $repodir
 #}
 
+# MSD组播转换luci
+rm -rf feeds/luci/applications/luci-app-msd_lite
+git clone https://github.com/lwb1978/luci-app-msd_lite package/luci-app-msd_lite
+
+# 替换udpxy为修改版，解决组播源数据有重复数据包导致的花屏和马赛克问题
+rm -rf feeds/packages/net/udpxy/Makefile
+cp -f ${GITHUB_WORKSPACE}/patchs/udpxy/Makefile feeds/packages/net/udpxy/
+# 修改 udpxy 菜单名称为大写
+sed -i 's#_(\"udpxy\")#_(\"UDPXY\")#g' feeds/luci/applications/luci-app-udpxy/luasrc/controller/udpxy.lua
 
 # 移除要替换的包
 rm -rf feeds/luci/applications/luci-app-mosdns
@@ -118,7 +133,13 @@ echo "插件切换操作执行完毕"
 # git clone https://github.com/sirpdboy/luci-app-poweroffdevice.git package/luci-app-poweroffdevice
 # git clone https://github.com/sirpdboy/luci-app-autotimeset.git package/luci-app-autotimeset
 
-# themes添加（svn co 命令意思：指定版本如https://github）
+# 添加主题
+# argon
+rm -rf feeds/kenzo/luci-app-argon-config
+rm -rf feeds/kenzo/luci-theme-argon
+rm -rf feeds/luci/themes/luci-theme-argon
+merge_folder main https://github.com/sbwml/luci-theme-argon package/openwrt-packages luci-app-argon-config luci-theme-argon
+#
 # git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git package/luci-theme-infinityfreedom
 # git clone https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
 # git clone https://github.com/openwrt-develop/luci-theme-atmaterial.git package/luci-theme-atmaterial
