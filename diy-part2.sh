@@ -98,6 +98,10 @@ git clone https://github.com/sbwml/luci-app-mosdns -b v5-lua package/mosdns
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 echo "MosDNS 插件切换完成"
 
+#替换miniupnpd
+rm -rf feeds/packages/net/miniupnpd
+merge_folder master https://github.com/coolsnowwolf/packages feeds/packages/net net/miniupnpd
+        
 # OpenSSL
 #pushd package/libs/openssl
 #git checkout 4fd8d7b7f8b7752ba8bb06e0d43808d0c5fddde0
