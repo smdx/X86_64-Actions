@@ -204,10 +204,14 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
+        echo "release_tag=$ImmortalWrt-(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         touch release.txt
         [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
+        echo "ImmortalWrt-x86" >> release.txt
+        echo "管理地址：10.0.0.1" >> release.txt
+        echo "默认密码：空" >> release.txt
+        echo "插件清单：AdGuard Home、MosDNS、SmartDNS、Passwall、Passwall2、Store、Wol、MultiSD_Lite、udpxy、UPnP" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Upload firmware to release
