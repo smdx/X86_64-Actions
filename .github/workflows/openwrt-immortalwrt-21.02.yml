@@ -199,7 +199,24 @@ jobs:
         ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
         echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
         echo "url=$(cat wetransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
-
+        
+    - name: Get package versions
+      id: get_versions
+      run: |
+        cd openwrt
+        adguardhome_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' $(find feeds/ -name Makefile | grep adguardhome | head -n 1))
+        mosdns_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' $(find feeds/ -name Makefile | grep mosdns | head -n 1))
+        smartdns_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' feeds/kenzo/luci-app-smartdns/Makefile)
+        passwall_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' feeds/small/luci-app-passwall/Makefile)
+        passwall2_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' feeds/small/luci-app-passwall2/Makefile)
+        store_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' $(find feeds/ -name Makefile | grep store | head -n 1))
+        echo "adguardhome=$adguardhome_version" >> $GITHUB_ENV
+        echo "mosdns=$mosdns_version" >> $GITHUB_ENV
+        echo "smartdns=$smartdns_version" >> $GITHUB_ENV
+        echo "passwall_version=$passwall_version" >> $GITHUB_ENV
+        echo "passwall2_version=$passwall2_version" >> $GITHUB_ENV
+        echo "store=$store_version" >> $GITHUB_ENV
+        
     - name: Generate release tag
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
@@ -212,6 +229,12 @@ jobs:
         echo "管理地址：10.0.0.1" >> release.txt
         echo "默认密码：空" >> release.txt
         echo "插件清单：AdGuard Home、MosDNS、SmartDNS、Passwall、Passwall2、Store、Wol、MultiSD_Lite、udpxy、UPnP" >> release.txt
+        echo "Adguardhome Version: $adguardhome" >> release.txt
+        echo "MosDNS Version: $mosdns" >> release.txt
+        echo "SmartDNS Version: $smartdns_version" >> release.txt
+        echo "Passwall Version: $passwall_version" >> release.txt
+        echo "Passwall2 Version: $passwall2_version" >> release.txt
+        echo "Store Version: $store_version" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Upload firmware to release
