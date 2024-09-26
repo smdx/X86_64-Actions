@@ -201,7 +201,6 @@ jobs:
         echo "url=$(cat wetransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
         
     - name: Get package versions
-      id: get_versions
       run: |
         cd openwrt
         adguardhome_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' $(find feeds/ -name Makefile | grep adguardhome | head -n 1))
