@@ -122,7 +122,6 @@ jobs:
         chmod 600 files/etc/config/ttyd
         patch -p1 < "${GITHUB_WORKSPACE}/patches/sysctl.patch"
         $GITHUB_WORKSPACE/$DIY_P2_SH
-        $GITHUB_WORKSPACE/scripts/PKG_Version_Get.sh
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
@@ -209,8 +208,7 @@ jobs:
         touch release.txt
         [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
-        $GITHUB_WORKSPACE/scripts/PKG_Version_Output.sh
-        sed -i 's/ImmortalWrt-x86/ImmortalWrt-x86-23.05/g' release.txt
+        $GITHUB_WORKSPACE/scripts/Information.sh
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Upload firmware to release

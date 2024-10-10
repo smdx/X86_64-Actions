@@ -209,7 +209,7 @@ jobs:
         touch release.txt
         [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
-        $GITHUB_WORKSPACE/scripts/PKG_Version_Output.sh
+        $GITHUB_WORKSPACE/scripts/Information.sh
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Upload firmware to release
