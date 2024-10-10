@@ -1,12 +1,12 @@
 #!/bin/bash
 # Get Package Versions
-adguardhome_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' feeds/kenzo/adguardhome/Makefile)
-mosdns_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' package/mosdns/mosdns/Makefile)
-smartdns_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' feeds/kenzo/luci-app-smartdns/Makefile)
-passwall_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' feeds/small/luci-app-passwall/Makefile)
-passwall2_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' feeds/small/luci-app-passwall2/Makefile)
-openclash_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' feeds/kenzo/luci-app-openclash/Makefile)
-store_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' feeds/kenzo/luci-app-store/Makefile)
+adguardhome_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' openwrt/feeds/kenzo/adguardhome/Makefile)
+mosdns_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' openwrt/package/mosdns/mosdns/Makefile)
+smartdns_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' openwrt/feeds/kenzo/luci-app-smartdns/Makefile)
+passwall_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' openwrt/feeds/small/luci-app-passwall/Makefile)
+passwall2_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' openwrt/feeds/small/luci-app-passwall2/Makefile)
+openclash_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' openwrt/feeds/kenzo/luci-app-openclash/Makefile)
+store_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' openwrt/feeds/kenzo/luci-app-store/Makefile)
 echo "adguardhome=$adguardhome_version" >> $GITHUB_ENV
 echo "mosdns=$mosdns_version" >> $GITHUB_ENV
 echo "smartdns=$smartdns_version" >> $GITHUB_ENV
@@ -24,11 +24,6 @@ elif [[ $REPO_URL == *"immortalwrt"* ]]; then
     echo "ImmortalWrt-x86" >> release.txt
 fi
 
-# 输出 REPO_BRANCH 信息
-if [ -n "$REPO_BRANCH" ]; then
-    echo "Repository Branch: $REPO_BRANCH" >> release.txt
-fi
-
 # 输出 REPO_BRANCH 信息，首字母大写
 if [ -n "$REPO_BRANCH" ]; then
     # 将首字母转换为大写
@@ -40,9 +35,6 @@ fi
 echo "管理地址：10.0.0.1" >> release.txt
 echo "默认密码：空" >> release.txt
 
-#
-# Package 信息输出
-#
 # 定义需要检查的插件列表
 declare -A plugins
 plugins=(
@@ -74,7 +66,7 @@ while IFS= read -r line; do
             selected_plugins+=("$plugin")
         fi
     done
-done < .config
+done < openwrt/.config
 
 # 插入插件清单到 release.txt
 echo "插件清单：${selected_plugins[*]}" >> release.txt
