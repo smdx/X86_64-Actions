@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: Build Test-immortalwrt
+name: Build Test-immortalwrt-23.05
 
 on:
   repository_dispatch:
@@ -29,8 +29,8 @@ env:
   FILES: ImmortalWRT/files
   FEEDS_CONF: ImmortalWRT/feeds.conf.default
   CONFIG_FILE: ImmortalWRT/openwrt-immortalwrt-23.05.config
-  DIY_P1_SH: ImmortalWRT/diy-part1.sh
-  DIY_P2_SH: ImmortalWRT/diy-part23.sh
+  DIY_P1_SH: ImmortalWRT/diy-part-a23.sh
+  DIY_P2_SH: ImmortalWRT/diy-part-b23.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
