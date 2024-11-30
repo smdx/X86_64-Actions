@@ -129,6 +129,9 @@ echo "DPDK 插件拉取完成"
 
 # luci-app-wrtbwmon
 merge_folder master https://github.com/coolsnowwolf/luci feeds/luci/applications applications/luci-app-wrtbwmon
+sed -i 's/interval: 5,/interval: 1,/' feeds/luci/applications/luci-app-wrtbwmon/htdocs/luci-static/wrtbwmon/wrtbwmon.js
+sed -i 's/<option value="5" selected="selected">5 <%=translate("Seconds")%>/<option value="5">5 <%=translate("Second")%>/' feeds/luci/applications/luci-app-wrtbwmon/luasrc/view/wrtbwmon/wrtbwmon.htm
+sed -i 's/<option value="1">1 <%=translate("Second")%>/<option value="1" selected="selected">1 <%=translate("Second")%>/' feeds/luci/applications/luci-app-wrtbwmon/luasrc/view/wrtbwmon/wrtbwmon.htm
 echo "Wrtbwmon 插件拉取完成"
 
 echo "插件切换操作执行完毕"
