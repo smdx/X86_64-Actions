@@ -128,7 +128,8 @@ echo "Dnsmasq 插件切换完成"
 #echo "GN 插件切换完成"
 
 # DPDK
-merge_commits main https://github.com/k13132/openwrt-dpdk e1329c9da0c06cc2994e92b23cd4d21e3a36ac2e package/new packages/dpdk packages/kmod-amd_iommu_v2 packages/kmod-uio_pci_generic packages/kmod-vfio-pci packages/numactl
+merge_commits main https://github.com/k13132/openwrt-dpdk 0abe11d724cf74a3be22f850e22360fed48c29c2 package/new packages/dpdk packages/kmod-iommu_v2 packages/kmod-uio_pci_generic packages/kmod-vfio-pci packages/numactl
+sed -i 's|include \$(INCLUDE_DIR)/meson.mk|include \$(TOPDIR)/feeds/packages/devel/meson/meson.mk|' package/new/dpdk/Makefile
 sed -i '/^define Package\/libdpdk/,/^endef/ s/\(DEPENDS:=.*\)/\1 +libbpf +libelf/' package/new/dpdk/Makefile
 echo "DPDK 插件拉取完成"
 
