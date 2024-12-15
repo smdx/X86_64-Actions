@@ -98,7 +98,10 @@ rm -rf package/passwall-packages/{chinadns-ng,naiveproxy,shadowsocks-rust,v2ray-
 merge_folder v5 https://github.com/sbwml/openwrt_helloworld package/passwall-packages chinadns-ng naiveproxy shadowsocks-rust v2ray-geodata
 # app
 rm -rf feeds/luci/applications/{luci-app-passwall,luci-app-ssr-libev-server}
-git clone -b luci-smartdns-dev --single-branch https://github.com/lwb1978/openwrt-passwall package/passwall-luci
+rm -rf feeds/small/{luci-app-passwall,luci-app-passwall2}
+merge_folder main https://github.com/xiaorouji/openwrt-passwall package/passwall-packages luci-app-passwall
+merge_folder main https://github.com/xiaorouji/openwrt-passwall2 package/passwall-packages luci-app-passwall2
+# git clone -b luci-smartdns-dev --single-branch https://github.com/lwb1978/openwrt-passwall package/passwall-luci
 # git clone https://github.com/xiaorouji/openwrt-passwall package/passwall-luci
 # ------------------------------------------------------------
 echo "PassWall 插件切换完成"
