@@ -75,13 +75,14 @@ sed -i 's/cheaper = 1/cheaper = 2/g' feeds/packages/net/uwsgi/files-luci-support
 sed -i 's/option timeout 30/option timeout 60/g' package/system/rpcd/files/rpcd.config
 sed -i 's#20) \* 1000#60) \* 1000#g' feeds/luci/modules/luci-base/htdocs/luci-static/resources/rpc.js
 
+### 插件切换到指定版本
+echo "开始执行切换插件到指定版本"
+
 # 移除要替换的包
 rm -rf feeds/luci/applications/luci-app-mosdns
-rm -rf feeds/packages/net/{alist,adguardhome,mosdns,smartdns}
+rm -rf feeds/packages/net/{alist,adguardhome,mosdns,xray*,v2ray*,v2ray*,sing*,smartdns}
 rm -rf feeds/packages/utils/v2dat
 
-# 插件切换到指定版本
-echo "开始执行切换插件到指定版本"
 # Golang 1.23.4
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
@@ -89,9 +90,7 @@ echo "Golang 插件切换完成"
 
 #改用MosDNS源码：
 rm -rf feeds/small/luci-app-mosdns
-rm -rf feeds/small/v2ray-geodata
 git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
-git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 echo "MosDNS 插件切换完成"
 
 #SmartDNS 替换最新源码Makefile
@@ -100,18 +99,12 @@ wget -O feeds/kenzo/smartdns/Makefile https://raw.githubusercontent.com/kenzok8/
 echo "SmartDNS 插件切换完成"
 
 # ------------------PassWall 科学上网--------------------------
-# 移除 openwrt feeds 自带的核心库
-rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box,pdnsd-alt,brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-rust,shadowsocksr-libev,simple-obfs,tcping,trojan,trojan-go,trojan-plus,tuic-client,v2ray-plugin,xray-plugin,gn}
-rm -rf feeds/small/{xray-core,v2ray-core,v2ray-geodata,sing-box,pdnsd-alt,brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-rust,shadowsocksr-libev,simple-obfs,tcping,trojan,trojan-go,trojan-plus,tuic-client,v2ray-plugin,xray-plugin,gn}
-# 核心库
-git clone https://github.com/xiaorouji/openwrt-passwall-packages package/passwall-packages
-rm -rf package/passwall-packages/{chinadns-ng,naiveproxy,shadowsocks-rust,v2ray-geodata}
-merge_folder v5 https://github.com/sbwml/openwrt_helloworld package/passwall-packages chinadns-ng naiveproxy shadowsocks-rust v2ray-geodata
-# app
-rm -rf feeds/luci/applications/{luci-app-passwall,luci-app-ssr-libev-server}
-rm -rf feeds/small/{luci-app-passwall,luci-app-passwall2}
-merge_folder main https://github.com/xiaorouji/openwrt-passwall package/passwall-packages luci-app-passwall
-merge_folder main https://github.com/xiaorouji/openwrt-passwall2 package/passwall-packages luci-app-passwall2
+# 移除 openwrt feeds 自带的app
+rm -rf feeds/luci/applications/luci-app-passwall
+rm -rf feeds/small/luci-app-passwall
+rm -rf feeds/small/luci-app-passwall2
+merge_folder main https://github.com/xiaorouji/openwrt-passwall feeds/small luci-app-passwall
+merge_folder main https://github.com/xiaorouji/openwrt-passwall2 feeds/small luci-app-passwall2
 # git clone -b luci-smartdns-dev --single-branch https://github.com/lwb1978/openwrt-passwall package/passwall-luci
 # git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
 # git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 package/luci-app-passwall2
