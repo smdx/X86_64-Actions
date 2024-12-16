@@ -50,16 +50,22 @@ plugins=(
     ["Passwall"]="luci-app-passwall"
     ["Passwall2"]="luci-app-passwall2"
     ["OpenClash"]="luci-app-openclash"
+    ["MiHomo"]="luci-app-mihomo"
     ["HomeProxy"]="luci-app-homeproxy"
     ["Store"]="luci-app-store"
     ["SQM"]="luci-app-sqm"
+    ["E_QoS"]="luci-app-eqos"
     ["WOL"]="luci-app-wol"
     ["UPnP"]="luci-app-upnp"
+    ["Socat"]="luci-app-socat"
     ["DDNS"]="luci-app-ddns"
-    ["uHTTPd"]="luci-app-uhttpd"
     ["Udpxy"]="luci-app-udpxy"
     ["NatMap"]="luci-app-natmap"
+    ["ZeroTier"]="luci-app-zerotier"
     ["MultiSD_Lite"]="luci-app-msd_lite"
+    ["uHTTPd"]="luci-app-uhttpd"
+    ["USB_Printer"]="luci-app-usb-printer"
+    ["KMS_Services"]="luci-app-vlmcsd"
 )
 
 # 插件状态数组
@@ -100,6 +106,9 @@ for plugin in "${selected_plugins[@]}"; do
             ;;
         "OpenClash")
             echo "OpenClash Version: $openclash" >> release.txt
+            ;;
+        "MiHomo")
+            echo "MiHomo Version: $mihomo" >> release.txt
             ;;
         "Store")
             echo "Store Version: $store" >> release.txt
