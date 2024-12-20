@@ -106,7 +106,7 @@ rm -rf feeds/small/luci-app-passwall2
 merge_folder main https://github.com/xiaorouji/openwrt-passwall feeds/small luci-app-passwall
 merge_folder main https://github.com/xiaorouji/openwrt-passwall2 feeds/small luci-app-passwall2
 # PW New Dnsmasq 防火墙重定向修改为默认关闭
-sed -i 's/local RUN_NEW_DNSMASQ=1/local RUN_NEW_DNSMASQ=0/' feeds/small/luci-app-passwall/root/usr/share/passwall/app.sh
+# sed -i 's/local RUN_NEW_DNSMASQ=1/local RUN_NEW_DNSMASQ=0/' feeds/small/luci-app-passwall/root/usr/share/passwall/app.sh
 #
 # git clone -b luci-smartdns-dev --single-branch https://github.com/lwb1978/openwrt-passwall package/passwall-luci
 # git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
