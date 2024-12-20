@@ -16,6 +16,7 @@ passwall2_release=$(grep -oP 'PKG_RELEASE:=\K[^ ]+' feeds/small/luci-app-passwal
 openclash_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' feeds/small/luci-app-openclash/Makefile)
 openclash_release=$(grep -oP 'PKG_RELEASE:=\K[^ ]+' feeds/small/luci-app-openclash/Makefile)
 mihomo_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' feeds/small/luci-app-mihomo/Makefile)
+mihomo_source=$(grep -oP 'PKG_SOURCE_DATE:=\K[^ ]+' feeds/small/mihomo/Makefile)
 store_version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' feeds/kenzo/luci-app-store/Makefile)
 echo "adguardhome=$adguardhome_version" >> $GITHUB_ENV
 echo "mosdns=${mosdns_version}-${mosdns_release}" >> $GITHUB_ENV
@@ -23,7 +24,7 @@ echo "smartdns=${smartdns_version}-${smartdns_release}" >> $GITHUB_ENV
 echo "passwall_version=${passwall_version}-${passwall_release}" >> $GITHUB_ENV
 echo "passwall2_version=${passwall2_version}-${passwall2_release}" >> $GITHUB_ENV
 echo "openclash=${openclash_version}-${openclash_release}" >> $GITHUB_ENV
-echo "mihomo=$mihomo_version" >> $GITHUB_ENV
+echo "mihomo=${mihomo_version}-Source_${mihomo_source}" >> $GITHUB_ENV
 echo "store=$store_version" >> $GITHUB_ENV
 
 echo "========================="
