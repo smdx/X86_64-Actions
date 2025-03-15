@@ -102,13 +102,7 @@ jobs:
         sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
         gcc --version
         g++ --version
-        
-    - name: Setup ccache
-      run: |
-        sudo apt-get install -y ccache
-        echo "::set-env name=CC::ccache gcc"
-        echo "::set-env name=CXX::ccache g++"
-        
+
     - name: Clone source code
       working-directory: /workdir
       run: |
