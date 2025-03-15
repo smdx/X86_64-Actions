@@ -85,7 +85,7 @@ jobs:
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
         sudo -E apt-get -qq update
         sudo -E apt-get -yqq install $(cat $GITHUB_WORKSPACE/depends-ubuntu-2204)
-        sudo apt install -y clang-13 llvm-13 gcc-13 g++-13
+        sudo apt install -y clang-13 llvm-13
         sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.org/init_build_environment.sh)'
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
@@ -93,6 +93,22 @@ jobs:
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
 
+    - name: Setup GCC 13
+      run: |
+        sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+        sudo apt-get update
+        sudo apt-get install -y gcc-13 g++-13
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100
+        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
+        gcc --version
+        g++ --version
+        
+    - name: Setup ccache
+      run: |
+        sudo apt-get install -y ccache
+        echo "::set-env name=CC::ccache gcc"
+        echo "::set-env name=CXX::ccache g++"
+        
     - name: Clone source code
       working-directory: /workdir
       run: |
