@@ -83,9 +83,11 @@ jobs:
         sudo sh -c 'echo "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-18 main" >> /etc/apt/sources.list'
         sudo sh -c 'echo "deb-src http://apt.llvm.org/noble/ llvm-toolchain-noble-18 main" >> /etc/apt/sources.list'
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-        sudo -E apt-get -qq update
+        sudo apt update -y
+        sudo apt full-upgrade -y
         sudo -E apt-get -yqq install $(cat $GITHUB_WORKSPACE/depends-ubuntu-2204)
         sudo apt install -y clang-13 llvm-13
+        sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.org/init_build_environment.sh)'
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
