@@ -235,37 +235,37 @@ sed -i 's/services/network/g' feeds/luci/applications/luci-app-upnp/root/usr/sha
 #curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/target-modify_for_x86_64.patch | patch -p1
 
 ## patch source
-#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0001-tools-add-upx-tools.patch | patch -p1
-#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0002-rootfs-add-upx-compression-support.patch | patch -p1
-#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0003-rootfs-add-r-w-permissions-for-UCI-configuration-fil.patch | patch -p1
-#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0004-rootfs-Add-support-for-local-kmod-installation-sourc.patch | patch -p1
-#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0005-kernel-Add-support-for-llvm-clang-compiler.patch | patch -p1
-#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0006-build-kernel-add-out-of-tree-kernel-config.patch | patch -p1
-#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0007-include-kernel-add-miss-config-for-linux-6.11.patch | patch -p1
-#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0008-meson-add-platform-variable-to-cross-compilation-fil.patch | patch -p1
-#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0009-kernel-add-legacy-cgroup-v1-memory-controller.patch | patch -p1
-#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0010-kernel-add-PREEMPT_RT-support-for-aarch64-x86_64.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0001-tools-add-upx-tools.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0002-rootfs-add-upx-compression-support.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0003-rootfs-add-r-w-permissions-for-UCI-configuration-fil.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0004-rootfs-Add-support-for-local-kmod-installation-sourc.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0005-kernel-Add-support-for-llvm-clang-compiler.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0006-build-kernel-add-out-of-tree-kernel-config.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0007-include-kernel-add-miss-config-for-linux-6.11.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0008-meson-add-platform-variable-to-cross-compilation-fil.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0009-kernel-add-legacy-cgroup-v1-memory-controller.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0010-kernel-add-PREEMPT_RT-support-for-aarch64-x86_64.patch | patch -p1
 
 ## perf
-#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/openwrt-6.x/musl/990-add-typedefs-for-Elf64_Relr-and-Elf32_Relr.patch > toolchain/musl/patches/990-add-typedefs-for-Elf64_Relr-and-Elf32_Relr.patch
-#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/openwrt-6.x/perf/Makefile > package/devel/perf/Makefile
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/openwrt-6.x/musl/990-add-typedefs-for-Elf64_Relr-and-Elf32_Relr.patch > toolchain/musl/patches/990-add-typedefs-for-Elf64_Relr-and-Elf32_Relr.patch
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/openwrt-6.x/perf/Makefile > package/devel/perf/Makefile
 
 ## libpfring
-#rm -rf feeds/packages/libs/libpfring
-#mkdir -p feeds/packages/libs/libpfring/patches
-#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/Makefile > feeds/packages/libs/libpfring/Makefile
-#pushd feeds/packages/libs/libpfring/patches
-#  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/patches/0001-fix-cross-compiling.patch
-#  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/patches/100-fix-compilation-warning.patch
-#  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/patches/900-fix-linux-6.6.patch
-#popd
+rm -rf feeds/packages/libs/libpfring
+mkdir -p feeds/packages/libs/libpfring/patches
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/Makefile > feeds/packages/libs/libpfring/Makefile
+pushd feeds/packages/libs/libpfring/patches
+  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/patches/0001-fix-cross-compiling.patch
+  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/patches/100-fix-compilation-warning.patch
+  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/patches/900-fix-linux-6.6.patch
+popd
 
 # DPDK
 merge_folder master https://github.com/sbwml/r4s_build_script package/new openwrt/patch/dpdk/dpdk openwrt/patch/dpdk/numactl
 echo "DPDK 插件拉取完成"
 
 # kselftests-bpf
-# curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/kselftests-bpf/Makefile > package/devel/kselftests-bpf/Makefile
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/kselftests-bpf/Makefile > package/devel/kselftests-bpf/Makefile
 
 # SQM Translation
 mkdir -p feeds/packages/net/sqm-scripts/patches
