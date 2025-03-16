@@ -447,9 +447,10 @@ $(eval $(call KernelPackage,phy-micrel))
 define KernelPackage/phy-realtek
    SUBMENU:=$(NETWORK_DEVICES_MENU)
    TITLE:=Realtek Ethernet PHY driver
-   KCONFIG:=CONFIG_REALTEK_PHY
-   DEPENDS:=+kmod-libphy
-   FILES:=$(LINUX_DIR)/drivers/net/phy/realtek.ko
+   KCONFIG:=CONFIG_REALTEK_PHY \
+    CONFIG_REALTEK_PHY_HWMON=y
+   DEPENDS:=+kmod-libphy +kmod-hwmon-core
+   FILES:=$(LINUX_DIR)/drivers/net/phy/realtek/realtek.ko
    AUTOLOAD:=$(call AutoLoad,18,realtek,1)
 endef
 
@@ -1524,6 +1525,28 @@ define KernelPackage/bnx2x/description
 endef
 
 $(eval $(call KernelPackage,bnx2x))
+
+define KernelPackage/bnxt-en
+  SUBMENU:=$(NETWORK_DEVICES_MENU)
+  TITLE:=Broadcom NetXtreme-C/E network driver
+  DEPENDS:=@PCI_SUPPORT +kmod-hwmon-core +kmod-lib-crc32c +kmod-mdio +kmod-ptp
+  FILES:=$(LINUX_DIR)/drivers/net/ethernet/broadcom/bnxt/bnxt_en.ko
+  KCONFIG:= \
+	  CONFIG_BNXT \
+	  CONFIG_BNXT_SRIOV=y \
+	  CONFIG_BNXT_FLOWER_OFFLOAD=y \
+	  CONFIG_BNXT_DCB=n \
+	  CONFIG_BNXT_HWMON=y
+  AUTOLOAD:=$(call AutoProbe,bnxt_en)
+endef
+
+define KernelPackage/bnxt-en/description
+  Supports Broadcom NetXtreme-C/E based Ethernet NICs including:
+  * BCM573xx
+  * BCM574xx
+endef
+
+$(eval $(call KernelPackage,bnxt-en))
 
 define KernelPackage/be2net
   SUBMENU:=$(NETWORK_DEVICES_MENU)
