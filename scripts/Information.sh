@@ -58,6 +58,8 @@ plugin_order=(
     "Udpxy"
     "NatMap"
     "ZeroTier"
+    "Watchat"
+    "WireGuard"
     "MultiSD_Lite"
     "uHTTPd"
     "USB Printer"
@@ -66,6 +68,7 @@ plugin_order=(
 
 declare -A plugin_packages=(
     ["AdGuard Home"]="luci-app-adguardhome"
+    ["Store"]="luci-app-store"
     ["MosDNS"]="luci-app-mosdns"
     ["SmartDNS"]="luci-app-smartdns"
     ["Passwall"]="luci-app-passwall"
@@ -74,7 +77,6 @@ declare -A plugin_packages=(
     ["Mi Homo"]="luci-app-mihomo"
     ["FC Homo"]="luci-app-fchomo"
     ["Home Proxy"]="luci-app-homeproxy"
-    ["Store"]="luci-app-store"
     ["SQM"]="luci-app-sqm"
     ["EQoS"]="luci-app-eqos"
     ["WOL"]="luci-app-wol"
@@ -84,6 +86,8 @@ declare -A plugin_packages=(
     ["Udpxy"]="luci-app-udpxy"
     ["NatMap"]="luci-app-natmap"
     ["ZeroTier"]="luci-app-zerotier"
+    ["Watchat"]="luci-app-watchat"
+    ["WireGuard"]="wireguard-tools"
     ["MultiSD_Lite"]="luci-app-msd_lite"
     ["uHTTPd"]="luci-app-uhttpd"
     ["USB Printer"]="luci-app-usb-printer"
@@ -107,6 +111,7 @@ echo "---------------------------------------------" >> release.txt
 for plugin in "${selected_plugins[@]}"; do
     case $plugin in
         "AdGuard Home") echo "Adguard Home Version: ${adguardhome}" >> release.txt ;;
+        "Store") echo "Store Version: ${store}" >> release.txt ;;
         "MosDNS") echo "MosDNS Version: ${mosdns}" >> release.txt ;;
         "SmartDNS") echo "SmartDNS Version: ${smartdns}" >> release.txt ;;
         "Passwall") echo "Passwall Version: ${passwall}" >> release.txt ;;
@@ -115,7 +120,9 @@ for plugin in "${selected_plugins[@]}"; do
         "Mi Homo") echo "Mi Homo Version: ${mihomo}" >> release.txt ;;
         "FC Homo") echo "FC Homo Version: ${fchomo}" >> release.txt ;;
         "Home Proxy") echo "Home Proxy Version: ${homeproxy}" >> release.txt ;;
-        "Store") echo "Store Version: ${store}" >> release.txt ;;
+        "ZeroTier") echo "ZeroTier Version: ${zerotier}" >> release.txt ;;
+        "Watchat") echo "Watchat Version: ${watchat}" >> release.txt ;;
+        "WireGuard") echo "WireGuard Version: ${wireguard}" >> release.txt ;;
     esac
 done
 
