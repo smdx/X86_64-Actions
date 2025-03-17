@@ -128,9 +128,9 @@ echo "PassWall 插件切换完成"
 #echo "AdguardHome 插件切换完成"
 
 # ppp - 2.5.0
-rm -rf package/network/services/ppp
-git clone https://github.com/sbwml/package_network_services_ppp package/network/services/ppp
-echo "ppp 插件切换完成"
+#rm -rf package/network/services/ppp
+#git clone https://github.com/sbwml/package_network_services_ppp package/network/services/ppp
+#echo "ppp 插件切换完成"
 
 # 替换curl修改版（无nghttp3、ngtcp2）
 curl_ver=$(cat feeds/packages/net/curl/Makefile | grep -i "PKG_VERSION:=" | awk 'BEGIN{FS="="};{print $2}')
