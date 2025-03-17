@@ -5,18 +5,24 @@ plugins=(
     "adguardhome"
     "mosdns"
     "smartdns"
+    "luci-app-store"
     "luci-app-passwall"
     "luci-app-passwall2"
     "luci-app-fchomo"
     "luci-app-mihomo"
     "luci-app-openclash"
-    "luci-app-store"
+    "luci-app-zerotier"
+    "luci-app-watchcat"
+    "luci-app-wireguard"
 )
 
 # 定义需要自定义目录名称的插件映射（插件名:目录名称）
 # 示例：["luci-app-fchomo"]="mihomo"   将luci-app-fchomo的目录名称指定为mihomo
 declare -A custom_dir_names=(
     ["luci-app-fchomo"]="mihomo"
+    ["luci-app-zerotier"]="zerotier"
+    ["luci-app-watchcat"]="watchcat"
+    ["luci-app-wireguard"]="wireguard-tools"
 )
 
 # 遍历插件
