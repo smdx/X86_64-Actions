@@ -11,6 +11,7 @@ plugins=(
     "luci-app-fchomo"
     "luci-app-mihomo"
     "luci-app-openclash"
+    "luci-app-lucky"
     "luci-app-zerotier"
     "luci-app-watchcat"
     "luci-app-wireguard"
@@ -20,6 +21,7 @@ plugins=(
 # 示例：["luci-app-fchomo"]="mihomo"   将luci-app-fchomo的目录名称指定为mihomo
 declare -A custom_dir_names=(
     ["luci-app-fchomo"]="mihomo"
+    ["luci-app-lucky"]="lucky"
     ["luci-app-zerotier"]="zerotier"
     ["luci-app-watchcat"]="watchcat"
     ["luci-app-wireguard"]="wireguard-tools"

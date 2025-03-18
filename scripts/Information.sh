@@ -56,6 +56,7 @@ plugin_order=(
     "Socat"
     "DDNS"
     "Udpxy"
+    "Lucky"
     "NatMap"
     "ZeroTier"
     "Watchat"
@@ -68,7 +69,6 @@ plugin_order=(
 
 declare -A plugin_packages=(
     ["AdGuard Home"]="luci-app-adguardhome"
-    ["Store"]="luci-app-store"
     ["MosDNS"]="luci-app-mosdns"
     ["SmartDNS"]="luci-app-smartdns"
     ["Passwall"]="luci-app-passwall"
@@ -81,9 +81,11 @@ declare -A plugin_packages=(
     ["EQoS"]="luci-app-eqos"
     ["WOL"]="luci-app-wol"
     ["UPnP"]="luci-app-upnp"
+    ["Store"]="luci-app-store"
     ["Socat"]="luci-app-socat"
     ["DDNS"]="luci-app-ddns"
     ["Udpxy"]="luci-app-udpxy"
+    ["Lucky"]="luci-app-lucky"
     ["NatMap"]="luci-app-natmap"
     ["ZeroTier"]="luci-app-zerotier"
     ["Watchat"]="luci-app-watchat"
@@ -120,6 +122,7 @@ for plugin in "${selected_plugins[@]}"; do
         "Mi Homo") echo "Mi Homo Version: ${mihomo}" >> release.txt ;;
         "FC Homo") echo "FC Homo Version: ${fchomo}" >> release.txt ;;
         "Home Proxy") echo "Home Proxy Version: ${homeproxy}" >> release.txt ;;
+        "Lucky") echo "Lucky Version: ${lucky}" >> release.txt ;;
         "ZeroTier") echo "ZeroTier Version: ${zerotier}" >> release.txt ;;
         "Watchat") echo "Watchat Version: ${watchat}" >> release.txt ;;
         "WireGuard") echo "WireGuard Version: ${wireguard}" >> release.txt ;;
