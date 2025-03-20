@@ -56,6 +56,7 @@ plugin_order=(
     "Socat"
     "DDNS"
     "Udpxy"
+    "VNT"
     "xfrpc"
     "Lucky"
     "NatMap"
@@ -86,6 +87,7 @@ declare -A plugin_packages=(
     ["Socat"]="luci-app-socat"
     ["DDNS"]="luci-app-ddns"
     ["Udpxy"]="luci-app-udpxy"
+    ["VNT"]="luci-app-vnt"
     ["xfrpc"]="luci-app-xfrpc"
     ["Lucky"]="luci-app-lucky"
     ["NatMap"]="luci-app-natmap"
@@ -124,6 +126,7 @@ for plugin in "${selected_plugins[@]}"; do
         "Mi Homo") echo "Mi Homo Version: ${mihomo}" >> release.txt ;;
         "FC Homo") echo "FC Homo Version: ${fchomo}" >> release.txt ;;
         "Home Proxy") echo "Home Proxy Version: ${homeproxy}" >> release.txt ;;
+        "VNT") echo "VNT Version: ${vnt}" >> release.txt ;;
         "Lucky") echo "Lucky Version: ${lucky}" >> release.txt ;;
         "ZeroTier") echo "ZeroTier Version: ${zerotier}" >> release.txt ;;
         "Watchat") echo "Watchat Version: ${watchat}" >> release.txt ;;

@@ -88,6 +88,9 @@ rm -rf feeds/packages/lang/golang
 git clone --depth=1 https://github.com/sbwml/packages_lang_golang feeds/packages/lang/golang
 echo "Golang 插件切换完成"
 
+# VNT 简便高效的异地组网、内网穿透工具
+merge_folder main https://github.com/lmq8267/luci-app-vnt package/new luci-app-vnt vnt vnts
+
 # MosDNS
 rm -rf feeds/small/mosdns
 rm -rf feeds/small/luci-app-mosdns

@@ -11,6 +11,7 @@ plugins=(
     "luci-app-fchomo"
     "luci-app-mihomo"
     "luci-app-openclash"
+    "luci-app-vnt"
     "luci-app-lucky"
     "luci-app-xfrpc"
     "luci-app-zerotier"
