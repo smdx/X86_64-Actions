@@ -128,6 +128,15 @@ merge_folder main https://github.com/xiaorouji/openwrt-passwall2 package/new luc
 # ------------------------------------------------------------
 echo "PassWall 插件切换完成"
 
+# Lukcy大吉
+rm -rf feeds/kenzo/luci-app-lucky
+git clone https://github.com/sirpdboy/luci-app-lucky package/lucky-packages
+# git clone https://github.com/gdy666/luci-app-lucky.git package/lucky-packages
+
+# zerotier
+rm -rf feeds/luci/applications/luci-app-zerotier
+git clone https://github.com/lwb1978/luci-app-zerotier package/luci-app-zerotier
+
 #替换miniupnpd(ImmortalWRT源码用)
 #rm -rf feeds/packages/net/miniupnpd
 #merge_folder master https://github.com/coolsnowwolf/packages feeds/packages/net net/miniupnpd
