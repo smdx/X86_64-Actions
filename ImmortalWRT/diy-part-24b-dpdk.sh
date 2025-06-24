@@ -99,12 +99,17 @@ echo "MosDNS 插件切换完成"
 
 # SmartDNS
 rm -rf feeds/luci/applications/luci-app-smartdns
-git clone https://github.com/lwb1978/luci-app-smartdns package/new/luci-app-smartdns
+git clone https://github.com/lwb1978/luci-app-smartdns package/luci-app-smartdns
 # 替换immortalwrt 软件仓库smartdns版本为官方最新版
 rm -rf feeds/packages/net/smartdns
-merge_folder main https://github.com/lwb1978/OpenWrt-Actions package/new patch/smartdns
-#rm -rf feeds/kenzo/smartdns/Makefile
-#wget -O feeds/kenzo/smartdns/Makefile https://raw.githubusercontent.com/kenzok8/jell/refs/heads/main/smartdns/Makefile
+# cp -rf ${GITHUB_WORKSPACE}/patch/smartdns package/
+git clone https://github.com/lwb1978/openwrt-smartdns package/smartdns
+# 添加 smartdns-ui
+echo "CONFIG_PACKAGE_smartdns-ui=y" >> .config
+
+# openssl Enable QUIC and KTLS support
+echo "CONFIG_OPENSSL_WITH_QUIC=y" >> .config
+# echo "CONFIG_OPENSSL_WITH_KTLS=y" >> .config
 echo "SmartDNS 插件切换完成"
 
 # ------------------PassWall 科学上网--------------------------
