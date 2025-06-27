@@ -340,7 +340,7 @@ echo "插件自定义操作执行完毕"
 rm -rf feeds/kenzo/luci-app-argon-config
 rm -rf feeds/kenzo/luci-theme-argon
 rm -rf feeds/luci/themes/luci-theme-argon
-merge_folder main https://github.com/sbwml/luci-theme-argon package/new luci-app-argon-config luci-theme-argon
+merge_folder openwrt-24.10 https://github.com/sbwml/luci-theme-argon package/new luci-app-argon-config luci-theme-argon
 echo "luci-theme-argon 替换完成"
 
 # git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git package/luci-theme-infinityfreedom
