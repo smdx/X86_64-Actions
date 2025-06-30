@@ -83,9 +83,9 @@ rm -rf feeds/luci/applications/luci-app-mosdns
 rm -rf feeds/packages/net/{alist,adguardhome,mosdns,xray*,v2ray*,v2ray*,sing*,smartdns}
 rm -rf feeds/packages/utils/v2dat
 
-# Golang 1.2x
+# Golang 1.25
 rm -rf feeds/packages/lang/golang
-git clone --depth=1 https://github.com/sbwml/packages_lang_golang feeds/packages/lang/golang
+git clone --depth=1 https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
 echo "Golang 插件切换完成"
 
 # VNT 简便高效的异地组网、内网穿透工具
@@ -139,6 +139,10 @@ echo "PassWall 插件切换完成"
 #rm -rf package/network/services/ppp
 #git clone https://github.com/sbwml/package_network_services_ppp package/network/services/ppp
 #echo "ppp 插件切换完成"
+
+# curl
+rm -rf feeds/packages/net/curl
+git clone https://github.com/sbwml/feeds_packages_net_curl feeds/packages/net/curl
 
 # 替换curl修改版（无nghttp3、ngtcp2）
 curl_ver=$(cat feeds/packages/net/curl/Makefile | grep -i "PKG_VERSION:=" | awk 'BEGIN{FS="="};{print $2}')
