@@ -127,6 +127,10 @@ merge_folder main https://github.com/xiaorouji/openwrt-passwall2 package/new luc
 # git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
 # git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 package/luci-app-passwall2
 # ------------------------------------------------------------
+# sing-box-1.12.0 with_ech error fix
+sed -i '/config SING_BOX_WITH_ECH/,+3d' feeds/small/sing-box/Makefile
+sed -i '/CONFIG_SING_BOX_WITH_ECH/d' feeds/small/sing-box/Makefile
+
 echo "PassWall 插件切换完成"
 
 #AdguardHome指定commits
