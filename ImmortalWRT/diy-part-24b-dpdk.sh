@@ -99,18 +99,20 @@ echo "MosDNS 插件切换完成"
 
 # SmartDNS
 rm -rf feeds/luci/applications/luci-app-smartdns
+rm -rf feeds/kenzo/luci-app-smartdns
 git clone https://github.com/lwb1978/luci-app-smartdns package/luci-app-smartdns
 # 替换immortalwrt 软件仓库smartdns版本为官方最新版
 rm -rf feeds/packages/net/smartdns
+rm -rf feeds/kenzo/smartdns
 # cp -rf ${GITHUB_WORKSPACE}/patch/smartdns package/
 git clone https://github.com/lwb1978/openwrt-smartdns package/smartdns
 # 添加 smartdns-ui
-echo "CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_smartdns_ui=y" >> .config
-echo "CONFIG_PACKAGE_smartdns-ui=y" >> .config
+# echo "CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_smartdns_ui=y" >> .config
+# echo "CONFIG_PACKAGE_smartdns-ui=y" >> .config
 
 # openssl Enable QUIC and KTLS support
 echo "CONFIG_OPENSSL_WITH_QUIC=y" >> .config
-# echo "CONFIG_OPENSSL_WITH_KTLS=y" >> .config
+echo "CONFIG_OPENSSL_WITH_KTLS=y" >> .config
 echo "SmartDNS 插件切换完成"
 
 # ------------------PassWall 科学上网--------------------------
@@ -156,6 +158,9 @@ curl_ver=$(cat feeds/packages/net/curl/Makefile | grep -i "PKG_VERSION:=" | awk 
 	rm -rf feeds/packages/net/curl
 	cp -rf ${GITHUB_WORKSPACE}/patches/curl feeds/packages/net/curl
 }
+
+# apk-tools APK管理器不再校验版本号的合法性
+mkdir -p package/system/apk/patches && cp -f ${GITHUB_WORKSPACE}/patches/apk-tools/9999-hack-for-linux-pre-releases.patch package/system/apk/patches/
 
 # Lukcy大吉
 rm -rf feeds/kenzo/luci-app-lucky
@@ -256,6 +261,10 @@ echo "Firewall4 防火墙操作完成"
 sed -i 's#\"title\": \"UPnP IGD \& PCP\"#\"title\": \"UPnP\"#g' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
 # 移动 UPnP 到 “网络” 子菜单
 sed -i 's/services/network/g' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
+
+# node - prebuilt
+rm -rf feeds/packages/lang/node
+git clone https://$github/sbwml/feeds_packages_lang_node-prebuilt feeds/packages/lang/node -b packages-24.10
 
 ## GCC Optimization level -O3
 #curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/target-modify_for_x86_64.patch | patch -p1
@@ -361,6 +370,13 @@ echo "luci-theme-argon 替换完成"
 # 设置默认主题
 # default_theme='Argon'
 # sed -i "s/bootstrap/$default_theme/g" feeds/luci/modules/luci-base/root/etc/config/luci
+
+# 修正部分从第三方仓库拉取的软件 Makefile 路径问题
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/lang\/golang\/golang-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang-package.mk/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/lang\/rust\/rust-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/rust\/rust-package.mk/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHREPO/PKG_SOURCE_URL:=https:\/\/github.com/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload.github.com/g' {}
 
 #echo 'refresh feeds'
 # ./scripts/feeds update -a
