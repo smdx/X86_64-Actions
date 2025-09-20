@@ -105,7 +105,7 @@ git clone https://github.com/lwb1978/luci-app-smartdns package/luci-app-smartdns
 rm -rf feeds/packages/net/smartdns
 rm -rf feeds/kenzo/smartdns
 # cp -rf ${GITHUB_WORKSPACE}/patch/smartdns package/
-git clone https://github.com/lwb1978/openwrt-smartdns package/smartdns
+git clone https://github.com/smdx/openwrt-smartdns package/smartdns
 # 添加 smartdns-ui
 # echo "CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_smartdns_ui=y" >> .config
 # echo "CONFIG_PACKAGE_smartdns-ui=y" >> .config
