@@ -40,28 +40,21 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
-    
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        
     steps:
-    - name: Free Disk Space (Ubuntu)
-      uses: jlumbroso/free-disk-space@main
-      with:
-        # this might remove tools that are actually needed,
-        # if set to "true" but frees about 6 GB
-        tool-cache: true
-        
-        # all of these default to true, but feel free to set to
-        # "false" if necessary for your workflow
-        android: true
-        dotnet: true
-        haskell: true
-        large-packages: true
-        swap-storage: true
-        
     - name: Checkout
-      uses: actions/checkout@v4
-      
-    - name: Check server configuration
+      uses: actions/checkout@main
+
+    - name: Setup variables
+      run: |
+        sudo timedatectl set-timezone "$TZ"
+        echo "status=success" >> ${GITHUB_OUTPUT}
+
+    - name: Show system
       run: |
         echo "警告⚠"
         echo "分配的服务器性能有限，若选择的插件过多，务必注意CPU性能！"
@@ -73,39 +66,18 @@ jobs:
         echo "已安装内存详细信息："
         echo -e "$(sudo lshw -short -C memory | grep GiB) \n"
         echo "--------------------------硬盘信息--------------------------"
-        echo "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT    
-    
-    - name: Initialization environment
-      env:
-        DEBIAN_FRONTEND: noninteractive
-      run: |
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
-        sudo sh -c 'echo "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-13 main" >> /etc/apt/sources.list'
-        sudo sh -c 'echo "deb-src http://apt.llvm.org/jammy/ llvm-toolchain-jammy-13 main" >> /etc/apt/sources.list'
-        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-        sudo -E apt-get -qq update
-        sudo -E apt-get -yqq install $(cat $GITHUB_WORKSPACE/depends-ubuntu-2204)
-        sudo apt install -y clang-13 llvm-13
-        sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.org/init_build_environment.sh)'
-        curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh | sudo -E bash -
-        sudo -E apt-get install -y nodejs
-        sudo -E apt-get -qq autoremove --purge
-        sudo -E apt-get -qq clean
-        sudo timedatectl set-timezone "$TZ"
-        sudo mkdir -p /workdir
-        sudo chown $USER:$GROUPS /workdir
+        echo "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
 
-    - name: Setup GCC 13
-      run: |
-        for i in 1 2 3; do
-          sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test && break || sleep 10
-        done
-        sudo apt-get update
-        sudo apt-get install -y gcc-13 g++-13
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100
-        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
-        gcc --version
-        g++ --version
+    - name: Free disk space
+      uses: sbwml/actions@free-disk
+      with:
+        build-mount-path: /workdir
+
+    - name: Build System Setup
+      uses: sbwml/actions@openwrt-build-setup
+
+    - name: Install LLVM
+      uses: sbwml/actions@install-llvm
 
     - name: Clone source code
       working-directory: /workdir
