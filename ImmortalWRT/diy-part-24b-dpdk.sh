@@ -167,10 +167,6 @@ rm -rf feeds/kenzo/luci-app-lucky
 git clone https://github.com/sirpdboy/luci-app-lucky package/lucky-packages
 # git clone https://github.com/gdy666/luci-app-lucky.git package/lucky-packages
 
-# zerotier
-rm -rf feeds/luci/applications/luci-app-zerotier
-git clone https://github.com/lwb1978/luci-app-zerotier package/luci-app-zerotier
-
 # 移动 WOL 到 “网络” 子菜单
 sed -i 's/services/network/g' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
 
@@ -370,6 +366,18 @@ echo "luci-theme-argon 替换完成"
 # 设置默认主题
 # default_theme='Argon'
 # sed -i "s/bootstrap/$default_theme/g" feeds/luci/modules/luci-base/root/etc/config/luci
+
+# 更新 zerotier 到 1.14.2
+pushd feeds/packages/net/zerotier
+	zero_ver=$(cat Makefile | grep -i "PKG_VERSION:=" | awk 'BEGIN{FS="="};{print $2}')
+	[ "$(check_ver "$zero_ver" "1.14.2")" != "0" ] && {
+		echo "更新 zerotier 到 1.14.2"
+		for zero_f in *; do
+			[ "$zero_f" != "files" ] && rm -rf "$zero_f"
+		done
+		cp -a "${GITHUB_WORKSPACE}/patches/zerotier/." .
+	}
+popd
 
 # 修正部分从第三方仓库拉取的软件 Makefile 路径问题
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
