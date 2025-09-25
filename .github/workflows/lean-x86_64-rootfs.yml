@@ -20,8 +20,8 @@ on:
         default: 'false'
 
 # 每周五 AM11:20 执行编译(UTC)
-  schedule:
-    - cron: '30 0 * * 5'
+#  schedule:
+#    - cron: '30 0 * * 5'
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
