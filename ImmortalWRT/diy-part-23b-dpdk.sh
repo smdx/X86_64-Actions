@@ -185,10 +185,6 @@ rm -rf feeds/kenzo/luci-app-lucky
 git clone https://github.com/sirpdboy/luci-app-lucky package/lucky-packages
 # git clone https://github.com/gdy666/luci-app-lucky.git package/lucky-packages
 
-# zerotier
-rm -rf feeds/luci/applications/luci-app-zerotier
-git clone https://github.com/lwb1978/luci-app-zerotier package/luci-app-zerotier
-
 # 移动 WOL 到 “网络” 子菜单
 sed -i 's/services/network/g' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
 
