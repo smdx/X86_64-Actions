@@ -193,32 +193,42 @@ git clone https://github.com/lwb1978/luci-app-zerotier package/luci-app-zerotier
 sed -i 's/services/network/g' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
 
 # luci-app-wrtbwmon拉取插件
-merge_folder main https://github.com/kenzok8/jell package/new luci-app-wrtbwmon wrtbwmon
-sed -i 's/network/status/g' package/new/luci-app-wrtbwmon/root/usr/share/luci/menu.d/luci-app-wrtbwmon.json
-sed -i '1,$c\
-{\
-	"protocol": "ipv4",\
-	"interval": "2",\
-	"showColumns": [\
-		"thClient",\
-		"thDownload",\
-		"thUpload",\
-		"thTotalDown",\
-		"thTotalUp",\
-		"thTotal"\
-	],\
-	"showZero": true,\
-	"useBits": false,\
-	"useMultiple": "1000",\
-	"useDSL": false,\
-	"upstream": "100",\
-	"downstream": "100",\
-	"hideMACs": [\
-		"00:00:00:00:00:00"\
-	]\
-}' package/new/luci-app-wrtbwmon/root/etc/luci-wrtbwmon.conf
+#merge_folder main https://github.com/kenzok8/jell package/new luci-app-wrtbwmon wrtbwmon
+#sed -i 's/network/status/g' package/new/luci-app-wrtbwmon/root/usr/share/luci/menu.d/luci-app-wrtbwmon.json
+#sed -i '1,$c\
+#{\
+#	"protocol": "ipv4",\
+#	"interval": "2",\
+#	"showColumns": [\
+#		"thClient",\
+#		"thDownload",\
+#		"thUpload",\
+#		"thTotalDown",\
+#		"thTotalUp",\
+#		"thTotal"\
+#	],\
+#	"showZero": true,\
+#	"useBits": false,\
+#	"useMultiple": "1000",\
+#	"useDSL": false,\
+#	"upstream": "100",\
+#	"downstream": "100",\
+#	"hideMACs": [\
+#		"00:00:00:00:00:00"\
+#	]\
+#}' package/new/luci-app-wrtbwmon/root/etc/luci-wrtbwmon.conf
 
-echo "luci-app-wrtbwmon 插件拉取完成"
+#echo "luci-app-wrtbwmon 插件拉取完成"
+
+# LuCI Bandix 流量监控
+merge_folder main https://github.com/timsaya/openwrt-bandix package/new openwrt-bandix
+merge_folder main https://github.com/timsaya/luci-app-bandix package/new luci-app-bandix
+sed -i 's/network/status/g' package/new/luci-app-bandix/root/usr/share/luci/menu.d/luci-app-bandix.json
+echo "CONFIG_PACKAGE_bandix=y" >> .config
+echo "CONFIG_PACKAGE_luci-app-bandix=y" >> .config
+echo "CONFIG_PACKAGE_luci-i18n-bandix-zh-cn=y" >> .config
+
+echo "LuCI Bandix 流量监控 插件拉取完成"
 
 # vim - fix E1187: Failed to source defaults.vim
 pushd feeds/packages
