@@ -14,8 +14,9 @@ plugins=(
     "luci-app-vnt"
     "luci-app-lucky"
     "luci-app-xfrpc"
-    "luci-app-zerotier"
     "luci-app-watchcat"
+    "luci-app-rtp2httpd"
+    "luci-app-zerotier"
     "luci-app-wireguard"
 )
 
@@ -25,8 +26,9 @@ declare -A custom_dir_names=(
     ["luci-app-fchomo"]="mihomo"
     ["luci-app-lucky"]="lucky"
     ["luci-app-xfrpc"]="xfrpc"
-    ["luci-app-zerotier"]="zerotier"
     ["luci-app-watchcat"]="watchcat"
+    ["luci-app-rtp2httpd"]="rtp2httpd"
+    ["luci-app-zerotier"]="zerotier"
     ["luci-app-wireguard"]="wireguard-tools"
 )
 
