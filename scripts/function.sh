@@ -1,35 +1,54 @@
 #!/bin/bash
 
 # 拉取仓库文件夹
+# 参数1是分支名,参数2是库地址,参数3是所有文件下载到指定路径,参数4是指定要下载的包文件夹。
+# 同一个仓库下载多个文件夹直接在后面跟文件名或路径，空格分开。
+# 示例:
+# merge_folder master https://github.com/WYC-2020/openwrt-packages package/openwrt-packages luci-app-eqos luci-app-openclash luci-app-ddnsto ddnsto
+# merge_folder master https://github.com/lisaac/luci-app-dockerman package/lean applications/luci-app-dockerman
 function merge_folder() {
-	# 参数1是分支名,参数2是库地址,参数3是所有文件下载到指定路径,参数4是指定要下载的包文件夹。
-	# 同一个仓库下载多个文件夹直接在后面跟文件名或路径，空格分开。
-	# 示例:
-	# merge_folder master https://github.com/WYC-2020/openwrt-packages package/openwrt-packages luci-app-eqos luci-app-openclash luci-app-ddnsto ddnsto 
-	# merge_folder master https://github.com/lisaac/luci-app-dockerman package/lean applications/luci-app-dockerman
-	if [[ $# -lt 3 ]]; then
-		echo "Syntax error: [$#] [$*]" >&2
-		return 1
-	fi
-	trap 'rm -rf "$tmpdir"' EXIT
-	branch="$1" curl="$2" target_dir="$3" && shift 3
-	rootdir="$PWD"
-	localdir="$target_dir"
-	[ -d "$localdir" ] || mkdir -p "$localdir"
-	tmpdir="$(mktemp -d)" || exit 1
-	git clone -b "$branch" --depth 1 --filter=blob:none --sparse "$curl" "$tmpdir"
-	cd "$tmpdir"
-	git sparse-checkout init --cone
-	git sparse-checkout set "$@"
-	# 使用循环逐个移动文件夹
-	for folder in "$@"; do
-		mv -f "$folder" "$rootdir/$localdir"
-	done
-	cd "$rootdir"
+    if [[ $# -lt 3 ]]; then
+        echo "Syntax error: [$#] [$*]" >&2
+        return 1
+    fi
+    trap 'rm -rf "$tmpdir"' EXIT
+    branch="$1" curl="$2" target_dir="$3" && shift 3
+    rootdir="$PWD"
+    localdir="$target_dir"
+    [ -d "$localdir" ] || mkdir -p "$localdir"
+    tmpdir="$(mktemp -d)" || exit 1
+    
+    git clone -b "$branch" --depth 1 --filter=blob:none --sparse "$curl" "$tmpdir"
+    cd "$tmpdir"
+    git sparse-checkout init --cone
+    git sparse-checkout set "$@"
+    
+    # 修改后的移动逻辑
+    for folder in "$@"; do
+        if [ -d "$folder" ]; then
+            # 获取文件夹的基本名称
+            base_name=$(basename "$folder")
+            # 移动文件夹内容，保持文件夹结构
+            if [ -d "$folder" ]; then
+                mv -f "$folder" "$rootdir/$localdir/$base_name"
+            fi
+        else
+            echo "Warning: Folder $folder not found in repository"
+        fi
+    done
+    
+    cd "$rootdir"
 }
 
+
+# 拉取指定commits
+# 参数1是分支名，参数2是库地址，参数3是提交的哈希值，参数4是目标目录路径。后续参数为要下载的包名或路径。
+# 拉取 lisaac/luci-app-dockerman 存储库中的特定提交中的指定包到 my_packages 目录
+# 示例:
+# merge_commits master https://github.com/kenzok8/openwrt-packages 915f448b80ee1adb928a5cfd58c33c678abacb5c package/openwrt-packages/test luci-app-adguardhome
+# rm -rf package/network/utils/ipset
+# merge_commits main https://github.com/openwrt/openwrt 9f6a28b91e30de9c6875afbe1493934218dbfb49 package/network/utils package/network/utils/ipset
 function merge_commits(){
-    # 参数1是分支名，参数2是库地址，参数3是提交的哈希值，参数4是目标目录路径。后续参数为要下载的包名或路径。
     branch="$1"
     curl="$2"
     commit="$3"
@@ -53,10 +72,6 @@ function merge_commits(){
     done
 }
 
-# 拉取 lisaac/luci-app-dockerman 存储库中的特定提交中的指定包到 my_packages 目录
-# merge_commits master https://github.com/kenzok8/openwrt-packages 915f448b80ee1adb928a5cfd58c33c678abacb5c package/openwrt-packages/test luci-app-adguardhome
-# rm -rf package/network/utils/ipset
-# merge_commits main https://github.com/openwrt/openwrt 9f6a28b91e30de9c6875afbe1493934218dbfb49 package/network/utils package/network/utils/ipset
 
 drop_package(){
 	find package/ -follow -name $1 -not -path "package/custom/*" | xargs -rt rm -rf
@@ -93,6 +108,7 @@ check_ver() {
 	# echo "版本 $version1 等于版本 $version2"
 	echo 255
 }
+
 
 # 版本比较 bash
 check_ver2() {
