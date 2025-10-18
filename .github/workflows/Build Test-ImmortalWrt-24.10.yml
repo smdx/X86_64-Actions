@@ -107,8 +107,8 @@ jobs:
         chmod -R 755 files
         chmod 600 files/etc/config/ttyd
         patch -p1 < "${GITHUB_WORKSPACE}/patches/sysctl.patch"
-        $GITHUB_WORKSPACE/$DIY_P2_SH
-        $GITHUB_WORKSPACE/scripts/PKG_Version_Get.sh
+        bash -x $GITHUB_WORKSPACE/$DIY_P2_SH
+        bash -x $GITHUB_WORKSPACE/scripts/PKG_Version_Get.sh
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
