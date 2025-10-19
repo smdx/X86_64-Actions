@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 拉取仓库文件夹
-merge_folder() {
+function merge_folder() {
 	# 参数1是分支名,参数2是库地址,参数3是所有文件下载到指定路径,参数4是指定要下载的包文件夹。
 	# 同一个仓库下载多个文件夹直接在后面跟文件名或路径，空格分开。
 	# 示例:
@@ -28,6 +28,11 @@ merge_folder() {
 	cd "$rootdir"
 }
 
+# 拉取仓库指定commits
+# 拉取 lisaac/luci-app-dockerman 存储库中的特定提交中的指定包到 my_packages 目录
+# merge_commits master https://github.com/kenzok8/openwrt-packages 915f448b80ee1adb928a5cfd58c33c678abacb5c package/openwrt-packages/test luci-app-adguardhome
+# rm -rf package/network/utils/ipset
+# merge_commits main https://github.com/openwrt/openwrt 9f6a28b91e30de9c6875afbe1493934218dbfb49 package/network/utils package/network/utils/ipset
 function merge_commits(){
     # 参数1是分支名，参数2是库地址，参数3是提交的哈希值，参数4是目标目录路径。后续参数为要下载的包名或路径。
     branch="$1"
@@ -53,10 +58,6 @@ function merge_commits(){
     done
 }
 
-# 拉取 lisaac/luci-app-dockerman 存储库中的特定提交中的指定包到 my_packages 目录
-# merge_commits master https://github.com/kenzok8/openwrt-packages 915f448b80ee1adb928a5cfd58c33c678abacb5c package/openwrt-packages/test luci-app-adguardhome
-# rm -rf package/network/utils/ipset
-# merge_commits main https://github.com/openwrt/openwrt 9f6a28b91e30de9c6875afbe1493934218dbfb49 package/network/utils package/network/utils/ipset
 
 drop_package(){
 	find package/ -follow -name $1 -not -path "package/custom/*" | xargs -rt rm -rf
