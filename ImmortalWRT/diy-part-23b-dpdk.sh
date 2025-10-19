@@ -60,6 +60,15 @@ cp -f ${GITHUB_WORKSPACE}/patches/udpxy/Makefile feeds/packages/net/udpxy/
 # 修改 udpxy 菜单名称为大写
 #sed -i 's#_(\"udpxy\")#_(\"UDPXY\")#g' feeds/luci/applications/luci-app-udpxy/luasrc/controller/udpxy.lua
 
+# 添加rtp2httpd
+merge_folder main https://github.com/stackia/rtp2httpd package/new openwrt-support/rtp2httpd openwrt-support/luci-app-rtp2httpd
+rm -f package/new/rtp2httpd/Makefile
+cp -f ${GITHUB_WORKSPACE}/patches/rtp2httpd/Makefile package/new/rtp2httpd/Makefile
+echo "" >> .config  # 添加一个空行(确保正确换行)
+echo "CONFIG_PACKAGE_luci-app-rtp2httpd=y" >> .config
+echo "CONFIG_PACKAGE_rtp2httpd=y" >> .config
+echo "添加 rtp2httpd 流媒体转发服务器"
+
 # uwsgi - fix timeout
 sed -i '$a cgi-timeout = 600' feeds/packages/net/uwsgi/files-luci-support/luci-*.ini
 sed -i '/limit-as/c\limit-as = 5000' feeds/packages/net/uwsgi/files-luci-support/luci-webui.ini
@@ -104,10 +113,12 @@ rm -rf feeds/kenzo/smartdns
 # cp -rf ${GITHUB_WORKSPACE}/patch/smartdns package/
 git clone https://github.com/lwb1978/openwrt-smartdns package/smartdns
 # 添加 smartdns-ui
+# echo "" >> .config  # 添加一个空行(确保正确换行)
 # echo "CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_smartdns_ui=y" >> .config
 # echo "CONFIG_PACKAGE_smartdns-ui=y" >> .config
 
 # openssl Enable QUIC and KTLS support
+echo "" >> .config  # 添加一个空行(确保正确换行)
 echo "CONFIG_OPENSSL_WITH_QUIC=y" >> .config
 echo "CONFIG_OPENSSL_WITH_KTLS=y" >> .config
 echo "SmartDNS 插件切换完成"
@@ -220,6 +231,7 @@ sed -i 's/services/network/g' feeds/luci/applications/luci-app-wol/root/usr/shar
 merge_folder main https://github.com/timsaya/openwrt-bandix package/new openwrt-bandix
 merge_folder main https://github.com/timsaya/luci-app-bandix package/new luci-app-bandix
 sed -i 's/network/status/g' package/new/luci-app-bandix/root/usr/share/luci/menu.d/luci-app-bandix.json
+echo "" >> .config  # 添加一个空行(确保正确换行)
 echo "CONFIG_PACKAGE_bandix=y" >> .config
 echo "CONFIG_PACKAGE_luci-app-bandix=y" >> .config
 echo "CONFIG_PACKAGE_luci-i18n-bandix-zh-cn=y" >> .config

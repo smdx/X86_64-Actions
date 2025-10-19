@@ -62,6 +62,7 @@ plugin_order=(
     "NatMap"
     "ZeroTier"
     "Watchat"
+    "Rtp2HTTPd"
     "WireGuard"
     "MultiSD_Lite"
     "uHTTPd"
@@ -91,8 +92,9 @@ declare -A plugin_packages=(
     ["xfrpc"]="luci-app-xfrpc"
     ["Lucky"]="luci-app-lucky"
     ["NatMap"]="luci-app-natmap"
-    ["ZeroTier"]="luci-app-zerotier"
     ["Watchat"]="luci-app-watchat"
+    ["Rtp2HTTPd"]="luci-app-rtp2httpd"
+    ["ZeroTier"]="luci-app-zerotier"
     ["WireGuard"]="wireguard-tools"
     ["MultiSD_Lite"]="luci-app-msd_lite"
     ["uHTTPd"]="luci-app-uhttpd"
@@ -128,8 +130,9 @@ for plugin in "${selected_plugins[@]}"; do
         "Home Proxy") echo "Home Proxy Version: ${homeproxy}" >> release.txt ;;
         "VNT") echo "VNT Version: ${vnt}" >> release.txt ;;
         "Lucky") echo "Lucky Version: ${lucky}" >> release.txt ;;
-        "ZeroTier") echo "ZeroTier Version: ${zerotier}" >> release.txt ;;
         "Watchat") echo "Watchat Version: ${watchat}" >> release.txt ;;
+        "Rtp2HTTPd") echo "Rtp2HTTPd Version: ${rtp2httpd}" >> release.txt ;;
+        "ZeroTier") echo "ZeroTier Version: ${zerotier}" >> release.txt ;;
         "WireGuard") echo "WireGuard Version: ${wireguard}" >> release.txt ;;
     esac
 done
