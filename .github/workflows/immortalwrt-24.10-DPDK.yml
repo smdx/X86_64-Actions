@@ -24,8 +24,9 @@ on:
     - cron: '30 0 * * 1'
 
 env:
-  REPO_URL: https://github.com/immortalwrt/immortalwrt
+  REPO_URL: https://github.com/immortalwrt/immortalwrt.git
   REPO_BRANCH: openwrt-24.10
+  DEVICE_NAME: ImmortalWRT-x86
   FILES: ImmortalWRT/files
   FEEDS_CONF: ImmortalWRT/feeds.conf.default
   CONFIG_FILE: ImmortalWRT/immortalwrt-24.10-DPDK.config
