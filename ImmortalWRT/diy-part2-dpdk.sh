@@ -54,14 +54,24 @@ sed -i '/exit 0/i ethtool -s eth0 speed 2500 duplex full\nethtool -s eth1 speed 
 #sed -i '/customized in this file/a net.core.wmem_max=16777216' package/base-files/files/etc/sysctl.conf
 
 # MSD组播转换luci
-rm -rf feeds/luci/applications/luci-app-msd_lite
-git clone https://github.com/lwb1978/luci-app-msd_lite package/luci-app-msd_lite
+#rm -rf feeds/luci/applications/luci-app-msd_lite
+#git clone https://github.com/lwb1978/luci-app-msd_lite package/luci-app-msd_lite
 
 # 替换udpxy为修改版，解决组播源数据有重复数据包导致的花屏和马赛克问题
-rm -rf feeds/packages/net/udpxy/Makefile
-cp -f ${GITHUB_WORKSPACE}/patches/udpxy/Makefile feeds/packages/net/udpxy/
+#rm -rf feeds/packages/net/udpxy/Makefile
+#cp -f ${GITHUB_WORKSPACE}/patches/udpxy/Makefile feeds/packages/net/udpxy/
 # 修改 udpxy 菜单名称为大写
 #sed -i 's#_(\"udpxy\")#_(\"UDPXY\")#g' feeds/luci/applications/luci-app-udpxy/luasrc/controller/udpxy.lua
+
+# 添加rtp2httpd
+merge_folder main https://github.com/stackia/rtp2httpd package openwrt-support/rtp2httpd openwrt-support/luci-app-rtp2httpd
+rm -f package/rtp2httpd/Makefile
+curl -s https://raw.githubusercontent.com/smdx/rtp2httpd/refs/heads/main/Makefile > package/rtp2httpd/Makefile
+echo "" >> .config  # 添加一个空行(确保正确换行)
+echo "CONFIG_PACKAGE_luci-app-rtp2httpd=y" >> .config
+echo "CONFIG_PACKAGE_rtp2httpd=y" >> .config
+
+echo "添加 rtp2httpd 流媒体转发服务器"
 
 # 移除要替换的包
 rm -rf feeds/luci/applications/luci-app-mosdns
