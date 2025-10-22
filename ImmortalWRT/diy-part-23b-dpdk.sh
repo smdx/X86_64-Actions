@@ -192,9 +192,9 @@ curl_ver=$(cat feeds/packages/net/curl/Makefile | grep -i "PKG_VERSION:=" | awk 
 }
 
 # Lukcy大吉
-rm -rf feeds/kenzo/luci-app-lucky
-git clone https://github.com/sirpdboy/luci-app-lucky package/lucky-packages
-# git clone https://github.com/gdy666/luci-app-lucky.git package/lucky-packages
+#rm -rf feeds/kenzo/luci-app-lucky
+#git clone https://github.com/sirpdboy/luci-app-lucky package/lucky-packages
+### git clone https://github.com/gdy666/luci-app-lucky.git package/lucky-packages
 
 # 移动 WOL 到 “网络” 子菜单
 sed -i 's/services/network/g' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
