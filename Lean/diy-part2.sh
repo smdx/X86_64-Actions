@@ -69,14 +69,24 @@ sed -i '/exit 0/i ethtool -s eth0 speed 2500 duplex full\nethtool -s eth1 speed 
 #sed -i '/customized in this file/a net.core.wmem_max=16777216' package/base-files/files/etc/sysctl.conf
 
 # MSD组播转换luci
-rm -rf feeds/luci/applications/luci-app-msd_lite
-git clone https://github.com/lwb1978/luci-app-msd_lite package/luci-app-msd_lite
+#rm -rf feeds/luci/applications/luci-app-msd_lite
+#git clone https://github.com/lwb1978/luci-app-msd_lite package/luci-app-msd_lite
 
 # 替换udpxy为修改版，解决组播源数据有重复数据包导致的花屏和马赛克问题
-rm -rf feeds/packages/net/udpxy/Makefile
-cp -f ${GITHUB_WORKSPACE}/patches/udpxy/Makefile feeds/packages/net/udpxy/
+#rm -rf feeds/packages/net/udpxy/Makefile
+#cp -f ${GITHUB_WORKSPACE}/patches/udpxy/Makefile feeds/packages/net/udpxy/
 # 修改 udpxy 菜单名称为大写
-#sed -i 's#_(\"udpxy\")#_(\"UDPXY\")#g' feeds/luci/applications/luci-app-udpxy/luasrc/controller/udpxy.lua
+##sed -i 's#_(\"udpxy\")#_(\"UDPXY\")#g' feeds/luci/applications/luci-app-udpxy/luasrc/controller/udpxy.lua
+
+# 添加rtp2httpd
+merge_folder main https://github.com/stackia/rtp2httpd package openwrt-support/rtp2httpd openwrt-support/luci-app-rtp2httpd
+rm -f package/rtp2httpd/Makefile
+curl -s https://raw.githubusercontent.com/smdx/rtp2httpd/refs/heads/main/Makefile > package/rtp2httpd/Makefile
+echo "" >> .config  # 添加一个空行(确保正确换行)
+echo "CONFIG_PACKAGE_luci-app-rtp2httpd=y" >> .config
+echo "CONFIG_PACKAGE_rtp2httpd=y" >> .config
+
+echo "添加 rtp2httpd 流媒体转发服务器"
 
 # 移除要替换的包
 rm -rf feeds/luci/applications/luci-app-mosdns
@@ -104,12 +114,22 @@ echo "MosDNS 插件切换完成"
 
 # SmartDNS
 rm -rf feeds/luci/applications/luci-app-smartdns
-git clone https://github.com/lwb1978/luci-app-smartdns package/new/luci-app-smartdns
+rm -rf feeds/kenzo/luci-app-smartdns
+git clone https://github.com/lwb1978/luci-app-smartdns package/luci-app-smartdns
 # 替换immortalwrt 软件仓库smartdns版本为官方最新版
 rm -rf feeds/packages/net/smartdns
-merge_folder main https://github.com/lwb1978/OpenWrt-Actions package/new patch/smartdns
-#rm -rf feeds/kenzo/smartdns/Makefile
-#wget -O feeds/kenzo/smartdns/Makefile https://raw.githubusercontent.com/kenzok8/jell/refs/heads/main/smartdns/Makefile
+rm -rf feeds/kenzo/smartdns
+# cp -rf ${GITHUB_WORKSPACE}/patch/smartdns package/
+git clone https://github.com/smdx/openwrt-smartdns package/smartdns
+# 添加 smartdns-ui
+# echo "" >> .config  # 添加一个空行(确保正确换行)
+# echo "CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_smartdns_ui=y" >> .config
+# echo "CONFIG_PACKAGE_smartdns-ui=y" >> .config
+
+# openssl Enable QUIC and KTLS support
+echo "" >> .config  # 添加一个空行(确保正确换行)
+echo "CONFIG_OPENSSL_WITH_QUIC=y" >> .config
+echo "CONFIG_OPENSSL_WITH_KTLS=y" >> .config
 echo "SmartDNS 插件切换完成"
 
 # ------------------PassWall 科学上网--------------------------
@@ -131,6 +151,30 @@ sed -i '/config SING_BOX_WITH_ECH/,+3d' feeds/small/sing-box/Makefile
 sed -i '/CONFIG_SING_BOX_WITH_ECH/d' feeds/small/sing-box/Makefile
 
 echo "PassWall 插件切换完成"
+
+# LuCI Bandix 流量监控
+merge_folder main https://github.com/timsaya/openwrt-bandix package/new openwrt-bandix
+merge_folder main https://github.com/timsaya/luci-app-bandix package/new luci-app-bandix
+sed -i 's/network/status/g' package/new/luci-app-bandix/root/usr/share/luci/menu.d/luci-app-bandix.json
+echo "" >> .config  # 添加一个空行(确保正确换行)
+echo "CONFIG_PACKAGE_bandix=y" >> .config
+echo "CONFIG_PACKAGE_luci-app-bandix=y" >> .config
+echo "CONFIG_PACKAGE_luci-i18n-bandix-zh-cn=y" >> .config
+
+echo "LuCI Bandix 流量监控 插件拉取完成"
+
+# curl
+rm -rf feeds/packages/net/curl
+git clone https://github.com/sbwml/feeds_packages_net_curl feeds/packages/net/curl
+
+# 替换curl修改版（无nghttp3、ngtcp2）
+curl_ver=$(cat feeds/packages/net/curl/Makefile | grep -i "PKG_VERSION:=" | awk 'BEGIN{FS="="};{print $2}')
+[ "$(check_ver "$curl_ver" "8.12.0")" != "0" ] && {
+	echo "替换curl版本"
+	rm -rf feeds/packages/net/curl
+	cp -rf ${GITHUB_WORKSPACE}/patches/curl feeds/packages/net/curl
+}
+
 
 # Lukcy大吉
 rm -rf feeds/kenzo/luci-app-lucky
@@ -191,6 +235,13 @@ merge_folder main https://github.com/sbwml/luci-theme-argon package/openwrt-pack
 # Smartdns
 #git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 #git clone https://github.com/pymumu/smartdns.git package/smartdns
+
+# 修正部分从第三方仓库拉取的软件 Makefile 路径问题
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/lang\/golang\/golang-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang-package.mk/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/lang\/rust\/rust-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/rust\/rust-package.mk/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHREPO/PKG_SOURCE_URL:=https:\/\/github.com/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload.github.com/g' {}
 
 #echo 'refresh feeds'
 #./scripts/feeds update -a
