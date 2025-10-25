@@ -41,21 +41,20 @@ cp -rf /workdir/.YAOF/PATCH/kernel/6.8_Better_data_locality_in_networking_fast_p
 # UDP
 cp -rf /workdir/.YAOF/PATCH/kernel/6.7_FQ_packet_scheduling/* ./target/linux/generic/backport-6.6/
 # BBRv3
-cp -rf /workdir/.YAOF/PATCH/kernel/bbr3/* ./target/linux/generic/hack-6.6/
-# fullcore
-cp -rf /workdir/.YAOF/PATCH/kernel/bcmfullcone/* ./target/linux/generic/hack-6.6/
+# cp -rf /workdir/.YAOF/PATCH/kernel/bbr3/* ./target/linux/generic/hack-6.6/
 
-# openssl replace version 3.5.0
-rm -rf package/libs/openssl
-merge_folder master https://github.com/immortalwrt/immortalwrt package/libs/ package/libs/openssl
-# openssl Enable QUIC and KTLS support
-openssl_ver=$(cat package/libs/openssl/Makefile | grep -i "PKG_VERSION:=" | awk 'BEGIN{FS="="};{print $2}')
-[ "$(check_ver "$openssl_ver" "3.5.0")" != "0" ] && {
-	curl -s https://github.com/openwrt/openwrt/commit/362aea4649485ca7c31ce42c371d5051e7dead4d.patch | patch -p1
-	pushd package/libs/openssl/patches
-	curl -sSL https://github.com/openssl/openssl/commit/99ea6b38430dc977ba63c832694cdb3c2cb3c2c9.patch -o 900-Add-NULL-check-in-ossl_quic_get_peer_token.patch
-	popd
-}
+
+#openssl replace version 3.5.0
+# rm -rf package/libs/openssl
+# merge_folder master https://github.com/immortalwrt/immortalwrt package/libs/ package/libs/openssl
+#openssl Enable QUIC and KTLS support
+# openssl_ver=$(cat package/libs/openssl/Makefile | grep -i "PKG_VERSION:=" | awk 'BEGIN{FS="="};{print $2}')
+# [ "$(check_ver "$openssl_ver" "3.5.0")" != "0" ] && {
+	# curl -s https://github.com/openwrt/openwrt/commit/362aea4649485ca7c31ce42c371d5051e7dead4d.patch | patch -p1
+	# pushd package/libs/openssl/patches
+	# curl -sSL https://github.com/openssl/openssl/commit/99ea6b38430dc977ba63c832694cdb3c2cb3c2c9.patch -o 900-Add-NULL-check-in-ossl_quic_get_peer_token.patch
+	# popd
+# }
 
 sed -i '1isrc-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
 sed -i '2isrc-git small https://github.com/kenzok8/small' feeds.conf.default
