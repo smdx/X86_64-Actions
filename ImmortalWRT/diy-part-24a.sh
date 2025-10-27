@@ -29,21 +29,6 @@ cat >> target/linux/x86/64/config-6.6 <<-EOF
 CONFIG_PREEMPT_DYNAMIC=y
 EOF
 
-echo "克隆 YAOF"
-git clone -b 24.10 --depth 1 https://github.com/QiuSimons/YAOF /workdir/.YAOF
-
-# echo "打打补丁~"
-### 必要的 Patches FROM YAOF ###
-# TCP optimizations
-cp -rf /workdir/.YAOF/PATCH/kernel/6.7_Boost_For_Single_TCP_Flow/* ./target/linux/generic/backport-6.6/
-cp -rf /workdir/.YAOF/PATCH/kernel/6.8_Boost_TCP_Performance_For_Many_Concurrent_Connections-bp_but_put_in_hack/* ./target/linux/generic/hack-6.6/
-cp -rf /workdir/.YAOF/PATCH/kernel/6.8_Better_data_locality_in_networking_fast_paths-bp_but_put_in_hack/* ./target/linux/generic/hack-6.6/
-# UDP
-cp -rf /workdir/.YAOF/PATCH/kernel/6.7_FQ_packet_scheduling/* ./target/linux/generic/backport-6.6/
-# BBRv3
-# cp -rf /workdir/.YAOF/PATCH/kernel/bbr3/* ./target/linux/generic/hack-6.6/
-
-
 #openssl replace version 3.5.0
 # rm -rf package/libs/openssl
 # merge_folder master https://github.com/immortalwrt/immortalwrt package/libs/ package/libs/openssl
