@@ -63,6 +63,7 @@ plugin_order=(
     "ZeroTier"
     "Watchat"
     "Rtp2HTTPd"
+    "LuCI Bandix"
     "WireGuard"
     "MultiSD_Lite"
     "uHTTPd"
@@ -94,6 +95,7 @@ declare -A plugin_packages=(
     ["NatMap"]="luci-app-natmap"
     ["Watchat"]="luci-app-watchat"
     ["Rtp2HTTPd"]="luci-app-rtp2httpd"
+    ["LuCI Bandix"]="luci-app-bandix"
     ["ZeroTier"]="luci-app-zerotier"
     ["WireGuard"]="wireguard-tools"
     ["MultiSD_Lite"]="luci-app-msd_lite"
@@ -132,6 +134,7 @@ for plugin in "${selected_plugins[@]}"; do
         "Lucky") echo "Lucky Version: ${lucky}" >> release.txt ;;
         "Watchat") echo "Watchat Version: ${watchat}" >> release.txt ;;
         "Rtp2HTTPd") echo "Rtp2HTTPd Version: ${rtp2httpd}" >> release.txt ;;
+        "LuCI Bandix") echo "LuCI Bandix Version: ${bandix}" >> release.txt ;;
         "ZeroTier") echo "ZeroTier Version: ${zerotier}" >> release.txt ;;
         "WireGuard") echo "WireGuard Version: ${wireguard}" >> release.txt ;;
     esac

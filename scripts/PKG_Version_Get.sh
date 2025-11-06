@@ -14,6 +14,7 @@ plugins=(
     "luci-app-vnt"
     "luci-app-lucky"
     "luci-app-xfrpc"
+    "luci-app-bandix"
     "luci-app-watchcat"
     "luci-app-rtp2httpd"
     "luci-app-zerotier"
