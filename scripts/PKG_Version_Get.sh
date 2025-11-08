@@ -8,6 +8,7 @@ plugins=(
     "luci-app-store"
     "luci-app-passwall"
     "luci-app-passwall2"
+    "luci-app-nikki"
     "luci-app-fchomo"
     "luci-app-mihomo"
     "luci-app-openclash"

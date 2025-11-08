@@ -48,6 +48,7 @@ plugin_order=(
     "Mi Homo"
     "FC Homo"
     "Home Proxy"
+    "Nikki Mihomo"
     "Store"
     "SQM"
     "EQoS"
@@ -81,6 +82,7 @@ declare -A plugin_packages=(
     ["Mi Homo"]="luci-app-mihomo"
     ["FC Homo"]="luci-app-fchomo"
     ["Home Proxy"]="luci-app-homeproxy"
+    ["Nikki Mihomo"]="luci-app-nikki"
     ["SQM"]="luci-app-sqm"
     ["EQoS"]="luci-app-eqos"
     ["WOL"]="luci-app-wol"
@@ -130,6 +132,7 @@ for plugin in "${selected_plugins[@]}"; do
         "Mi Homo") echo "Mi Homo Version: ${mihomo}" >> release.txt ;;
         "FC Homo") echo "FC Homo Version: ${fchomo}" >> release.txt ;;
         "Home Proxy") echo "Home Proxy Version: ${homeproxy}" >> release.txt ;;
+        "Nikki Mihomo") echo "Nikki Mihomo Version: ${nikki}" >> release.txt ;;
         "VNT") echo "VNT Version: ${vnt}" >> release.txt ;;
         "Lucky") echo "Lucky Version: ${lucky}" >> release.txt ;;
         "Watchat") echo "Watchat Version: ${watchat}" >> release.txt ;;

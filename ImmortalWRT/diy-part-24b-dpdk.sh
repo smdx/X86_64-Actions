@@ -160,8 +160,16 @@ merge_folder main https://github.com/xiaorouji/openwrt-passwall2 package/new luc
 # sing-box-1.12.0 with_ech error fix
 sed -i '/config SING_BOX_WITH_ECH/,+3d' feeds/small/sing-box/Makefile
 sed -i '/CONFIG_SING_BOX_WITH_ECH/d' feeds/small/sing-box/Makefile
-
 echo "PassWall 插件切换完成"
+
+#Nikki Mihomo
+rm -rf feeds/small/nikki
+rm -rf feeds/small/luci-app-nikki
+merge_folder main https://github.com/nikkinikki-org/OpenWrt-nikki package/new nikki luci-app-nikki
+echo "" >> .config  # 添加一个空行(确保正确换行)
+echo "CONFIG_PACKAGE_nikki=y" >> .config
+echo "CONFIG_PACKAGE_luci-app-nikki=y" >> .config
+echo "Nikki Mihomo 插件操作完成"
 
 # Naiveproxy 缺少x86编译失败版本回退
 sed -i 's/140.0.7339.123-2/140.0.7339.123-1/g' feeds/small/naiveproxy/Makefile

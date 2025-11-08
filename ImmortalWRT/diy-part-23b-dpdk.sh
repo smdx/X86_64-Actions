@@ -155,6 +155,15 @@ merge_folder main https://github.com/xiaorouji/openwrt-passwall2 package/new luc
 # ------------------------------------------------------------
 echo "PassWall 插件切换完成"
 
+#Nikki Mihomo
+rm -rf feeds/small/nikki
+rm -rf feeds/small/luci-app-nikki
+merge_folder main https://github.com/nikkinikki-org/OpenWrt-nikki package/new nikki luci-app-nikki
+echo "" >> .config  # 添加一个空行(确保正确换行)
+echo "CONFIG_PACKAGE_nikki=y" >> .config
+echo "CONFIG_PACKAGE_luci-app-nikki=y" >> .config
+echo "Nikki Mihomo 插件操作完成"
+
 #AdguardHome指定commits
 #rm -rf feeds/kenzo/adguardhome
 #rm -rf feeds/kenzo/luci-app-adguardhome
