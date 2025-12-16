@@ -146,6 +146,8 @@ rm -rf feeds/small/luci-app-passwall
 rm -rf feeds/small/luci-app-passwall2
 merge_folder main https://github.com/xiaorouji/openwrt-passwall package/new luci-app-passwall
 merge_folder main https://github.com/xiaorouji/openwrt-passwall2 package/new luci-app-passwall2
+# 修改源码DHCP缓存重置操作
+sed -i 's/if not _flag and dnsmasq_noresolv == "1" then/if not _flag and dnsmasq_noresolv == "0" then/' package/new/luci-app-passwall/root/usr/share/passwall/helper_dnsmasq.lua
 # PW New Dnsmasq 防火墙重定向修改为默认关闭
 # sed -i 's/local RUN_NEW_DNSMASQ=1/local RUN_NEW_DNSMASQ=0/' feeds/small/luci-app-passwall/root/usr/share/passwall/app.sh
 #
