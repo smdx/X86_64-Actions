@@ -108,6 +108,7 @@ jobs:
         chmod 600 files/etc/config/ttyd
         patch -p1 < "${GITHUB_WORKSPACE}/patches/sysctl.patch"
         $GITHUB_WORKSPACE/$DIY_P2_SH
+        $GITHUB_WORKSPACE/scripts/custom.sh
         $GITHUB_WORKSPACE/scripts/PKG_Version_Get.sh
 
     - name: SSH connection to Actions

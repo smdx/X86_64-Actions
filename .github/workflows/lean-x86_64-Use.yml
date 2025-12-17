@@ -86,6 +86,7 @@ jobs:
         chmod 600 files/etc/config/ttyd
         chmod 644 files/lib/preinit/99_firewall_lxc_workaround
         $GITHUB_WORKSPACE/$DIY_P2_SH
+        $GITHUB_WORKSPACE/scripts/custom.sh
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
