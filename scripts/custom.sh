@@ -10,11 +10,10 @@ REPLACE_TASKS=(
   #"aaa7890aaa7890aaa7890aaa7890aaa7890aaa7890aaa7890aaa7890aaaaa" \
   #"bbb0123bbb0123bbb0123bbb0123bbb0123bbb0123bbb0123bbb0123bbbbb"
 
-  # 示例2：v2ray（新增/修改只需复制这段模板）
-  #"feeds/small/v2ray/Makefile" \
-  #"abc1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcd" \
-  #"def67890abcdef1234567890abcdef1234567890abcdef1234567890abcde123"
-
+  # 示例2：freeswitch（依赖替换：+libpcre $ → +libpcre2 /）
+  #"package/feeds/telephony/freeswitch/Makefile" \
+  #"+libpcre \\$" \
+  #"+libpcre2 \\/"
   # 继续添加：复制上面3行，替换路径和指定内容即可
 
   # naiveproxy 143.0.7499.109-2 修复仓库HASH错误
