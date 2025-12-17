@@ -173,9 +173,6 @@ echo "CONFIG_PACKAGE_nikki=y" >> .config
 echo "CONFIG_PACKAGE_luci-app-nikki=y" >> .config
 echo "Nikki Mihomo 插件操作完成"
 
-# Naiveproxy 缺少x86编译失败版本回退
-sed -i 's/140.0.7339.123-2/140.0.7339.123-1/g' feeds/small/naiveproxy/Makefile
-
 #AdguardHome指定commits
 #rm -rf feeds/kenzo/adguardhome
 #rm -rf feeds/kenzo/luci-app-adguardhome
