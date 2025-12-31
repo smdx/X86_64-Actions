@@ -267,13 +267,13 @@ export mirror=https://init.cooluc.com
 export github="github.com"
 
 # 防火墙4添加自定义nft命令支持
-patch -p1 < ${GITHUB_WORKSPACE}/patches/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch
+patch -p1 < ${GITHUB_WORKSPACE}/patches/firewall4-24.10/100-openwrt-firewall4-add-custom-nft-command-support.patch
 
 pushd feeds/luci
 	# 防火墙4添加自定义nft命令选项卡
-	patch -p1 < ${GITHUB_WORKSPACE}/patches/firewall4/0004-luci-add-firewall-add-custom-nft-rule-support.patch
+	patch -p1 < ${GITHUB_WORKSPACE}/patches/firewall4-24.10/0004-luci-add-firewall-add-custom-nft-rule-support.patch
 	# 状态-防火墙页面去掉iptables警告，并添加nftables、iptables标签页
-	patch -p1 < ${GITHUB_WORKSPACE}/patches/firewall4/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch
+	patch -p1 < ${GITHUB_WORKSPACE}/patches/firewall4-24.10/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch
 popd
 
 # 补充 firewall4 luci 中文翻译
@@ -325,19 +325,23 @@ curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/pa
 curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0008-meson-add-platform-variable-to-cross-compilation-fil.patch | patch -p1
 curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0009-kernel-add-legacy-cgroup-v1-memory-controller.patch | patch -p1
 curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0010-kernel-add-PREEMPT_RT-support-for-aarch64-x86_64.patch | patch -p1
+#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0011-tools-squashfs4-enable-zstd-compression-support.patch | patch -p1
+#curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0012-config-include-image-add-support-for-squashfs-zstd-c.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0013-include-kernel-Always-collect-module-symvers.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/generic-24.10/0014-include-netfilter-update-kernel-config-options-for-l.patch | patch -p1
 
 ## perf
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/openwrt-6.x/musl/990-add-typedefs-for-Elf64_Relr-and-Elf32_Relr.patch > toolchain/musl/patches/990-add-typedefs-for-Elf64_Relr-and-Elf32_Relr.patch
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/openwrt-6.x/perf/Makefile > package/devel/perf/Makefile
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/openwrt-6.x-24.10/musl/990-add-typedefs-for-Elf64_Relr-and-Elf32_Relr.patch > toolchain/musl/patches/990-add-typedefs-for-Elf64_Relr-and-Elf32_Relr.patch
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/openwrt-6.x-24.10/perf/Makefile > package/devel/perf/Makefile
 
 ## libpfring
 rm -rf feeds/packages/libs/libpfring
 mkdir -p feeds/packages/libs/libpfring/patches
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/Makefile > feeds/packages/libs/libpfring/Makefile
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/libpfring/Makefile > feeds/packages/libs/libpfring/Makefile
 pushd feeds/packages/libs/libpfring/patches
-  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/patches/0001-fix-cross-compiling.patch
-  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/patches/100-fix-compilation-warning.patch
-  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/patches/900-fix-linux-6.6.patch
+  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/libpfring/patches/0001-fix-cross-compiling.patch
+  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/libpfring/patches/100-fix-compilation-warning.patch
+  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/libpfring/patches/900-fix-linux-6.6.patch
 popd
 
 # DPDK
@@ -345,7 +349,7 @@ merge_folder master https://github.com/sbwml/r4s_build_script package/new openwr
 echo "DPDK 插件拉取完成"
 
 # kselftests-bpf
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/kselftests-bpf/Makefile > package/devel/kselftests-bpf/Makefile
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/kselftests-bpf/Makefile > package/devel/kselftests-bpf/Makefile
 
 # SQM Translation
 mkdir -p feeds/packages/net/sqm-scripts/patches
@@ -377,18 +381,19 @@ if grep -q "^CONFIG_USE_LTO=y" .config; then
     
     # xtables-addons module
     rm -rf feeds/packages/net/xtables-addons
-    git clone https://$github/sbwml/kmod_packages_net_xtables-addons feeds/packages/net/xtables-addons
+    git clone https://$github/sbwml/kmod_packages_net_xtables-addons feeds/packages/net/xtables-addons -b v6.18
+    rm -rf feeds/packages/net/xtables-addons/patches/901-fix-build-for-linux-6.18.patch
     
     # netatop
     sed -i 's/$(MAKE)/$(KERNEL_MAKE)/g' feeds/packages/admin/netatop/Makefile
-    curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/clang/netatop/900-fix-build-with-clang.patch > feeds/packages/admin/netatop/patches/900-fix-build-with-clang.patch
+    curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/clang/netatop/900-fix-build-with-clang.patch > feeds/packages/admin/netatop/patches/900-fix-build-with-clang.patch
     
     # dmx_usb_module
     rm -rf feeds/packages/libs/dmx_usb_module
     git clone https://$gitea/sbwml/feeds_packages_libs_dmx_usb_module feeds/packages/libs/dmx_usb_module
     
     # macremapper
-    curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/clang/macremapper/100-macremapper-fix-clang-build.patch | patch -p1
+    curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/clang/macremapper/100-macremapper-fix-clang-build.patch | patch -p1
     # coova-chilli module
     rm -rf feeds/packages/net/coova-chilli
     git clone https://$github/sbwml/kmod_packages_net_coova-chilli feeds/packages/net/coova-chilli
