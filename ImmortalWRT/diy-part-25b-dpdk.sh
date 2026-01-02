@@ -345,21 +345,6 @@ sed -i 's#\"title\": \"UPnP IGD \& PCP\"#\"title\": \"UPnP\"#g' feeds/luci/appli
 # 移动 UPnP 到 “网络” 子菜单
 sed -i 's/services/network/g' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
 
-## patch source
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0001-tools-add-upx-tools.patch | patch -p1
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0002-rootfs-add-upx-compression-support.patch | patch -p1
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0003-rootfs-add-r-w-permissions-for-UCI-configuration-fil.patch | patch -p1
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0004-rootfs-Add-support-for-local-kmod-installation-sourc.patch | patch -p1
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0005-kernel-Add-support-for-llvm-clang-compiler.patch | patch -p1
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0006-build-kernel-add-out-of-tree-kernel-config.patch | patch -p1
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0007-include-kernel-add-miss-config-for-linux-6.11.patch | patch -p1
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0008-meson-add-platform-variable-to-cross-compilation-fil.patch | patch -p1
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0009-tools-squashfs4-enable-lz4-zstd-compression-support.patch | patch -p1
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0010-kernel-add-PREEMPT_RT-support-for-aarch64-x86_64.patch | patch -p1
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0011-config-include-image-add-support-for-squashfs-zstd-c.patch | patch -p1
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0012-include-kernel-Always-collect-module-symvers.patch | patch -p1
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0013-include-netfilter-update-kernel-config-options-for-l.patch | patch -p1
-
 # attr no-mold
 sed -i '/PKG_BUILD_PARALLEL/aPKG_BUILD_FLAGS:=no-mold' feeds/packages/utils/attr/Makefile
 
@@ -466,9 +451,6 @@ else
     echo "CONFIG_USE_LTO is not set, skipping..."
 fi
 
-# attr no-mold
-sed -i '/PKG_BUILD_PARALLEL/aPKG_BUILD_FLAGS:=no-mold' feeds/packages/utils/attr/Makefile
-
 # x86 - disable mitigations
 sed -i 's/noinitrd/noinitrd mitigations=off/g' target/linux/x86/image/grub-efi.cfg
 
@@ -488,24 +470,14 @@ curl -s ${GITHUB_WORKSPACE}/patches/25.12/odhcp6c/0001-odhcp6c-update-to-25.12-G
 # linux-atm
 curl -s ${GITHUB_WORKSPACE}/patches/25.12/packages-patches/clang/linux-atm/openwrt-fix-build-with-clang.patch | patch -p1
 
-# attr
-sed -i '/PKG_BUILD_PARALLEL/aPKG_BUILD_FLAGS:=no-mold' feeds/packages/utils/attr/Makefile
-
 # apk-tools
 curl -s ${GITHUB_WORKSPACE}/patches/25.12/apk-tools/999-hack-for-linux-pre-releases.patch > package/system/apk/patches/999-hack-for-linux-pre-releases.patch
 
 # irqbalance
 curl -s ${GITHUB_WORKSPACE}/patches/25.12/packages-patches/irqbalance/900-meson-add-numa-option.patch > feeds/packages/utils/irqbalance/patches/900-meson-add-numa-option.patch
 
-# libsodium - fix build with lto (GNU BUG - 89147)
-sed -i "/CONFIGURE_ARGS/i\TARGET_CFLAGS += -ffat-lto-objects\n" feeds/packages/libs/libsodium/Makefile
-
 # haproxy - fix build with quictls
 sed -i '/USE_QUIC_OPENSSL_COMPAT/d' feeds/packages/net/haproxy/Makefile
-
-# xdp-tools
-rm -rf package/network/utils/xdp-tools
-git clone https://$github/sbwml/package_network_utils_xdp-tools package/network/utils/xdp-tools
 
 # ksmbd luci
 sed -i 's/0666/0644/g;s/0777/0755/g' feeds/luci/applications/luci-app-ksmbd/htdocs/luci-static/resources/view/ksmbd.js
@@ -513,10 +485,6 @@ sed -i 's/0666/0644/g;s/0777/0755/g' feeds/luci/applications/luci-app-ksmbd/htdo
 # ksmbd tools
 sed -i 's/0666/0644/g;s/0777/0755/g' feeds/packages/net/ksmbd-tools/files/ksmbd.config.example
 sed -i 's/bind interfaces only = yes/bind interfaces only = no/g' feeds/packages/net/ksmbd-tools/files/ksmbd.conf.template
-
-# perf
-curl -s ${GITHUB_WORKSPACE}/patches/25.12/openwrt-6.x/musl/990-add-typedefs-for-Elf64_Relr-and-Elf32_Relr.patch > toolchain/musl/patches/990-add-typedefs-for-Elf64_Relr-and-Elf32_Relr.patch
-curl -s ${GITHUB_WORKSPACE}/patches/25.12/openwrt-6.x/perf/Makefile > package/devel/perf/Makefile
 
 # kselftests-bpf
 curl -s ${GITHUB_WORKSPACE}/patches/25.12/packages-patches/kselftests-bpf/Makefile > package/devel/kselftests-bpf/Makefile
@@ -545,16 +513,6 @@ mkdir -p feeds/packages/kernel/ovpn-dco/patches
 curl -s ${GITHUB_WORKSPACE}/patches/25.12/packages-patches/ovpn-dco/901-fix-linux-6.11.patch > feeds/packages/kernel/ovpn-dco/patches/901-fix-linux-6.11.patch
 curl -s ${GITHUB_WORKSPACE}/patches/25.12/packages-patches/ovpn-dco/902-fix-linux-6.12.patch > feeds/packages/kernel/ovpn-dco/patches/902-fix-linux-6.12.patch
 
-# libpfring
-rm -rf feeds/packages/libs/libpfring
-mkdir -p feeds/packages/libs/libpfring/patches
-curl -s ${GITHUB_WORKSPACE}/patches/25.12/packages-patches/libpfring/Makefile > feeds/packages/libs/libpfring/Makefile
-pushd feeds/packages/libs/libpfring/patches
-  curl -Os ${GITHUB_WORKSPACE}/patches/25.12/packages-patches/libpfring/patches/0001-fix-cross-compiling.patch
-  curl -Os ${GITHUB_WORKSPACE}/patches/25.12/packages-patches/libpfring/patches/100-fix-compilation-warning.patch
-  curl -Os ${GITHUB_WORKSPACE}/patches/25.12/packages-patches/libpfring/patches/900-fix-linux-6.6.patch
-popd
-
 # nat46
 mkdir -p package/kernel/nat46/patches
 curl -s ${GITHUB_WORKSPACE}/patches/25.12/packages-patches/nat46/100-fix-build-with-kernel-6.9.patch > package/kernel/nat46/patches/100-fix-build-with-kernel-6.9.patch
@@ -580,19 +538,6 @@ popd
 
 # routing - batman-adv fix build with linux-6.12
 curl -s ${GITHUB_WORKSPACE}/patches/25.12/packages-patches/batman-adv/901-fix-linux-6.12rc2-builds.patch > feeds/routing/batman-adv/patches/901-fix-linux-6.12rc2-builds.patch
-
-# clang
-# netatop
-sed -i 's/$(MAKE)/$(KERNEL_MAKE)/g' feeds/packages/admin/netatop/Makefile
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/packages-patches/clang/netatop/900-fix-build-with-clang.patch > feeds/packages/admin/netatop/patches/900-fix-build-with-clang.patch
-# dmx_usb_module
-rm -rf feeds/packages/libs/dmx_usb_module
-git clone https://$gitea/sbwml/feeds_packages_libs_dmx_usb_module feeds/packages/libs/dmx_usb_module
-# macremapper
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/packages-patches/clang/macremapper/100-macremapper-fix-clang-build.patch | patch -p1
-# coova-chilli module
-rm -rf feeds/packages/net/coova-chilli
-git clone https://$github/sbwml/kmod_packages_net_coova-chilli feeds/packages/net/coova-chilli
 
 echo "插件自定义操作执行完毕"
 
