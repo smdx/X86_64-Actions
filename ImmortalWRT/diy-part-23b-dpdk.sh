@@ -285,13 +285,13 @@ export mirror=https://init.cooluc.com
 export github="github.com"
 
 # 防火墙4添加自定义nft命令支持
-patch -p1 < ${GITHUB_WORKSPACE}/patches/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch
+patch -p1 < ${GITHUB_WORKSPACE}/patches/firewall4-24.10/100-openwrt-firewall4-add-custom-nft-command-support.patch
 
 pushd feeds/luci
 	# 防火墙4添加自定义nft命令选项卡
-	patch -p1 < ${GITHUB_WORKSPACE}/patches/firewall4/0004-luci-add-firewall-add-custom-nft-rule-support.patch
+	patch -p1 < ${GITHUB_WORKSPACE}/patches/firewall4-24.10/0004-luci-add-firewall-add-custom-nft-rule-support.patch
 	# 状态-防火墙页面去掉iptables警告，并添加nftables、iptables标签页
-	patch -p1 < ${GITHUB_WORKSPACE}/patches/firewall4/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch
+	patch -p1 < ${GITHUB_WORKSPACE}/patches/firewall4-24.10/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch
 popd
 
 # 补充 firewall4 luci 中文翻译
@@ -347,7 +347,7 @@ merge_folder master https://github.com/sbwml/r4s_build_script package/new openwr
 echo "DPDK 插件拉取完成"
 
 # kselftests-bpf
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/kselftests-bpf/Makefile > package/devel/kselftests-bpf/Makefile
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/kselftests-bpf/Makefile > package/devel/kselftests-bpf/Makefile
 
 # SQM Translation
 mkdir -p feeds/packages/net/sqm-scripts/patches

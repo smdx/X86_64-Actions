@@ -43,10 +43,12 @@ define KernelPackage/bluetooth
 	CONFIG_BT_HCIBTUSB_MTK=y \
 	CONFIG_BT_HCIBTUSB_RTL=y \
 	CONFIG_BT_HCIUART \
+	CONFIG_BT_HCIUART_3WIRE=y \
 	CONFIG_BT_HCIUART_BCM=n \
 	CONFIG_BT_HCIUART_INTEL=n \
 	CONFIG_BT_HCIUART_H4 \
 	CONFIG_BT_HCIUART_NOKIA=n \
+	CONFIG_BT_HCIUART_RTL=y \
 	CONFIG_BT_HIDP
   $(call AddDepends/rfkill)
   FILES:= \
@@ -278,9 +280,9 @@ define KernelPackage/mlxreg
 	CONFIG_SENSORS_MLXREG_FAN \
 	CONFIG_LEDS_MLXREG
   FILES:= \
-	$(LINUX_DIR)/drivers/platform/x86/mlx-platform.ko \
 	$(LINUX_DIR)/drivers/platform/mellanox/mlxreg-hotplug.ko \
 	$(LINUX_DIR)/drivers/platform/mellanox/mlxreg-io.ko \
+	$(LINUX_DIR)/drivers/platform/mellanox/mlx-platform.ko \
 	$(LINUX_DIR)/drivers/hwmon/mlxreg-fan.ko \
 	$(LINUX_DIR)/drivers/leds/leds-mlxreg.ko
   AUTOLOAD:=$(call AutoProbe,mlx-platform mlxreg-hotplug mlxreg-io mlxreg-fan leds-mlxreg)
@@ -707,7 +709,7 @@ define KernelPackage/serial-8250-exar
   KCONFIG:= CONFIG_SERIAL_8250_EXAR
   FILES:=$(LINUX_DIR)/drivers/tty/serial/8250/8250_exar.ko
   AUTOLOAD:=$(call AutoProbe,8250 8250_base 8250_exar)
-  DEPENDS:=@PCI_SUPPORT +kmod-serial-8250
+  DEPENDS:=@PCI_SUPPORT +kmod-serial-8250 +kmod-eeprom-93cx6
 endef
 
 define KernelPackage/serial-8250-exar/description
@@ -802,13 +804,18 @@ $(eval $(call KernelPackage,ikconfig))
 define KernelPackage/zram
   SUBMENU:=$(OTHER_MENU)
   TITLE:=ZRAM
-  DEPENDS:=+LINUX_6_12:kmod-lib-lzo
+  DEPENDS:=+kmod-lib-lzo +kmod-lib-lz4 \
+           +kmod-lib-lz4hc +kmod-lib-zstd
   KCONFIG:= \
 	CONFIG_ZSMALLOC \
 	CONFIG_ZRAM \
 	CONFIG_ZRAM_DEBUG=n \
 	CONFIG_ZRAM_WRITEBACK=n \
-	CONFIG_ZSMALLOC_STAT=n
+	CONFIG_ZSMALLOC_STAT=n \
+	CONFIG_ZRAM_BACKEND_LZ4=y \
+	CONFIG_ZRAM_BACKEND_LZ4HC=y \
+	CONFIG_ZRAM_BACKEND_LZO=y \
+	CONFIG_ZRAM_BACKEND_ZSTD=y
   FILES:= \
 	$(LINUX_DIR)/mm/zsmalloc.ko \
 	$(LINUX_DIR)/drivers/block/zram/zram.ko

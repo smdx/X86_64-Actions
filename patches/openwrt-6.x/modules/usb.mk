@@ -1034,6 +1034,21 @@ endef
 $(eval $(call KernelPackage,usb-serial-qualcomm))
 
 
+define KernelPackage/usb-serial-xr
+  TITLE:=Support for MaxLinear/Exar USB to Serial devices
+  KCONFIG:=CONFIG_USB_SERIAL_XR
+  FILES:=$(LINUX_DIR)/drivers/usb/serial/xr_serial.ko
+  AUTOLOAD:=$(call AutoProbe,xr_serial)
+  $(call AddDepends/usb-serial)
+endef
+
+define KernelPackage/usb-serial-xr/description
+ Kernel support for MaxLinear/Exar USB to Serial converter devices
+endef
+
+$(eval $(call KernelPackage,usb-serial-xr))
+
+
 define KernelPackage/usb-storage
   TITLE:=USB Storage support
   DEPENDS:= +kmod-scsi-core
@@ -1282,7 +1297,7 @@ $(eval $(call KernelPackage,usb-net-kaweth))
 
 define KernelPackage/usb-net-lan78xx
   TITLE:=USB-To-Ethernet Microchip LAN78XX convertors
-  DEPENDS:=+kmod-fixed-phy +kmod-phy-microchip +PACKAGE_kmod-of-mdio:kmod-of-mdio
+  DEPENDS:=+kmod-fixed-phy +kmod-phy-microchip +kmod-phylink +PACKAGE_kmod-of-mdio:kmod-of-mdio
   KCONFIG:=CONFIG_USB_LAN78XX
   FILES:=$(LINUX_DIR)/drivers/$(USBNET_DIR)/lan78xx.ko
   AUTOLOAD:=$(call AutoProbe,lan78xx)
