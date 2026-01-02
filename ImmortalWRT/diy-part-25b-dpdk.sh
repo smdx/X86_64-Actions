@@ -266,8 +266,110 @@ export mirror=https://init.cooluc.com
 # github mirror
 export github="github.com"
 
+# patch source
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0001-tools-add-upx-tools.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0002-rootfs-add-upx-compression-support.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0003-rootfs-add-r-w-permissions-for-UCI-configuration-fil.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0004-rootfs-Add-support-for-local-kmod-installation-sourc.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0005-kernel-Add-support-for-llvm-clang-compiler.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0006-build-kernel-add-out-of-tree-kernel-config.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0007-include-kernel-add-miss-config-for-linux-6.11.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0008-meson-add-platform-variable-to-cross-compilation-fil.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0009-tools-squashfs4-enable-lz4-zstd-compression-support.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0010-kernel-add-PREEMPT_RT-support-for-aarch64-x86_64.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0011-config-include-image-add-support-for-squashfs-zstd-c.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0012-include-kernel-Always-collect-module-symvers.patch | patch -p1
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/generic-25.12/0013-include-netfilter-update-kernel-config-options-for-l.patch | patch -p1
+
 # Shortcut Forwarding Engine
 git clone https://$gitea/sbwml/shortcut-fe package/new/shortcut-fe
+
+# kernel modules
+rm -rf package/kernel/linux
+git checkout package/kernel/linux
+pushd package/kernel/linux/modules
+    rm -f [a-z]*.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/block.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/can.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/crypto.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/firewire.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/fs.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/gpio.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/hwmon.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/i2c.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/iio.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/input.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/leds.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/lib.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/multiplexer.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/netdevices.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/netfilter.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/netsupport.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/nls.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/other.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/pcmcia.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/rtc.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/sound.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/spi.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/usb.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/video.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/virt.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/w1.mk
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/wpan.mk
+popd
+
+# BBRv3 - linux-6.12
+pushd target/linux/generic/backport-6.12
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0001-net-tcp_bbr-broaden-app-limited-rate-sample-detectio.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0002-net-tcp_bbr-v2-shrink-delivered_mstamp-first_tx_msta.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0003-net-tcp_bbr-v2-snapshot-packets-in-flight-at-transmi.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0004-net-tcp_bbr-v2-count-packets-lost-over-TCP-rate-samp.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0005-net-tcp_bbr-v2-export-FLAG_ECE-in-rate_sample.is_ece.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0006-net-tcp_bbr-v2-introduce-ca_ops-skb_marked_lost-CC-m.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0007-net-tcp_bbr-v2-adjust-skb-tx.in_flight-upon-merge-in.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0008-net-tcp_bbr-v2-adjust-skb-tx.in_flight-upon-split-in.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0009-net-tcp-add-new-ca-opts-flag-TCP_CONG_WANTS_CE_EVENT.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0010-net-tcp-re-generalize-TSO-sizing-in-TCP-CC-module-AP.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0011-net-tcp-add-fast_ack_mode-1-skip-rwin-check-in-tcp_f.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0012-net-tcp_bbr-v2-record-app-limited-status-of-TLP-repa.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0013-net-tcp_bbr-v2-inform-CC-module-of-losses-repaired-b.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0014-net-tcp_bbr-v2-introduce-is_acking_tlp_retrans_seq-i.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0015-tcp-introduce-per-route-feature-RTAX_FEATURE_ECN_LOW.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0016-net-tcp_bbr-v3-update-TCP-bbr-congestion-control-mod.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0017-net-tcp_bbr-v3-ensure-ECN-enabled-BBR-flows-set-ECT-.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0018-tcp-export-TCPI_OPT_ECN_LOW-in-tcp_info-tcpi_options.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0019-x86-cfi-bpf-Add-tso_segs-and-skb_marked_lost-to-bpf_.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0020-net-tcp_bbr-v3-silence-Wconstant-logical-operand.patch
+popd
+
+# LRNG - 6.12
+pushd target/linux/generic/hack-6.12
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0001-LRNG-Entropy-Source-and-DRNG-Manager.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0002-LRNG-allocate-one-DRNG-instance-per-NUMA-node.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0003-LRNG-proc-interface.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0004-LRNG-add-switchable-DRNG-support.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0005-LRNG-add-common-generic-hash-support.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0006-crypto-DRBG-externalize-DRBG-functions-for-LRNG.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0007-LRNG-add-SP800-90A-DRBG-extension.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0008-LRNG-add-kernel-crypto-API-PRNG-extension.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0009-LRNG-add-atomic-DRNG-implementation.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0010-LRNG-add-common-timer-based-entropy-source-code.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0011-LRNG-add-interrupt-entropy-source.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0012-scheduler-add-entropy-sampling-hook.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0013-LRNG-add-scheduler-based-entropy-source.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0014-LRNG-add-SP800-90B-compliant-health-tests.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0015-LRNG-add-random.c-entropy-source-support.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0016-LRNG-CPU-entropy-source.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0017-LRNG-add-Jitter-RNG-fast-noise-source.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0018-LRNG-add-option-to-enable-runtime-entropy-rate-confi.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0019-LRNG-add-interface-for-gathering-of-raw-entropy.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0020-LRNG-add-power-on-and-runtime-self-tests.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0021-LRNG-sysctls-and-proc-interface.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0022-LRMG-add-drop-in-replacement-random-4-API.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0023-LRNG-add-kernel-crypto-API-interface.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0024-LRNG-add-dev-lrng-device-file-support.patch
+    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/lrng/011-LRNG-0025-LRNG-add-hwrand-framework-interface.patch
+popd
 
 # 防火墙4添加自定义nft命令支持
 # firewall4
@@ -293,6 +395,13 @@ sed -i '/^PKG_BUILD_FLAGS[[:space:]]*:/aPKG_FIXUP:=autoreconf' package/libs/libn
 mkdir -p package/network/utils/nftables/patches
 curl -s ${GITHUB_WORKSPACE}/patches/25.12/firewall4/nftables/0001-nftables-add-fullcone-expression-support.patch > package/network/utils/nftables/patches/0001-nftables-add-fullcone-expression-support.patch
 curl -s ${GITHUB_WORKSPACE}/patches/25.12/firewall4/nftables/0002-nftables-add-brcm-fullconenat-support.patch > package/network/utils/nftables/patches/0002-nftables-add-brcm-fullconenat-support.patch
+
+# fstools
+rm -rf package/system/fstools
+git clone https://$github/sbwml/package_system_fstools -b openwrt-25.12 package/system/fstools
+# util-linux
+rm -rf package/utils/util-linux
+git clone https://$github/sbwml/package_utils_util-linux -b openwrt-25.12 package/utils/util-linux
 
 # FullCone module
 git clone https://$gitea/sbwml/nft-fullcone package/new/nft-fullcone
@@ -431,7 +540,7 @@ if grep -q "^CONFIG_USE_LTO=y" .config; then
     
     # xtables-addons module
     rm -rf feeds/packages/net/xtables-addons
-    git clone https://$github/sbwml/kmod_packages_net_xtables-addons feeds/packages/net/xtables-addons -b v6.18
+    git clone https://$github/sbwml/kmod_packages_net_xtables-addons feeds/packages/net/xtables-addons -b openwrt-25.12
     rm -rf feeds/packages/net/xtables-addons/patches/901-fix-build-for-linux-6.18.patch
 
     # netatop
