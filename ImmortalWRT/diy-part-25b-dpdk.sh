@@ -284,40 +284,6 @@ curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/pa
 # Shortcut Forwarding Engine
 git clone https://$gitea/sbwml/shortcut-fe package/new/shortcut-fe
 
-# kernel modules
-rm -rf package/kernel/linux
-git checkout package/kernel/linux
-pushd package/kernel/linux/modules
-    rm -f [a-z]*.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/block.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/can.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/crypto.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/firewire.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/fs.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/gpio.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/hwmon.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/i2c.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/iio.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/input.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/leds.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/lib.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/multiplexer.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/netdevices.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/netfilter.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/netsupport.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/nls.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/other.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/pcmcia.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/rtc.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/sound.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/spi.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/usb.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/video.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/virt.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/w1.mk
-    curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/openwrt-6.x/modules/wpan.mk
-popd
-
 # BBRv3 - linux-6.12
 pushd target/linux/generic/backport-6.12
     curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/25.12/kernel-6.12/bbr3/010-bbr3-0001-net-tcp_bbr-broaden-app-limited-rate-sample-detectio.patch
@@ -503,7 +469,6 @@ echo "# CONFIG_PACKAGE_urngd is not set" >> .config
 
 ### 配置GCC
 echo -e "\n# GCC" >> .config
-echo -e "CONFIG_DEVEL=y" >> .config
 echo -e "CONFIG_TOOLCHAINOPTS=y" >> .config
 #echo -e "CONFIG_GCC_USE_VERSION_15=y\n" >> .config
 
@@ -658,7 +623,8 @@ rm -rf feeds/luci/themes/luci-theme-argon
 merge_folder openwrt-25.12 https://github.com/sbwml/luci-theme-argon package/new luci-app-argon-config luci-theme-argon
 # kucat
 git clone --depth=1 https://github.com/sirpdboy/luci-theme-kucat package/luci-theme-kucat
-echo 'CONFIG_PACKAGE_luci-theme-kucat=y' >> .config
+echo "" >> .config  # 添加一个空行(确保正确换行)
+echo "CONFIG_PACKAGE_luci-theme-kucat=y" >> .config
 echo "添加主题操作完成"
 
 # git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git package/luci-theme-infinityfreedom
