@@ -409,9 +409,8 @@ rm -rf feeds/kenzo/luci-app-argon-config
 rm -rf feeds/kenzo/luci-theme-argon
 rm -rf feeds/luci/themes/luci-theme-argon
 merge_folder openwrt-24.10 https://github.com/sbwml/luci-theme-argon package/new luci-app-argon-config luci-theme-argon
-# kucat
-git clone --depth=1 https://github.com/sirpdboy/luci-theme-kucat package/luci-theme-kucat
-echo 'CONFIG_PACKAGE_luci-theme-kucat=y' >> .config
+# argon登录框居中
+sed -i '/\.login-page \.login-container/,/}/ s/margin-left: 5%;/margin-left: 36%;/' package/new/luci-theme-argone/htdocs/luci-static/argone/css/cascade.css
 echo "添加主题操作完成"
 
 # git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git package/luci-theme-infinityfreedom
