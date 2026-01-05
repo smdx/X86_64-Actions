@@ -337,11 +337,11 @@ curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/pa
 ## libpfring
 rm -rf feeds/packages/libs/libpfring
 mkdir -p feeds/packages/libs/libpfring/patches
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/libpfring/Makefile > feeds/packages/libs/libpfring/Makefile
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/Makefile > feeds/packages/libs/libpfring/Makefile
 pushd feeds/packages/libs/libpfring/patches
-  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/libpfring/patches/0001-fix-cross-compiling.patch
-  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/libpfring/patches/100-fix-compilation-warning.patch
-  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/libpfring/patches/900-fix-linux-6.6.patch
+  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/patches/0001-fix-cross-compiling.patch
+  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/patches/100-fix-compilation-warning.patch
+  curl -Os https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/libpfring/patches/900-fix-linux-6.6.patch
 popd
 
 # DPDK
@@ -349,7 +349,7 @@ merge_folder master https://github.com/sbwml/r4s_build_script package/new openwr
 echo "DPDK 插件拉取完成"
 
 # kselftests-bpf
-curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/kselftests-bpf/Makefile > package/devel/kselftests-bpf/Makefile
+curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/kselftests-bpf/Makefile > package/devel/kselftests-bpf/Makefile
 
 # SQM Translation
 mkdir -p feeds/packages/net/sqm-scripts/patches
@@ -386,14 +386,14 @@ if grep -q "^CONFIG_USE_LTO=y" .config; then
     
     # netatop
     sed -i 's/$(MAKE)/$(KERNEL_MAKE)/g' feeds/packages/admin/netatop/Makefile
-    curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/clang/netatop/900-fix-build-with-clang.patch > feeds/packages/admin/netatop/patches/900-fix-build-with-clang.patch
+    curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/clang/netatop/900-fix-build-with-clang.patch > feeds/packages/admin/netatop/patches/900-fix-build-with-clang.patch
     
     # dmx_usb_module
     rm -rf feeds/packages/libs/dmx_usb_module
     git clone https://$gitea/sbwml/feeds_packages_libs_dmx_usb_module feeds/packages/libs/dmx_usb_module
     
     # macremapper
-    curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches-24.10/clang/macremapper/100-macremapper-fix-clang-build.patch | patch -p1
+    curl -s https://raw.githubusercontent.com/smdx/X86_64-Actions/refs/heads/main/patches/packages-patches/clang/macremapper/100-macremapper-fix-clang-build.patch | patch -p1
     # coova-chilli module
     rm -rf feeds/packages/net/coova-chilli
     git clone https://$github/sbwml/kmod_packages_net_coova-chilli feeds/packages/net/coova-chilli
