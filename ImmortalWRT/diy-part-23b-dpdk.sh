@@ -392,7 +392,9 @@ rm -rf feeds/kenzo/luci-app-argon-config
 rm -rf feeds/kenzo/luci-theme-argon
 rm -rf feeds/luci/themes/luci-theme-argon
 merge_folder main https://github.com/sbwml/luci-theme-argon package/new luci-app-argon-config luci-theme-argon
-echo "luci-theme-argon 替换完成"
+# argon登录框居中(4K屏)
+sed -i '/\.login-page \.login-container/,/}/ s/margin-left: 5%;/margin-left: 40%;/' package/new/luci-theme-argon/htdocs/luci-static/argon/css/cascade.css
+echo "添加主题操作完成"
 
 # git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git package/luci-theme-infinityfreedom
 # git clone https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
