@@ -105,7 +105,7 @@ echo "开始执行切换插件到指定版本"
 
 # 移除要替换的包
 rm -rf feeds/luci/applications/luci-app-mosdns
-rm -rf feeds/packages/net/{alist,adguardhome,mosdns,xray*,v2ray*,v2ray*,sing*,smartdns}
+rm -rf feeds/packages/net/{alist,adguardhome,mosdns,xray*,v2ray*,sing-box,smartdns}
 rm -rf feeds/packages/utils/v2dat
 
 # Golang 1.26
@@ -142,8 +142,10 @@ echo "SmartDNS 插件切换完成"
 # ------------------PassWall 科学上网--------------------------
 # 移除 openwrt feeds 自带的app
 rm -rf feeds/luci/applications/luci-app-passwall
-rm -rf feeds/small/luci-app-passwall
-rm -rf feeds/small/luci-app-passwall2
+# rm -rf feeds/small/luci-app-passwall
+# rm -rf feeds/small/luci-app-passwall2
+rm -rf feeds/helloworld/luci-app-passwall
+rm -rf feeds/helloworld/luci-app-passwall2
 merge_folder main https://github.com/Openwrt-Passwall/openwrt-passwall package/new luci-app-passwall
 merge_folder main https://github.com/Openwrt-Passwall/openwrt-passwall2 package/new luci-app-passwall2
 # 修改源码DHCP缓存重置操作

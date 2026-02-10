@@ -16,10 +16,9 @@
 
 
 sed -i '1isrc-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
-sed -i '2isrc-git small https://github.com/kenzok8/small' feeds.conf.default
+# sed -i '2isrc-git small https://github.com/kenzok8/small' feeds.conf.default
+sed -i '2isrc-git helloworld https://github.com/sbwml/openwrt_helloworld' feeds.conf.default
 sed -i '3isrc-git zzz https://github.com/blueberry-pie-11/luci-app-natmap'  feeds.conf.default
 
 #sed -i '1isrc-git mosdns https://github.com/sbwml/luci-app-mosdns'  feeds.conf.default
-#sed -i '3isrc-git helloworld https://github.com/sbwml/openwrt_helloworld' feeds.conf.default
-# echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
 #echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall;luci-smartdns-dev' >>feeds.conf.default
