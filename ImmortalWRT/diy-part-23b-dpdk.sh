@@ -387,6 +387,9 @@ rm -rf feeds/luci/themes/luci-theme-argon
 merge_folder main https://github.com/sbwml/luci-theme-argon package/new luci-app-argon-config luci-theme-argon
 # argon登录框居中(4K屏)
 sed -i '/\.login-page \.login-container/,/}/ s/margin-left: 5%;/margin-left: 40%;/' package/new/luci-theme-argon/htdocs/luci-static/argon/css/cascade.css
+# 更换背景图
+rm -rf package/new/luci-theme-argon/htdocs/luci-static/argon/img/bg.webp
+cp -f ${GITHUB_WORKSPACE}/patches/theme/bg.webp package/new/luci-theme-argon/htdocs/luci-static/argon/img/
 echo "添加主题操作完成"
 
 # git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git package/luci-theme-infinityfreedom
