@@ -23,7 +23,6 @@ plugins=(
 )
 
 # 定义需要自定义目录名称的插件映射（插件名:目录名称）
-# 示例：["luci-app-fchomo"]="mihomo"   将luci-app-fchomo的目录名称指定为mihomo
 declare -A custom_dir_names=(
     ["luci-app-fchomo"]="mihomo"
     ["luci-app-lucky"]="lucky"
@@ -71,8 +70,17 @@ for plugin in "${plugins[@]}"; do
         fi
     fi
 
-    # 读取版本信息
-    version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' "$makefile")
+    # ========== 核心修改：优先读取RELEASE_VERSION ==========
+    # 1. 先尝试读取RELEASE_VERSION
+    release_version=$(grep -oP 'RELEASE_VERSION:=\K[^ ]+' "$makefile")
+    # 2. 若RELEASE_VERSION存在，使用它；否则读取PKG_VERSION
+    if [[ -n "$release_version" ]]; then
+        version="$release_version"
+        echo "优先使用RELEASE_VERSION: $plugin -> $version"
+    else
+        version=$(grep -oP 'PKG_VERSION:=\K[^ ]+' "$makefile")
+    fi
+
     # 读取PKG_RELEASE（可选）
     release=$(grep -oP 'PKG_RELEASE:=\K[^ ]+' "$makefile" || true)
 
