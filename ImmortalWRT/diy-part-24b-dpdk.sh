@@ -449,6 +449,8 @@ if grep -q "^CONFIG_GCC_USE_VERSION_15=y" .config; then
     sed -i '/Build\/InstallDev/i TARGET_CFLAGS += -std=gnu17\n' feeds/packages/sound/shine/Makefile
     # jq
     sed -i '/CONFIGURE_ARGS/i TARGET_CFLAGS += -std=gnu17\n' feeds/packages/utils/jq/Makefile
+    # coova-chilli - fix gcc 15 c23
+    sed -i '/TARGET_CFLAGS/s/$/ -std=gnu17/' feeds/packages/net/coova-chilli/Makefile
 fi
 
 echo "插件自定义操作执行完毕"
