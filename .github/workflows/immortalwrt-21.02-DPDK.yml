@@ -19,9 +19,9 @@ on:
         required: false
         default: 'false'
 
- # 每周一 执行编译
- # schedule:
- #   - cron: '30 0 * * 1'
+# 周一早上6点 执行编译
+#  schedule:
+#    - cron: '0 22 * * 0'
 
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
