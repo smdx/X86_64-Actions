@@ -122,6 +122,8 @@ rm -rf feeds/packages/net/smartdns
 rm -rf feeds/kenzo/smartdns
 # cp -rf ${GITHUB_WORKSPACE}/patch/smartdns package/
 git clone https://github.com/lwb1978/openwrt-smartdns package/smartdns
+#修复 smartdns 依赖：添加 +zlib
+sed -i 's/DEPENDS:=+libpthread +libopenssl +libatomic/DEPENDS:=+libpthread +libopenssl +libatomic +zlib/' package/smartdns/Makefile
 # 添加 smartdns-ui
 # echo "CONFIG_PACKAGE_luci-app-smartdns_INCLUDE_smartdns_ui=y" >> .config
 # echo "CONFIG_PACKAGE_smartdns-ui=y" >> .config
