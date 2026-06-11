@@ -26,6 +26,12 @@ source ${GITHUB_WORKSPACE}/scripts/function.sh
 #参数1是分支名，参数2是库地址，参数3是指定commits，参数4是下载到指定路径，参数5是目标包文件夹。
 #merge_commits master https://github.com/kenzok8/openwrt-packages 114ee35443ccb8e0fbb92027134c3887feec9b37 feeds/kenzo adguardhome
 
+# 修改x86内核到6.6版
+# sed -i 's/KERNEL_PATCHVER:=.*/KERNEL_PATCHVER:=6.6/g' ./target/linux/x86/Makefile
+
+# 使用测试版内核
+echo "CONFIG_TESTING_KERNEL=y" >> .config
+
 # Modify default IP
 sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
 
