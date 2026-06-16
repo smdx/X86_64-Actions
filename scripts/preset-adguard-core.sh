@@ -9,7 +9,16 @@ if [ -z "${TARGET_FILES:-}" ]; then
 fi
 
 TARGET_BIN="${TARGET_FILES}/usr/bin"
+TARGET_FILE="${TARGET_BIN}/AdGuardHome"
+
+# 确保 parent 目录存在
 mkdir -p "${TARGET_BIN}"
+
+# 如果目标文件已存在（可能是目录或旧文件），删除它
+if [ -e "${TARGET_FILE}" ]; then
+  echo "删除已存在的目标: ${TARGET_FILE}"
+  rm -rf "${TARGET_FILE}"
+fi
 
 echo "目标 files 目录: ${TARGET_FILES}"
 
@@ -43,19 +52,19 @@ if [ -z "${binpath}" ]; then
 fi
 
 echo "在压缩包中找到二进制：${binpath}"
-echo "正在提取到 ${TARGET_BIN}/AdGuardHome ..."
-if ! tar -xzf "${tmpdir}/agh.tar.gz" -O "${binpath}" > "${TARGET_BIN}/AdGuardHome" 2>&1; then
+echo "正在提取到 ${TARGET_FILE} ..."
+if ! tar -xzf "${tmpdir}/agh.tar.gz" -O "${binpath}" > "${TARGET_FILE}" 2>&1; then
   echo "错误：从压缩包中提取二进制失败"
   exit 1
 fi
 
-chmod +x "${TARGET_BIN}/AdGuardHome"
+chmod +x "${TARGET_FILE}"
 
 # 验证文件
-if [ -x "${TARGET_BIN}/AdGuardHome" ]; then
-  echo "✓ AdGuardHome 已成功放入 ${TARGET_BIN}/AdGuardHome"
-  ls -lh "${TARGET_BIN}/AdGuardHome"
-  file_size=$(stat -f%z "${TARGET_BIN}/AdGuardHome" 2>/dev/null || stat -c%s "${TARGET_BIN}/AdGuardHome" 2>/dev/null || echo 'unknown')
+if [ -x "${TARGET_FILE}" ]; then
+  echo "✓ AdGuardHome 已成功放入 ${TARGET_FILE}"
+  ls -lh "${TARGET_FILE}"
+  file_size=$(stat -f%z "${TARGET_FILE}" 2>/dev/null || stat -c%s "${TARGET_FILE}" 2>/dev/null || echo 'unknown')
   echo "文件大小: ${file_size}"
 else
   echo "错误：文件验证失败（文件不存在或不可执行）"
