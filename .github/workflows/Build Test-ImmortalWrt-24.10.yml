@@ -98,6 +98,8 @@ jobs:
 
     - name: Load custom configuration
       run: |
+        chmod +x $GITHUB_WORKSPACE/scripts/preset-adguard-core.sh
+        TARGET_FILES=$(pwd)/$FILES $GITHUB_WORKSPACE/scripts/preset-adguard-core.sh
         #[ -e files ] && mv files openwrt/files
         [ -e $FILES ] && mv $FILES openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
