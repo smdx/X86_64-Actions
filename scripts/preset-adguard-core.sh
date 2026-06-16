@@ -3,7 +3,7 @@ set -euo pipefail
 
 ARCH="amd64"
 
-# 1) 自动检测构建根目录（优先 ImmortalWRT、openwrt，否则用 GITHUB_WORKSPACE）
+# 1) 自动检测构建根目录
 if [ -n "${GITHUB_WORKSPACE:-}" ] && [ -d "${GITHUB_WORKSPACE}/ImmortalWRT" ]; then
   BUILDROOT="${GITHUB_WORKSPACE}/ImmortalWRT"
 elif [ -n "${GITHUB_WORKSPACE:-}" ] && [ -d "${GITHUB_WORKSPACE}/openwrt" ]; then
@@ -30,23 +30,40 @@ if ! curl -fsSL -o "${tmpdir}/agh.tar.gz" "${AGH_CORE_URL}"; then
   exit 1
 fi
 
-echo "列出压缩包内容以查找二进制路径..."
-# 查找名字为 AdGuardHome（可在任意目录下）的条目（文件名正好是 AdGuardHome）
-binpath=$(tar -tzf "${tmpdir}/agh.tar.gz" | awk -F/ '/(^|\/)AdGuardHome$/ {print; exit}')
+echo "列出压缩包内容..."
+# 不再用管道，先把文件列表写到临时文件，再读取
+if ! tar -tzf "${tmpdir}/agh.tar.gz" > "${tmpdir}/filelist.txt" 2>&1; then
+  echo "错误：读取压缩包元数据失败"
+  cat "${tmpdir}/filelist.txt"
+  exit 1
+fi
+
+echo "查找 AdGuardHome 二进制..."
+binpath=$(grep -E '(^|/)AdGuardHome$' "${tmpdir}/filelist.txt" | head -1)
+
 if [ -z "${binpath}" ]; then
-  echo "错误：在压缩包中没有找到名为 AdGuardHome 的可执行条目"
-  echo "压缩包前几行内容："
-  tar -tzf "${tmpdir}/agh.tar.gz" | sed -n '1,40p'
+  echo "错误：在压缩包中没有找到名为 AdGuardHome 的二进制"
+  echo "压缩包前 20 行内容："
+  head -20 "${tmpdir}/filelist.txt"
   exit 1
 fi
 
 echo "在压缩包中找到二进制：${binpath}"
 echo "正在提取到 ${TARGET_BIN}/AdGuardHome ..."
-if tar -xzf "${tmpdir}/agh.tar.gz" -O "${binpath}" > "${TARGET_BIN}/AdGuardHome"; then
-  chmod +x "${TARGET_BIN}/AdGuardHome"
-  echo "AdGuardHome 已放入 ${TARGET_BIN}/AdGuardHome"
-  ls -l "${TARGET_BIN}/AdGuardHome" || true
-else
+if ! tar -xzf "${tmpdir}/agh.tar.gz" -O "${binpath}" > "${TARGET_BIN}/AdGuardHome" 2>&1; then
   echo "错误：从压缩包中提取二进制失败"
+  exit 1
+fi
+
+chmod +x "${TARGET_BIN}/AdGuardHome"
+
+# 验证文件
+if [ -x "${TARGET_BIN}/AdGuardHome" ]; then
+  echo "✓ AdGuardHome 已成功放入 ${TARGET_BIN}/AdGuardHome"
+  ls -lh "${TARGET_BIN}/AdGuardHome"
+  echo "文件大小: $(stat -f%z "${TARGET_BIN}/AdGuardHome" 2>/dev/null || stat -c%s "${TARGET_BIN}/AdGuardHome" 2>/dev/null || echo 'unknown')"
+else
+  echo "错误：文件验证失败（文件不存在或不可执行）"
+  ls -la "${TARGET_BIN}/" || true
   exit 1
 fi
