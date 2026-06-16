@@ -102,6 +102,7 @@ jobs:
 
     - name: Download AdGuardHome Core
       run: |
+        export TARGET_FILES="${{ env.FILES }}"
         chmod +x "${GITHUB_WORKSPACE}/scripts/preset-adguard-core.sh"
         "${GITHUB_WORKSPACE}/scripts/preset-adguard-core.sh"
         echo "AdGuard Home 插件核心下载完成"
