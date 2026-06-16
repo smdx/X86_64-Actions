@@ -171,13 +171,6 @@ echo "CONFIG_PACKAGE_nikki=y" >> .config
 echo "CONFIG_PACKAGE_luci-app-nikki=y" >> .config
 echo "Nikki Mihomo 插件操作完成"
 
-#AdguardHome指定commits
-#rm -rf feeds/kenzo/adguardhome
-#rm -rf feeds/kenzo/luci-app-adguardhome
-#merge_commits master https://github.com/kenzok8/openwrt-packages 114ee35443ccb8e0fbb92027134c3887feec9b37 feeds/kenzo adguardhome
-#merge_commits master https://github.com/kenzok8/openwrt-packages 915f448b80ee1adb928a5cfd58c33c678abacb5c feeds/kenzo luci-app-adguardhome
-#echo "AdguardHome 插件切换完成"
-
 # ppp - 2.5.0
 #rm -rf package/network/services/ppp
 #git clone https://github.com/sbwml/package_network_services_ppp package/network/services/ppp
