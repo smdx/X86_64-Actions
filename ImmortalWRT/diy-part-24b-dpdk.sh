@@ -171,13 +171,6 @@ echo "CONFIG_PACKAGE_nikki=y" >> .config
 echo "CONFIG_PACKAGE_luci-app-nikki=y" >> .config
 echo "Nikki Mihomo 插件操作完成"
 
-# AdGuard Home 核心下载
-if grep -q "CONFIG_PACKAGE_luci-app-adguardhome=y" .config; then
-    chmod +x "${GITHUB_WORKSPACE}/scripts/preset-adguard-core.sh"
-    "${GITHUB_WORKSPACE}/scripts/preset-adguard-core.sh"
-    echo "AdGuard Home 插件核心下载完成"
-fi
-
 # ppp - 2.5.0
 #rm -rf package/network/services/ppp
 #git clone https://github.com/sbwml/package_network_services_ppp package/network/services/ppp

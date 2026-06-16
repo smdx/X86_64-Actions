@@ -100,6 +100,12 @@ jobs:
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
 
+    - name: Download AdGuardHome Core
+      run: |
+        chmod +x "${GITHUB_WORKSPACE}/scripts/preset-adguard-core.sh"
+        "${GITHUB_WORKSPACE}/scripts/preset-adguard-core.sh"
+        echo "AdGuard Home 插件核心下载完成"
+    
     - name: Load custom configuration
       run: |
         #[ -e files ] && mv files openwrt/files
