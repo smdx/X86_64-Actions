@@ -3,20 +3,15 @@ set -euo pipefail
 
 ARCH="amd64"
 
-# 1) 自动检测构建根目录
-if [ -n "${GITHUB_WORKSPACE:-}" ] && [ -d "${GITHUB_WORKSPACE}/ImmortalWRT" ]; then
-  BUILDROOT="${GITHUB_WORKSPACE}/ImmortalWRT"
-elif [ -n "${GITHUB_WORKSPACE:-}" ] && [ -d "${GITHUB_WORKSPACE}/openwrt" ]; then
-  BUILDROOT="${GITHUB_WORKSPACE}/openwrt"
-elif [ -n "${GITHUB_WORKSPACE:-}" ]; then
-  BUILDROOT="${GITHUB_WORKSPACE}"
-else
-  BUILDROOT="$(pwd)"
+# 如果通过环境变量传入 TARGET_FILES，就用它；否则用默认值
+if [ -z "${TARGET_FILES:-}" ]; then
+  TARGET_FILES="${GITHUB_WORKSPACE}/ImmortalWRT/files"
 fi
 
-TARGET_FILES="${BUILDROOT}/files"
 TARGET_BIN="${TARGET_FILES}/usr/bin"
 mkdir -p "${TARGET_BIN}"
+
+echo "目标 files 目录: ${TARGET_FILES}"
 
 AGH_CORE_URL="https://github.com/AdguardTeam/AdGuardHome/releases/latest/download/AdGuardHome_linux_${ARCH}.tar.gz"
 echo "AdGuardHome 下载地址: ${AGH_CORE_URL}"
@@ -31,7 +26,6 @@ if ! curl -fsSL -o "${tmpdir}/agh.tar.gz" "${AGH_CORE_URL}"; then
 fi
 
 echo "列出压缩包内容..."
-# 不再用管道，先把文件列表写到临时文件，再读取
 if ! tar -tzf "${tmpdir}/agh.tar.gz" > "${tmpdir}/filelist.txt" 2>&1; then
   echo "错误：读取压缩包元数据失败"
   cat "${tmpdir}/filelist.txt"
@@ -61,7 +55,8 @@ chmod +x "${TARGET_BIN}/AdGuardHome"
 if [ -x "${TARGET_BIN}/AdGuardHome" ]; then
   echo "✓ AdGuardHome 已成功放入 ${TARGET_BIN}/AdGuardHome"
   ls -lh "${TARGET_BIN}/AdGuardHome"
-  echo "文件大小: $(stat -f%z "${TARGET_BIN}/AdGuardHome" 2>/dev/null || stat -c%s "${TARGET_BIN}/AdGuardHome" 2>/dev/null || echo 'unknown')"
+  file_size=$(stat -f%z "${TARGET_BIN}/AdGuardHome" 2>/dev/null || stat -c%s "${TARGET_BIN}/AdGuardHome" 2>/dev/null || echo 'unknown')
+  echo "文件大小: ${file_size}"
 else
   echo "错误：文件验证失败（文件不存在或不可执行）"
   ls -la "${TARGET_BIN}/" || true
