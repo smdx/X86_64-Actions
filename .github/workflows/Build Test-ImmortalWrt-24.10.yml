@@ -122,6 +122,7 @@ jobs:
       id: package
       run: |
         cd openwrt
+        test -x "${BUILDROOT}/files/usr/bin/AdGuardHome" || (echo "AdGuardHome 不存在，停止"; exit 1)
         make defconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
