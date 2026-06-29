@@ -140,7 +140,7 @@ for plugin in "${selected_plugins[@]}"; do
         "Watchat") echo "Watchat Version: ${watchat}" >> release.txt ;;
         "Rtp2HTTPd") echo "Rtp2HTTPd Version: ${rtp2httpd}" >> release.txt ;;
         "LuCI Bandix") echo "LuCI Bandix Version: ${bandix}" >> release.txt ;;
-        "LuCI Bandix-Plus") echo "LuCI Bandix-Plus Version: ${bandix-plus}" >> release.txt ;;
+        "LuCI Bandix-Plus") echo "LuCI Bandix-Plus Version: ${bandix_plus}" >> release.txt ;;
         "ZeroTier") echo "ZeroTier Version: ${zerotier}" >> release.txt ;;
         "WireGuard") echo "WireGuard Version: ${wireguard}" >> release.txt ;;
     esac

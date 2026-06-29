@@ -87,6 +87,7 @@ for plugin in "${plugins[@]}"; do
 
     # 清理插件名（去除luci-app-前缀）
     clean_name=${plugin/luci-app-/}
+    clean_name=${clean_name//-/_}
 
     # 验证版本信息
     if [[ -z "$version" ]]; then
