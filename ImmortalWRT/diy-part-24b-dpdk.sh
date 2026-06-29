@@ -227,16 +227,22 @@ sed -i 's/services/network/g' feeds/luci/applications/luci-app-wol/root/usr/shar
 
 #echo "luci-app-wrtbwmon 插件拉取完成"
 
-# LuCI Bandix 流量监控
-merge_folder main https://github.com/timsaya/openwrt-bandix package/new openwrt-bandix
-merge_folder main https://github.com/timsaya/luci-app-bandix package/new luci-app-bandix
-sed -i 's/network/status/g' package/new/luci-app-bandix/root/usr/share/luci/menu.d/luci-app-bandix.json
+# LuCI Bandix Plus流量监控
+#merge_folder main https://github.com/timsaya/openwrt-bandix-plus package/new openwrt-bandix
+#merge_folder main https://github.com/timsaya/luci-app-bandix-plus package/new luci-app-bandix
+#sed -i 's/network/status/g' package/new/luci-app-bandix/root/usr/share/luci/menu.d/luci-app-bandix.json
+#echo "" >> .config  # 添加一个空行(确保正确换行)
+#echo "CONFIG_PACKAGE_bandix=y" >> .config
+#echo "CONFIG_PACKAGE_luci-app-bandix=y" >> .config
+#echo "CONFIG_PACKAGE_luci-i18n-bandix-zh-cn=y" >> .config
+merge_folder main https://github.com/timsaya/openwrt-bandix-plus package/new openwrt-bandix-plus
+merge_folder main https://github.com/timsaya/luci-app-bandix-plus package/new luci-app-bandix-plus
+sed -i 's/network/status/g' package/new/luci-app-bandix-plus/root/usr/share/luci/menu.d/luci-app-bandix-plus.json
 echo "" >> .config  # 添加一个空行(确保正确换行)
-echo "CONFIG_PACKAGE_bandix=y" >> .config
-echo "CONFIG_PACKAGE_luci-app-bandix=y" >> .config
-echo "CONFIG_PACKAGE_luci-i18n-bandix-zh-cn=y" >> .config
+echo "CONFIG_PACKAGE_bandix-plus=y" >> .config
+echo "CONFIG_PACKAGE_luci-app-bandix-plus=y" >> .config
 
-echo "LuCI Bandix 流量监控 插件拉取完成"
+echo "LuCI Bandix Plus流量监控 插件拉取完成"
 
 # vim - fix E1187: Failed to source defaults.vim
 pushd feeds/packages
