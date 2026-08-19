@@ -110,6 +110,7 @@ jobs:
         cd openwrt
         chmod -R 755 files
         chmod 600 files/etc/config/ttyd
+        chmod -R 700 files/etc/AdGuardHome
         patch -p1 < "${GITHUB_WORKSPACE}/patches/sysctl.patch"
         $GITHUB_WORKSPACE/$DIY_P2_SH
         $GITHUB_WORKSPACE/scripts/custom.sh
