@@ -171,6 +171,13 @@ echo "CONFIG_PACKAGE_nikki=y" >> .config
 echo "CONFIG_PACKAGE_luci-app-nikki=y" >> .config
 echo "Nikki Mihomo 插件操作完成"
 
+#Nikki-rs Mihomo
+# merge_folder main https://github.com/CHKayanami/OpenWrt-nikki-rs package/new nikki-rs luci-app-nikki-rs
+# echo "" >> .config  # 添加一个空行(确保正确换行)
+# echo "CONFIG_PACKAGE_nikki-rs=y" >> .config
+# echo "CONFIG_PACKAGE_luci-app-nikki-rs=y" >> .config
+# echo "Nikki-rs Mihomo 插件操作完成"
+
 # ppp - 2.5.0
 #rm -rf package/network/services/ppp
 #git clone https://github.com/sbwml/package_network_services_ppp package/network/services/ppp
