@@ -67,15 +67,13 @@ sed -i 's#top -n1#\/bin\/busybox top -n1#g' feeds/luci/modules/luci-base/root/us
 #sed -i 's#_(\"udpxy\")#_(\"UDPXY\")#g' feeds/luci/applications/luci-app-udpxy/luasrc/controller/udpxy.lua
 
 # 添加rtp2httpd
+rm -rf feeds/packages/net/rtp2httpd
+rm -rf feeds/luci/applications/luci-app-rtp2httpd
 git clone --depth=1 -b main https://github.com/stackia/rtp2httpd rtp2httpd_tmp
 rm -rf package/rtp2httpd-openwrt
 mv rtp2httpd_tmp/openwrt-support package/rtp2httpd-openwrt
-mkdir package/rtp2httpd-openwrt/rtp2httpd/src
-mv rtp2httpd_tmp/* package/rtp2httpd-openwrt/rtp2httpd/src
 rm -rf rtp2httpd_tmp
-rm -f package/rtp2httpd-openwrt/rtp2httpd/Makefile
 mv package/rtp2httpd-openwrt/rtp2httpd/Makefile.versioned package/rtp2httpd-openwrt/rtp2httpd/Makefile
-rm -f package/rtp2httpd-openwrt/luci-app-rtp2httpd/Makefile
 mv package/rtp2httpd-openwrt/luci-app-rtp2httpd/Makefile.versioned package/rtp2httpd-openwrt/luci-app-rtp2httpd/Makefile
 echo "" >> .config  # 添加一个空行(确保正确换行)
 echo "CONFIG_PACKAGE_luci-app-rtp2httpd=y" >> .config
