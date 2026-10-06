@@ -95,6 +95,15 @@ sed -i 's/cheaper = 1/cheaper = 2/g' feeds/packages/net/uwsgi/files-luci-support
 sed -i 's/option timeout 30/option timeout 60/g' package/system/rpcd/files/rpcd.config
 sed -i 's#20) \* 1000#60) \* 1000#g' feeds/luci/modules/luci-base/htdocs/luci-static/resources/rpc.js
 
+# 禁用 RTL8188eu 驱动
+rm -rf package/kernel/rtl8188eu 2>/dev/null || true
+find feeds -type d -name "*8188eu*" -exec rm -rf {} \; 2>/dev/null || true
+sed -i '/^CONFIG_PACKAGE_kmod-rtl8188eu/d' .config
+echo "# CONFIG_PACKAGE_kmod-rtl8188eu is not set" >> .config
+echo "RTL8188eu 驱动已禁用"
+
+
+
 ### 插件切换到指定版本
 echo "开始执行切换插件到指定版本"
 
