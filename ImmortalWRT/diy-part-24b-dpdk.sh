@@ -103,9 +103,9 @@ rm -rf feeds/luci/applications/luci-app-mosdns
 rm -rf feeds/packages/net/{alist,adguardhome,mosdns,xray*,v2ray*,sing-box,smartdns}
 rm -rf feeds/packages/utils/v2dat
 
-# Golang 1.26
+# Golang 1.27
 rm -rf feeds/packages/lang/golang
-git clone --depth=1 https://github.com/sbwml/packages_lang_golang -b 26.x feeds/packages/lang/golang
+git clone --depth=1 https://github.com/sbwml/packages_lang_golang -b 27.x feeds/packages/lang/golang
 echo "Golang 插件切换完成"
 
 # VNT 简便高效的异地组网、内网穿透工具
